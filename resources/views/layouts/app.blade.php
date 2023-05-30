@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/dark-theme.css" rel="stylesheet">
-    <link href="assets/css/responsive.css" rel="stylesheet">
+    <link href="{{asset('assets/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
 
     <title>WHMCS-VPS</title>
   </head>
@@ -44,7 +44,7 @@
 
                     <div class="options-toggle-dropdown">
                         <ul>
-                            <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="assets/img/profile.png" alt="">{{ Auth::user()->firstname }}</li>
+                            <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="assets/img/profile.png" alt="">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</li>
 
                             <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img  style="filter: brightness(2.5);" src="assets/img/settings.svg" alt="">Settings</a></li>
                             <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="assets/img/messages.svg" alt="">Support Tickets</a></li>
@@ -91,7 +91,7 @@
     <!-- footer -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/scripts.js"></script>
+    <script src="{{asset('assets/js/scripts.js')}}"></script>
 
     <script>
         $( document ).ready(function() {
