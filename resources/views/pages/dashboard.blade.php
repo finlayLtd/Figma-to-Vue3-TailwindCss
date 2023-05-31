@@ -28,7 +28,7 @@
 							    <tr>
 							      <th scope="col">Ticket No</th>
 							      <th scope="col">Title</th>
-							      <th scope="col">Request Type</th>
+							      <th scope="col">Priority</th>
 							      <th scope="col">Date</th>
 							      <th scope="col">Status</th>
 							      <th scope="col" class="text-center">View Invoice</th>
@@ -36,50 +36,16 @@
 							    </tr>
 							  </thead>
 							  <tbody>
-							    <tr>
-							      <td>#123</td>
-							      <td>Name about yes request..</td>
-							      <td class="refund-request">Refund Request</td>
-							      <td class="date-cell">2023-13-03</td>
-							      <td class="successful-cell"><span>Successful</span></td>
-							      <td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-							    </tr>
-							    <tr>
-							      <td>#123</td>
-							      <td>Name about yes request..</td>
-							      <td class="refund-request">Refund Request</td>
-							      <td class="date-cell">2023-13-03</td>
-							      <td class="cancelled-cell"><span>Cancelled</span></td>
-							      <td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-
-							    </tr>
-							    <tr>
-							      <td>#123</td>
-							      <td>Name about yes request..</td>
-							      <td class="refund-request">Refund Request</td>
-							      <td class="date-cell">2023-13-03</td>
-							      <td class="in-progress-cell"><span>In progress</span></td>
-							      <td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-
-							    </tr>
-							    <tr>
-							      <td>#123</td>
-							      <td>Name about yes request..</td>
-							      <td class="refund-request">Refund Request</td>
-							      <td class="date-cell">2023-13-03</td>
-							      <td class="in-progress-cell"><span>In progress</span></td>
-							      <td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-
-							    </tr>
-							    <tr>
-							      <td>#123</td>
-							      <td>Name about yes request..</td>
-							      <td class="refund-request">Refund Request</td>
-							      <td class="date-cell">2023-13-03</td>
-							      <td class="in-progress-cell"><span>In progress</span></td>
-							      <td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-
-							    </tr>					    					    					    
+							    @foreach($tickets as $ticket)
+									<tr>
+									<td>#{{$ticket['tid']}}</td>
+									<td>{{$ticket['subject']}}</td>
+									<td class="refund-request">{{$ticket['priority']}}</td>
+									<td class="date-cell">{{$ticket['date']}}</td>
+									<td class="successful-cell"><span>{{$ticket['status']}}</span></td>
+									<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+									</tr>
+								@endforeach			    					    					    
 							  </tbody>
 							</table>
 						</div>	
