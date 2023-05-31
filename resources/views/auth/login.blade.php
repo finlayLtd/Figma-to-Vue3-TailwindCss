@@ -17,7 +17,7 @@
 
   <section class="home-hero login">
 
-    <div class="badge reset-success">
+    <div class="badge reset-success d-none">
       <img src="assets/img/reset-success.svg" alt=""> Send reset instructions was succesful.
     </div>
 

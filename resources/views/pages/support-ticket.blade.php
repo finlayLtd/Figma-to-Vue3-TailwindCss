@@ -19,139 +19,74 @@
 		                <li class="nav-item" role="presentation">
 		                  <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">All</button>
 		                </li>
-		                <li class="nav-item" role="presentation">
-		                  <button class="nav-link" id="pills-in-work-tab" data-bs-toggle="pill" data-bs-target="#pills-in-work" type="button" role="tab" aria-controls="pills-in-work" aria-selected="false">In work</button>
-		                </li>
-		                <li class="nav-item" role="presentation">
-		                  <button class="nav-link" id="pills-closed-tab" data-bs-toggle="pill" data-bs-target="#pills-closed" type="button" role="tab" aria-controls="pills-closed" aria-selected="false">Closed</button>
-		                </li>                                
+						@foreach ($status as $statu)
+							<li class="nav-item" role="presentation">
+							<button class="nav-link" id="pills-{{implode('-',explode(' ',$statu['title']))}}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{implode('-',explode(' ',$statu['title']))}}" type="button" role="tab" aria-controls="pills-in-work" aria-selected="false">{{$statu['title']}}</button>
+							</li>
+						@endforeach                              
 		              </ul>
 		            </div>
 		            <div class="col-md-3 text-end">
-								<button type="submit" class="btn btn-dark hover-dark-light d-inline" id="create-ticket">Create Ticket</button>			
-		            	
+						<button type="submit" class="btn btn-dark hover-dark-light d-inline" id="create-ticket">Create Ticket</button>			
 		            </div>
 
 		        </div> 
 
 
             <div class="tab-content" id="pills-tabContent">
-
+				
               <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
 
                 <div class="row mb-5">
+					@foreach ($tickets as $ticket)
 		              <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 		                <div class="card-item p-4 mb-4 support-item flex-column ">
 
 		                	<div class="d-flex justify-content-between support-item-header">
 		                		<div class="support-item-title">
-		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">#1667135379414894</span>
+		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">Ticket#{{$ticket['tid']}}</span>
 		                		</div>
 		                		<div class="support-item-status">
-		                			<span class="fs-15 color-in-work">In work</span>
+		                			<span class="fs-15 color-in-work">{{$ticket['status']}}</span>
 		                		</div>
 		                	</div>
 
                     	<div class="support-item-detail">
-                    		<p class="fs-15 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..</p>
+                    		<p class="fs-15 mb-0">{{$ticket['subject']}}</p>
                     	</div>
 
 		                </div>
 		              </div>
-
-
-		              <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-		                <div class="card-item p-4 mb-4 support-item flex-column ">
-
-		                	<div class="d-flex justify-content-between support-item-header">
-		                		<div class="support-item-title">
-		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">#1667135379414894</span>
-		                		</div>
-		                		<div class="support-item-status">
-		                			<span class="fs-15 color-closed">Closed</span>
-		                		</div>
-		                	</div>
-
-                    	<div class="support-item-detail">
-                    		<p class="fs-15 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..</p>
-                    	</div>
-
-		                </div>
-		              </div>
-
-
-
-            
+					@endforeach
                 </div>
 
               </div>
-
-              <div class="tab-pane fade" id="pills-in-work" role="tabpanel" aria-labelledby="pills-in-work-tab">
-
-                <div class="row mb-5">
-
+			  @foreach ($status as $statu)
+			  	<div class="tab-pane fade" id="pills-{{implode('-',explode(' ',$statu['title']))}}" role="tabpanel" aria-labelledby="pills-{{implode('-',explode(' ',$statu['title']))}}-tab">
+				  	@foreach ($tickets as $ticket)
+					  @if($ticket['status']==$statu['title'])
 		              <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 		                <div class="card-item p-4 mb-4 support-item flex-column ">
 
 		                	<div class="d-flex justify-content-between support-item-header">
 		                		<div class="support-item-title">
-		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">#1667135379414894</span>
+		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">Ticket#{{$ticket['tid']}}</span>
 		                		</div>
 		                		<div class="support-item-status">
-		                			<span class="fs-15 color-in-work">In work</span>
+		                			<span class="fs-15 color-in-work">{{$ticket['status']}}</span>
 		                		</div>
 		                	</div>
 
                     	<div class="support-item-detail">
-                    		<p class="fs-15 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..</p>
+                    		<p class="fs-15 mb-0">{{$ticket['subject']}}</p>
                     	</div>
 
 		                </div>
 		              </div>
-
-                </div>
-
-
-              </div>
-
-
-
-              <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
-
-                <div class="row mb-5">
-
-		              <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-		                <div class="card-item p-4 mb-4 support-item flex-column ">
-
-		                	<div class="d-flex justify-content-between support-item-header">
-		                		<div class="support-item-title">
-		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">#1667135379414894</span>
-		                		</div>
-		                		<div class="support-item-status">
-		                			<span class="fs-15 color-closed">Closed</span>
-		                		</div>
-		                	</div>
-
-                    	<div class="support-item-detail">
-                    		<p class="fs-15 mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..</p>
-                    	</div>
-
-		                </div>
-		              </div>
-
-                </div>
-
-
-              </div>
-
-
-            </div>
-
-
-
-
-
-
+					  @endif
+					@endforeach
+				</div>
+			  @endforeach
         </div>
 		</div>
 	</div>
@@ -174,34 +109,46 @@
 			</div>
 			<div class="modal-main">
 				<div class="amounts">
-					<h4>Subject</h4>
-					<input class="mb-3" type="text" placeholder="Write subject">
+					<form id="openTicket" enctype="multipart/form-data" method="POST" action="{{route('ticket.open')}}">
+						@csrf
+						<h4>Subject</h4>
+						<input class="mb-3" type="text" placeholder="Write subject">
 
-					<h4>Describe the problem</h4>
-					<textarea class="mb-3" name="" id="" cols="30" rows="8" ></textarea>
+						<h4>Describe the problem</h4>
+						<textarea class="mb-3" name="" id="" cols="30" rows="8" ></textarea>
 
-					<h4>Server related*</h4>
-					<select name="" id="">
-						<option value="Server">Server</option>
-						<option value="Server2">Server2</option>
-					</select>
+						<h4>Department*</h4>
+						<select name="department" id="department">
+							@foreach ($departments as $department)
+							<option value="{{$department['id']}}">{{$department['name']}}</option>
+							@endforeach
+						</select>
 
+						<h4>Service related</h4>
+						<select name="service" id="service">
+							<option value="0">- None -</option>
+							@foreach ($products as $product)
+							<option value="{{$product['pid']}}">{{$product['name']}}</option>
+							@endforeach
+						</select>
+						<button class="btn-dark d-block w-100 mt-5" id="open-ticket">Create Ticket</button>
+					</form>
 				</div>
-				<button class="btn-dark d-block w-100 mt-5">Create Ticket</button>
 			</div>
 		</div>
 	</div>
 </div>	
+@endsection
 
-<!-- 
-<script>
-	$("#create-ticket").click(function(){
-		$(".modal").removeClass("hidden");
-	})
-
-	$(".modal-close").click(function(){
-		$(".modal").addClass("hidden");
-	})
-</script> -->
-
+@section('script')
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#open-ticket").click(function(event){
+			event.preventDefault();
+			var form_data = new FormData(document.getElementById('openTicket'));
+			console.log(form_data);
+		});
+	});
+	
+</script>
 @endsection
