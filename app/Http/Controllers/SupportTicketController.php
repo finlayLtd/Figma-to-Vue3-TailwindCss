@@ -50,6 +50,7 @@ class SupportTicketController extends Controller
         $tickets = $tickets_response['tickets']['ticket'];
 
         $status = $tickets_status['statuses']['status'];
+
         return view('pages/support-ticket',compact('tickets','status','departments','products'));
     }
 

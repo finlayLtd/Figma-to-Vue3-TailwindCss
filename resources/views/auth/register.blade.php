@@ -17,10 +17,34 @@
 
   <section class="home-hero login">
     @if(isset($message))
-        <div class="badge reset-success">
+        <div class="badge reset-success" style="background: crimson;">
         <img src="assets/img/reset-success.svg" alt=""> {{$message}}
         </div>
     @endif
+
+    @error('firstname')
+        <div class="badge reset-success" style="background: crimson;">
+        <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+        </div>
+    @enderror
+
+    @error('lastname')
+        <div class="badge reset-success" style="background: crimson;">
+        <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+        </div>
+    @enderror
+
+    @error('email')
+        <div class="badge reset-success" style="background: crimson;">
+        <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+        </div>
+    @enderror
+
+    @error('password')
+        <div class="badge reset-success" style="background: crimson;">
+        <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+        </div>
+    @enderror
 
     <div class="login-wrapper pb-0 w-100">
       <div class="bg-dots bg-dots-left"></div>
@@ -42,12 +66,6 @@
 
                     <div class="col-md-6">
                         <input id="firstname" type="text" class="@error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname" autofocus>
-
-                        @error('firstname')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
                 </div>
 
@@ -55,12 +73,6 @@
                     <label for="#lastname">{{ __('Last Name') }}</label>
 
                     <input id="lastname" type="text" class="@error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
-
-                    @error('lastname')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
 
                 
@@ -68,24 +80,12 @@
                 <div class="login-input-wrapper mb-3">
                   <label for="#email">Email Address</label>
                   <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email@address.com">
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror      
                 </div>
 
                 <div class="login-input-wrapper mb-3">
                   <label for="#password">Password</label>
                   <div class="col-md-6">
                       <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                      @error('password')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
                   </div>
                 </div>
 
@@ -94,18 +94,13 @@
                   <label class="form-check-label checked" for="inStockCheckbox">I agree to the User Agreement, and I have read the Privacy Policy.</label>
                 </div>
 
-
                 <button type="submit" class="btn-dark w-100 mb-2">Register account</button>
-
 
                 <div class="text-center">
                     <p class="mb-0 mt-3 fs-14">Already have an account? <a href="{{url('/login')}}">Log in</a></p>
                 </div>
 
               </form>
-
-
-
 
           </div>
       </div>       

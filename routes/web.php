@@ -14,7 +14,7 @@ use sburina\Whmcs;
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return Redirect::to('/dashboard');
 });
 
 Auth::routes();
@@ -32,7 +32,8 @@ Route::group([
     Route::get('/servers', 'ServersController@index')->name('servers');
     Route::get('/settings', 'SettingsController@index')->name('settings');
     Route::get('/support-ticket', 'SupportTicketController@index')->name('support-ticket');
-    Route::get('/ticket-detail', 'SupportTicketController@index')->name('ticket-detail');
+    Route::get('/ticket-detail/{id}', 'TicketDetailController@index')->name('ticket-detail');
+    Route::post('/sendReply', 'TicketDetailController@sendReply')->name('sendReply');
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
 });
 

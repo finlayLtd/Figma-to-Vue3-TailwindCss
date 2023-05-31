@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 
 class TicketDetailController extends Controller
@@ -21,8 +21,44 @@ class TicketDetailController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages/ticket-detail');
+        $ticket_id  = $request->id;
+
+        $ticket_detail = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetTicket',
+            'ticketid' => $ticket_id,
+        ]);
+
+        return view('pages/ticket-detail', compact('ticket_id','ticket_detail'));
     }
+
+    public function sendReply(Request $request)
+    {
+
+        $ticket_id = $request->ticket_id;
+        $clientid = Auth::user()->client_id;
+        
+        if($request->message){
+            $message = $request->message;
+        } else $message = ' ';
+
+        $addTicketReply = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'AddTicketReply',
+            'ticketid' => $ticket_id,
+            'clientid' => $clientid,
+            'message' => $message,
+            'attachments' => $request->file
+        ]);
+
+        $ticket_detail = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetTicket',
+            'ticketid' => $ticket_id,
+        ]);
+
+        return redirect()->route('ticket-detail', ['id' => $ticket_id]);
+        
+    }
+
+    
 }
