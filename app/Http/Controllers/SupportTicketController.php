@@ -55,6 +55,7 @@ class SupportTicketController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
+
         if($tickets_response['totalresults'] > 0){
             $tickets = $tickets_response['tickets']['ticket'];
         }

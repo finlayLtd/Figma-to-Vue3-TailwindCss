@@ -4,9 +4,9 @@
 <section class="dashboard">
 	<div class="container">
 		<div class="title-button-wrapper ticket-detail">
-			<a href="#"><img class="status-arrow" src="assets/img/status-arrow.svg" alt=""></a>
-			<h3 class="ticket-status-title color-in-work">In Work</h3>
-			<h2 class="title mb-0 mt-2">Ticket #1667135379414894</h2>
+			<a href="{{url('/support-ticket')}}"><img class="status-arrow" src="{{asset('assets/img/status-arrow.svg')}}" alt=""></a>
+			<h3 class="ticket-status-title color-in-work">{{$ticket_detail['status']}}</h3>
+			<h2 class="title mb-0 mt-2">Ticket #{{$ticket_detail['tid']}}</h2>
 		</div>
 		<div class="sub-section server-list-tab">
         <div class="row justify-content-between align-items-center ">
@@ -16,101 +16,112 @@
 		                <div class="card-item p-4 mb-4 support-item flex-column ">
 
 		                	<div class="message-item-wrapper">
-		                		
-		                		<div class="message-item message-sent">
-		                				<div class="message-item-header">
-		                					<div class="message-sender-image">
-		                						<img src="assets/img/message-profile.png" alt="">
-		                					</div>
-		                					<div class="message-sender">
-		                						<span class="fs-15">Udodov</span><span class="message-sent-time fs-13">11:29</span>
-		                					</div>
-		                				</div>
+								@foreach ($ticket_detail['replies']['reply'] as $reply)
+									@if ($reply['requestor_type'] == 'Owner')
+										<div class="message-item message-received">
+											<div class="message-item-header">
+												<div class="message-sender-image">
+													<img src="{{ asset('assets/img/profile-support.png') }}" alt="">
+												</div>
+												<div class="message-sender">
+													<span class="fs-15">{{ $reply['requestor_name'] }}</span><span class="message-sent-time fs-13">{{ $reply['date'] }}</span>
+												</div>
+											</div>
 
-		                				<div class="message-content-wrapper">
-			                				<div class="message-body">
-			                					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?</div>
-			                				</div>
-			                				<div class="message-attachment">
-			                					<img src="assets/img/message-img.png" alt="">		                					
-			                				</div>
-		                				</div>
+											<div class="message-content-wrapper">
+												@if(!empty($reply['message']) && $reply['message']!=' ')
+												<div class="message-body">
+													<div>
+														{{ $reply['message'] }}
+													</div>
+												</div>
+												@endif
+												@if (!empty($reply['attachment']))
+												<div class="message-body message-attachment-body" style="width: fit-content;">
+													<a class="blackColor" href="https://devmach.xyz/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
+														<img src="{{ asset('assets/img/download_icon.png') }}" style="width: 24px;" alt="">
+														<span class="text-decoration-underline">{{ $reply['attachment'] }}</span>
+													</a>
+												</div>
+												@endif
+											</div>
+										</div>
+									@else
+										<div class="message-item message-sent">
+											<div class="message-item-header">
+												<div class="message-sender-image">
+													<img src="{{ asset('assets/img/message-profile.png') }}" alt="">
+												</div>
+												<div class="message-sender">
+													<span class="fs-15">{{ $reply['name'] }}</span><span class="message-sent-time fs-13">{{ $reply['date'] }}</span>
+												</div>
+											</div>
 
-		                		</div>
-
-
-		                		<div class="message-item message-received">
-		                				<div class="message-item-header">
-		                					<div class="message-sender-image">
-		                						<img src="assets/img/profile-support.png" alt="">
-		                					</div>
-		                					<div class="message-sender">
-		                						<span class="fs-15">Udodov</span><span class="message-sent-time fs-13">11:30</span>
-		                					</div>
-		                				</div>
-
-		                				<div class="message-content-wrapper">
-			                				<div class="message-body">
-			                						<div>
-				                						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				                						<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa </p>
-																	</div>
-			                				</div>
-		                				</div>
-		                		</div>
-
-
-
-		                		<div class="message-item message-sent">
-		                				<div class="message-item-header">
-		                					<div class="message-sender-image">
-		                						<img src="assets/img/message-profile.png" alt="">
-		                					</div>
-		                					<div class="message-sender">
-		                						<span class="fs-15">Udodov</span><span class="message-sent-time fs-13">11:31</span>
-		                					</div>
-		                				</div>
-
-		                				<div class="message-content-wrapper">
-			                				<div class="message-body">
-			                					<div>Thank you!</div>
-			                				</div>
-			                				<div class="message-attachment">
-			                					<img src="assets/img/message-img.png" alt="">		                					
-			                				</div>
-		                				</div>
-
-		                		</div>
-
-
-
-
-
+											<div class="message-content-wrapper">
+												@if(!empty($reply['message']) && $reply['message']!=' ')
+												<div class="message-body">
+													<div>
+														{{ $reply['message'] }}
+													</div>
+												</div>
+												@endif
+												@if (!empty($reply['attachment']))
+												<div class="message-body message-attachment-body" style="width: fit-content; margin-left: auto;">
+													<div>
+														<a class="blackColor" href="https://devmach.xyz/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
+															<img src="{{ asset('assets/img/download_icon.png') }}" style="width: 24px;" alt="">
+															<span class="text-decoration-underline">{{ $reply['attachment'] }}</span>
+														</a>
+													</div>
+												</div>
+												@endif
+											</div>
+										</div>
+									@endif
+								@endforeach
 		                	</div>
-
-		                	<div class="message-send-area-wrapper mt-4">
-		                		
-		                		<div class="upload-attachment">
-		                				<label class="file-label" for="file-upload"></label>
-		                				<input type="file" style="display: none" id="file-upload">
-		                		</div>
-
-		                		<div class="message-box">
-		                			<textarea class="p-3" name="" id="" cols="30" rows="5" placeholder="Type a message.."></textarea>
-		                		</div>
-		                	</div>
-
-
-
-
-
+							<form method="POST" action="/sendReply">
+								@csrf
+								<div class="message-send-area-wrapper mt-4">
+									<div class="upload-attachment">
+										<label class="file-label" for="file-upload"></label>
+										<input name="file" type="file" style="display: none" id="file-upload" onchange="displayFileName()">
+										<input name="ticket_id"  type="hidden" id="ticket_id" value="{{ $ticket_detail['id'] }}">
+									</div>
+									<div class="message-box">
+										<textarea id="message" name="message" class="p-3" name="" id="" cols="30" rows="5" placeholder="Type a message.."></textarea>
+										<div id="file-name-container">
+											File Selected: <span id="file-name" style="overflow-wrap: anywhere;"></span>
+										</div>
+									</div>
+								</div>
+								<div class="mt-1" style="text-align: right;">
+									<button class="btn-dark change-profile-btn fs-15" style="margin-right: 0px;" type="submit">Send</button>
+								</div>
+							</form>
 		                </div>
 		              </div>
-
 		        </div> 
-        </div>
+        	</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('html, body').animate({
+				scrollTop: $(document).height()
+			}, 1000);
+		});
+		function displayFileName() {
+			const input = document.getElementById('file-upload');
+			const output = document.getElementById('file-name');
+			const container = document.getElementById('file-name-container');
+			
+			output.innerText = input.files[0].name;
+			container.style.display = 'block';
+		}
+	</script>
 </section>		
 	
-@endsections
+@endsection
+

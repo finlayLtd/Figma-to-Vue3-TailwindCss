@@ -24,6 +24,19 @@
     </div>
   @endif
 
+  @error('email')
+    <div class="badge reset-success" style="background: crimson;">
+      <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+    </div>
+  @enderror
+
+
+  @error('password')
+    <div class="badge reset-success" style="background: crimson;">
+      <img src="assets/img/reset-success.svg" alt=""> {{ $message }}
+    </div>
+  @enderror
+
     <div class="login-wrapper pb-0 w-100">
       <div class="bg-dots bg-dots-left"></div>
       <div class="bg-dots bg-dots-right"></div>
@@ -45,22 +58,14 @@
                   <label for="#email">Email Address</label>
                   <!-- <input type="email" id="email" name="email" required placeholder="email@address.com">  -->
                   <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="email@address.com">               
-                  @error('email')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                  
                 </div>
 
                 <div class="login-input-wrapper mb-4">
                   <label for="#password">Password</label>
                   <!-- <input type="password" id="password" name="password" required placeholder="••••••••••">          -->
                   <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="••••••••••">       
-                  @error('password')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                  
                 </div>
 
                 <input style='display: none;' class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

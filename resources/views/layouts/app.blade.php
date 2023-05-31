@@ -10,8 +10,8 @@
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
-
-    <title>WHMCS-VPS</title>
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo-href.png') }}">
+    <title>CrazyRDP</title>
   </head>
   <body>
     <div id="app">
@@ -20,10 +20,10 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container d-flex flex-wrap align-items-center justify-content-between  py-3">
 
-                <a href="/" class="logo-wrapper d-flex align-items-center col-md-2 text-dark text-decoration-none order-lg-1">
-                    <img class="logo-dark" src="assets/img/crazy-rdp-logo.svg" alt="">
-                    <img class="logo-light" src="assets/img/logo-light.svg" alt="">
-
+                <a href="/home" class="logo-wrapper d-flex align-items-center col-md-2 text-dark text-decoration-none order-lg-1">
+                    <img class="logo-dark" src="{{asset('assets/img/crazy-rdp-logo.svg')}}" alt="">
+                    <img class="logo-light" src="{{asset('assets/img/logo-light.svg')}}" alt="">
+                    
                 </a>
 
                 <div class="col-md-4 d-flex align-items-center justify-content-end order-lg-3">
@@ -37,23 +37,23 @@
 
 
                     <!--Nav Action Buttons-->
-                    <a class="btn-balance btn-login d-lg-block hover-light-dark" href="#">€10.30 <div class="add-balance"><img src="assets/img/plus-d.svg" alt=""></div></a>
+                    <a class="btn-balance btn-login d-lg-block hover-light-dark" href="#">€10.30 <div class="add-balance"><img src="{{asset('assets/img/plus-d.svg')}}" alt=""></div></a>
 
                     <div class="profile-area position-relative">
-                    <img class="profile-img  options-toggle" src="assets/img/profile.png" alt="">
+                    <img class="profile-img  options-toggle" src="{{asset('assets/img/profile.png')}}" alt="">
 
                     <div class="options-toggle-dropdown">
                         <ul>
-                            <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="assets/img/profile.png" alt="">
+                            <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="{{asset('assets/img/profile.png')}}" alt="">
                                 {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
                             </li>
 
-                            <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img  style="filter: brightness(2.5);" src="assets/img/settings.svg" alt="">Settings</a></li>
-                            <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="assets/img/messages.svg" alt="">Support Tickets</a></li>
+                            <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img  style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">Settings</a></li>
+                            <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/messages.svg')}}" alt="">Support Tickets</a></li>
                             <li>
                                 <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><img src="assets/img/signout.svg" style="margin-right: 15px !important;margin-left: 3px;" alt="">
+                                    document.getElementById('logout-form').submit();"><img src="{{asset('assets/img/signout.svg')}}" style="margin-right: 15px !important;margin-left: 3px;" alt="">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -78,7 +78,7 @@
                     <ul class="navbar-nav justify-content-center mb-md-0">
                         <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a></li>
                         <li class="nav-item"><a href="{{ url('/support-ticket') }}" class="nav-link">Tickets</a></li>
-                        <li class="nav-item"><a href="{{ url('/servers') }}" class="nav-link active">Servers</a></li>
+                        <li class="nav-item"><a href="{{ url('/servers') }}" class="nav-link">Servers</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Invoices</a></li>
                     </ul>
                 </div>
