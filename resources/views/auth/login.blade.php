@@ -17,9 +17,12 @@
 
   <section class="home-hero login">
 
-    <div class="badge reset-success d-none">
-      <img src="assets/img/reset-success.svg" alt=""> Send reset instructions was succesful.
+
+  @if(isset($message))
+    <div class="badge reset-success">
+      <img src="assets/img/reset-success.svg" alt=""> Account registration successfully done.
     </div>
+  @endif
 
     <div class="login-wrapper pb-0 w-100">
       <div class="bg-dots bg-dots-left"></div>
@@ -64,20 +67,26 @@
 
                 <button class="btn-dark w-100 mb-2" type="submit">Login</button>
 
-                <button class="btn-light w-100 mb-3"><a href="{{url('/register')}}" style="color: black;">Register account</a></button>
-
-                @if (Route::has('password.request'))
-                  <div class="text-center">
-                      <a class="fs-14" href="{{ route('password.request') }}">
-                          {{ __('Forgot Your Password?') }}
-                      </a>
-                    </div>
-                @endif
+                
                 <!-- <div class="text-center">
                     <a class="fs-14" href="#">Forgot password?</a>
                 </div> -->
 
               </form>
+
+              <a href="{{url('/register')}}" style="color: black;">
+                <button class="btn-light w-100 mb-3">
+                  Register account
+                </button>
+              </a>
+
+              @if (Route::has('password.request'))
+                <div class="text-center">
+                    <a class="fs-14" href="{{ route('password.request') }}">
+                        {{ __('Forgot Your Password?') }}
+                    </a>
+                  </div>
+              @endif
 
 
 
