@@ -38,18 +38,18 @@
 							  <tbody>
 							    @foreach($tickets as $ticket)
 									<tr>
-									<td>#{{$ticket['tid']}}</td>
-									<td>{{$ticket['subject']}}</td>
-									<td class="refund-request">{{$ticket['priority']}}</td>
-									<td class="date-cell">{{$ticket['date']}}</td>
-									<td class="successful-cell"><span>{{$ticket['status']}}</span></td>
-									<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td><a href="{{ url('/ticket-detail/' . $ticket['id']) }}">#{{$ticket['tid']}}</a></td>
+										<td>{{$ticket['subject']}}</std>
+										<td class="refund-request">{{$ticket['priority']}}</td>
+										<td class="date-cell">{{$ticket['date']}}</td>
+										<td class="successful-cell"><span>{{$ticket['status']}}</span></td>
+										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 								@endforeach			    					    					    
 							  </tbody>
 							</table>
 						</div>	
-            <div class="w-100 server-list-pagination">
+            			<div class="w-100 server-list-pagination">
 							<nav aria-label="...">
 							  <ul class="pagination">
 							    <li class="page-item disabled first">
