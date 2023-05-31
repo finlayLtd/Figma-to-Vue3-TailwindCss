@@ -114,10 +114,10 @@
 					<form id="openTicket" enctype="multipart/form-data" method="POST" action="{{route('ticket.open')}}">
 						@csrf
 						<h4>Subject</h4>
-						<input class="mb-3" type="text" placeholder="Write subject">
+						<input class="mb-3" name="subject" type="text" placeholder="Write subject">
 
 						<h4>Describe the problem</h4>
-						<textarea class="mb-3" name="" id="" cols="30" rows="8" ></textarea>
+						<textarea class="mb-3" name="message" id="" cols="30" rows="8" ></textarea>
 
 						<h4>Department*</h4>
 						<select name="department" id="department">
