@@ -126,13 +126,17 @@
 							@endforeach
 						</select>
 
-						<h4>Service related</h4>
-						<select name="service" id="service">
-							<option value="0">- None -</option>
-							@foreach ($products as $product)
-							<option value="{{$product['pid']}}">{{$product['name']}}</option>
-							@endforeach
-						</select>
+						@if(sizeof($orders) > 0)
+							<h4>Service related</h4>
+							<select name="service" id="service">
+								<option value="0">- None -</option>
+								@foreach ($orders as $order_info)
+									@foreach($order_info['lineitems']['lineitem'] as $order_value)
+										<option value="{{$order_value['relid']}}">{{$order_value['product']}} - {{ $order_value['status'] }}</option>
+									@endforeach 
+								@endforeach
+							</select>
+						@endif
 						<button class="btn-dark d-block w-100 mt-5" id="open-ticket">Create Ticket</button>
 					</form>
 				</div>
