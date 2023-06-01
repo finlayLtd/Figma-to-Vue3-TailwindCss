@@ -11,6 +11,9 @@
     <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-href.png') }}">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/8de0481deb.js" crossorigin="anonymous"></script>
         
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
