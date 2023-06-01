@@ -25,7 +25,7 @@ class SupportTicketController extends Controller
      */
     public function index()
     {
-        $products = array();
+        $orders = array();
         $departments = array();
         $tickets = array();
         $status = array();
@@ -40,15 +40,16 @@ class SupportTicketController extends Controller
             'action' => 'GetSupportStatuses'
         ]);
         
-        $product_info =  (new \Sburina\Whmcs\Client)->post([
-            'action' => 'GetProducts'
+        $order_info =  (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetOrders',
+            'userid' => Auth::user()->client_id,
         ]);
 
         $departments_info =  (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetSupportDepartments'
         ]);
-        if($product_info['totalresults'] > 0){
-            $products = $product_info['products']['product'];
+        if($order_info['totalresults'] > 0){
+            $orders = $order_info['orders']['order'];
         }
 
         if($departments_info['totalresults'] > 0){
@@ -64,7 +65,7 @@ class SupportTicketController extends Controller
             $status = $tickets_status['statuses']['status'];
         }
         
-        return view('pages/support-ticket',compact('tickets','status','departments','products'));
+        return view('pages/support-ticket',compact('tickets','status','departments','orders'));
     }
 
     public function openticket(Request $request){
