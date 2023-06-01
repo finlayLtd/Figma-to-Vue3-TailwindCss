@@ -35,6 +35,9 @@ Route::group([
     Route::get('/ticket-detail/{id}', 'TicketDetailController@index')->name('ticket-detail');
     Route::post('/sendReply', 'TicketDetailController@sendReply')->name('sendReply');
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
+
+    Route::get('/forgot_password', 'ForgotPasswordController@index')->name('forgot_password');
+    Route::post('/send_forgot_email', 'ForgotPasswordController@send_forgot_email')->name('send_forgot_email');
 });
 
 

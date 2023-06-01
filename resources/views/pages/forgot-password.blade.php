@@ -17,6 +17,18 @@
 
   <section class="home-hero login">
 
+    @if(isset($message) && $message=='success')
+      <div class="badge reset-success">
+        <img src="assets/img/reset-success.svg" alt=""> Reset Email successfully sent.
+      </div>
+    @endif
+
+    @if(isset($message) && $message=='failed')
+      <div class="badge reset-success" style="background: crimson;">
+        <img src="assets/img/reset-success.svg" alt=""> Wrong email address or unregistered user.
+      </div>
+    @endif
+
     <div class="login-wrapper pb-0 w-100">
       <div class="bg-dots bg-dots-left"></div>
       <div class="bg-dots bg-dots-right"></div>
@@ -30,7 +42,8 @@
               </div> 
               <h2 class="login-title">Forgot password</h2>
 
-              <form action="" method="POST">
+              <form method="POST" action="{{ route('send_forgot_email') }}">
+                @csrf
 
                 <div class="login-input-wrapper mb-3">
                   <label for="#email">Email Address</label>
@@ -38,11 +51,11 @@
                 </div>
 
 
-                <button type="submit" class="btn-dark w-100 mb-2">Register account</button>
+                <button type="submit" class="btn-dark w-100 mb-2">Send Reset Email</button>
 
 
                 <div class="text-center">
-                    <p class="mb-0 mt-3 fs-14"><a href="#">Back <img class="ms-1" src="assets/img/blue-back.svg" alt=""></a></p>
+                    <p class="mb-0 mt-3 fs-14"><a href="{{url('/login')}}">Back <img class="ms-1" src="assets/img/blue-back.svg" alt=""></a></p>
                 </div>
 
               </form>
