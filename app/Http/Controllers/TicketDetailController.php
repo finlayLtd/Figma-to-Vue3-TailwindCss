@@ -38,18 +38,26 @@ class TicketDetailController extends Controller
 
         $ticket_id = $request->ticket_id;
         $clientid = Auth::user()->client_id;
-        
         if($request->message){
             $message = $request->message;
         } else $message = ' ';
 
-        $addTicketReply = (new \Sburina\Whmcs\Client)->post([
-            'action' => 'AddTicketReply',
-            'ticketid' => $ticket_id,
-            'clientid' => $clientid,
-            'message' => $message,
-            'attachments' => $request->file
-        ]);
+        if($request->file){
+            $addTicketReply = (new \Sburina\Whmcs\Client)->post([
+                'action' => 'AddTicketReply',
+                'ticketid' => $ticket_id,
+                'clientid' => $clientid,
+                'message' => $message,
+                'attachments' => base64_encode(json_encode([['name' => $request->file('file')->getClientOriginalName(), 'data' => base64_encode(file_get_contents($request->file))]])),
+            ]);
+        } else{
+            $addTicketReply = (new \Sburina\Whmcs\Client)->post([
+                'action' => 'AddTicketReply',
+                'ticketid' => $ticket_id,
+                'clientid' => $clientid,
+                'message' => $message,
+            ]);
+        }
 
         $ticket_detail = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetTicket',
