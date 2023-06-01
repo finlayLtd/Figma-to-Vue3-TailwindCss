@@ -149,11 +149,13 @@
 @section('script')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#open-ticket").click(function(event){
-			event.preventDefault();
-			var form_data = new FormData(document.getElementById('openTicket'));
-			console.log(form_data);
-		});
+		$("#create-ticket").click(function(){
+			$(".modal").removeClass("hidden");
+		})
+
+		$(".modal-close").click(function(){
+			$(".modal").addClass("hidden");
+		})
 	});
 	
 </script>

@@ -11,6 +11,11 @@
     <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-href.png') }}">
+        
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+   
+
     <title>CrazyRDP</title>
   </head>
   <body>
@@ -88,13 +93,11 @@
 
         <main class="py-4">
             @yield('content')
+            @yield('script')
         </main>
     </div>
-    <!-- footer -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('assets/js/scripts.js')}}"></script>
 
+    <script src="{{asset('assets/js/scripts.js')}}"></script>
     <script>
         $( document ).ready(function() {
             $("#more-products-btn").click(function(){
@@ -170,13 +173,6 @@
                 }
             })
 
-            $("#create-ticket").click(function(){
-                $(".modal").removeClass("hidden");
-            })
-
-            $(".modal-close").click(function(){
-                $(".modal").addClass("hidden");
-            })
         });  
     </script>   
 </body>
