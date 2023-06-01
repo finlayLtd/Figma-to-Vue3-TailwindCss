@@ -51,7 +51,7 @@
 						</div>	
             			<div class="w-100 server-list-pagination">
 							<nav aria-label="...">
-							  <ul class="pagination">
+							  <ul class="pagination" id="#pagination-container" total-ticket-num="{{$total_tickets}}">
 							    <li class="page-item disabled first">
 							      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
 							    </li>
@@ -693,4 +693,117 @@
 	</div>
 
 </section>			
+@endsection
+
+@section('script')
+<script type="text/javascript">
+	$(document).ready(function() {
+		initPageNation(1);
+	});
+	
+	function initPageNation(selectPage){
+		cnt = $("#pagination-container").attr("total-ticket-num");
+		btn_number = Math.ceil(cnt/10);
+		if(selectPage <= 0) return;
+		if(selectPage > btn_number) return;
+		$(".pagenation").empty();
+		btn_str += "<li class='page-item first page-number='0'><i class='fa fa-backward'></i></li>";
+		$(".pagenation").append(btn_str);
+		if(btn_number > 6){
+			switch(selectPage){
+				case 1:
+					var btn_str = "<li id='page-1' class='page-item active' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagenation").append(btn_str);
+				break;
+				case 2:
+					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item active' page-number='2'>2</li>";
+					btn_str += "<li id='page-3' class='page-item' page-number='3'>3</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagenation").append(btn_str);
+				break;
+				case (btn_number-1):
+					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item  active' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagenation").append(btn_str);
+				break;
+				case btn_number:
+					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item active' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagenation").append(btn_str);
+				break;
+
+				default:
+					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
+					if(selectPage != 3) {
+						if(selectPage != (btn_number-2)){
+							if((selectPage-2)>2) btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+							btn_str += "<li id='page-"+(selectPage-1)+"' class='page-item' page-number='"+(selectPage-1)+"'>"+(selectPage-1)+"</li>";
+							btn_str += "<li id='page-"+(selectPage)+"' class='page-item active' page-number='"+(selectPage)+"'>"+(selectPage)+"</li>";
+							btn_str += "<li id='page-"+(selectPage+1)+"' class='page-item' page-number='"+(selectPage+1)+"'>"+(selectPage+1)+"</li>";
+							if((selectPage+2)<(btn_number-1)) btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+						}else{
+							btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+							btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item active' page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
+						}
+					}else{
+						btn_str += "<li id='page-3' class='page-item active' page-number='3'>3</li>";
+						btn_str += "<li id='page-4' class='page-item' page-number='4'>4</li>";
+						btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					}
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagenation").append(btn_str);
+				break;
+			}
+		}else{
+			for(var loop=1;loop<=btn_number;loop++){
+				if(loop == selectPage) var btn_str = "<li id='page-"+loop+"' class='page-item active' page-number='"+loop+"'>"+loop+"</li>";
+				else var btn_str = "<li id='page-"+loop+"' class='page-item' page-number='"+loop+"'>"+loop+"</li>";
+				$(".pagenation").append(btn_str);
+			}
+		}
+		var btn_str = "<li class='page-item first page-number='-2'><i class='fa fa-backward'></i></li>";
+		$(".pagenation").append(btn_str);
+
+		$('.page-selector').on('click',function(event){
+			var selectedButtonValue = $(this).attr("page-number") * 1;
+			var CurrentSelectedPage = $(".active").attr("page-number") * 1;
+			if(selectedButtonValue > 0){
+				initPageNation(selectedButtonValue);
+			} 
+			else{
+				switch(selectedButtonValue){
+					case -1:
+						initPageNation(1);
+					break;
+					case 0:
+						initPageNation(CurrentSelectedPage - 1);
+					break;
+					case -2:
+						initPageNation(CurrentSelectedPage + 1);
+					break;
+					case -3:
+						initPageNation(btn_number);
+					break;
+				}
+			}
+			UserCards();
+		});
+	}
+</script>
 @endsection
