@@ -80,12 +80,12 @@
 									@endif
 								@endforeach
 		                	</div>
-							<form method="POST" action="/sendReply">
+							<form method="POST" action="/sendReply" enctype="multipart/form-data">
 								@csrf
 								<div class="message-send-area-wrapper mt-4">
 									<div class="upload-attachment">
-										<label class="file-label" for="file-upload"></label>
-										<input name="file" type="file" style="display: none" id="file-upload" onchange="displayFileName()">
+										<label class="file-label" for="file"></label>
+										<input name="file" type="file" style="display: none" id="file" onchange="displayFileName()">
 										<input name="ticket_id"  type="hidden" id="ticket_id" value="{{ $ticket_detail['id'] }}">
 									</div>
 									<div class="message-box">
@@ -113,7 +113,7 @@
 			}, 1000);
 		});
 		function displayFileName() {
-			const input = document.getElementById('file-upload');
+			const input = document.getElementById('file');
 			const output = document.getElementById('file-name');
 			const container = document.getElementById('file-name-container');
 			
