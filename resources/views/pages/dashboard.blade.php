@@ -20,55 +20,15 @@
         <div class="row justify-content-between align-items-center ">
         	<div class="col-md-12">
           	<div class="w-100 mb-2 mb-lg-5">
-							<h3 class="sub-title">Support Tickets</h3>
-		   			</div> 
-						<div class="w-100 support-table mb-4">
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">Ticket No</th>
-							      <th scope="col">Title</th>
-							      <th scope="col">Priority</th>
-							      <th scope="col">Date</th>
-							      <th scope="col">Status</th>
-							      <th scope="col" class="text-center">View Invoice</th>
-
-							    </tr>
-							  </thead>
-							  <tbody>
-							    @foreach($tickets as $ticket)
-									<tr>
-										<td><a href="{{ url('/ticket-detail/' . $ticket['id']) }}">#{{$ticket['tid']}}</a></td>
-										<td>{{$ticket['subject']}}</std>
-										<td class="refund-request">{{$ticket['priority']}}</td>
-										<td class="date-cell">{{$ticket['date']}}</td>
-										<td class="successful-cell"><span>{{$ticket['status']}}</span></td>
-										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-									</tr>
-								@endforeach			    					    					    
-							  </tbody>
-							</table>
+				<h3 class="sub-title">Support Tickets</h3>
+				</div> 
+						<div class="w-100 support-ticket-table mb-4">
+							@include('tables.dashboard-tickettable')
 						</div>	
             			<div class="w-100 server-list-pagination">
 							<nav aria-label="...">
-							  <ul class="pagination" id="#pagination-container" total-ticket-num="{{$total_tickets}}">
-							    <li class="page-item disabled first">
-							      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							    </li>
-							    <li class="page-item inner-page-item"><a class="page-link" href="#">1</a></li>
-							    <li class="page-item inner-page-item active" aria-current="page">
-							      <a class="page-link" href="#">2</a>
-							    </li>
-							    <li class="page-item"><a class="page-link" href="#">3</a></li>
-
-							    <li class="page-item inner-page-item d-none d-lg-block"><a class="page-link" href="#">4</a></li>
-							    <li class="page-item inner-page-item d-none d-lg-block"><a class="page-link" href="#">5</a></li>
-							    <li class="page-item inner-page-item d-none d-lg-block"><a class="page-link" href="#">...</a></li>
-							    <li class="page-item d-none d-lg-block"><a class="page-link" href="#">124</a></li>
-
-							    <li class="page-item last">
-							      <a class="page-link" href="#">Next</a>
-							    </li>
+							  <ul class="pagination" id="pagination-container" total-ticket-num="{{$total_tickets}}">
+							    
 							  </ul>
 							</nav>                	
             </div>
@@ -325,15 +285,15 @@
             	<div class="col-12">
 								<nav aria-label="...">
 								  <ul class="pagination">
-								    <li class="page-item disabled first">
+								    <li class="page-item page-link disabled first">
 								      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
 								    </li>
-								    <li class="page-item"><a class="page-link" href="#">1</a></li>
-								    <li class="page-item active" aria-current="page">
+								    <li class="page-item page-link"><a class="page-link" href="#">1</a></li>
+								    <li class="page-item page-link active" aria-current="page">
 								      <a class="page-link" href="#">2</a>
 								    </li>
-								    <li class="page-item"><a class="page-link" href="#">3</a></li>
-								    <li class="page-item last">
+								    <li class="page-item page-link"><a class="page-link" href="#">3</a></li>
+								    <li class="page-item page-link last">
 								      <a class="page-link" href="#">Next</a>
 								    </li>
 								  </ul>
@@ -632,15 +592,15 @@
             	<div class="col-12">
 								<nav aria-label="...">
 								  <ul class="pagination">
-								    <li class="page-item disabled first">
+								    <li class="page-item page-link disabled first">
 								      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
 								    </li>
-								    <li class="page-item"><a class="page-link" href="#">1</a></li>
-								    <li class="page-item active" aria-current="page">
+								    <li class="page-item page-link"><a class="page-link" href="#">1</a></li>
+								    <li class="page-item page-link active" aria-current="page">
 								      <a class="page-link" href="#">2</a>
 								    </li>
-								    <li class="page-item"><a class="page-link" href="#">3</a></li>
-								    <li class="page-item last">
+								    <li class="page-item page-link"><a class="page-link" href="#">3</a></li>
+								    <li class="page-item page-link last">
 								      <a class="page-link" href="#">Next</a>
 								    </li>
 								  </ul>
@@ -706,81 +666,81 @@
 		btn_number = Math.ceil(cnt/10);
 		if(selectPage <= 0) return;
 		if(selectPage > btn_number) return;
-		$(".pagenation").empty();
-		btn_str += "<li class='page-item first page-number='0'><i class='fa fa-backward'></i></li>";
-		$(".pagenation").append(btn_str);
+		$(".pagination").empty();
+		btn_str = "<li class='page-item page-link first page-link' page-number='0'>Previous</i></li>";
+		$(".pagination").append(btn_str);
 		if(btn_number > 6){
 			switch(selectPage){
 				case 1:
-					var btn_str = "<li id='page-1' class='page-item active' page-number='1'>1</li>";
-					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
-					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
-					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
-					$(".pagenation").append(btn_str);
+					var btn_str = "<li id='page-1' class='page-item page-link active page-link' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item page-link page-link' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item page-link page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item page-link' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item page-link' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagination").append(btn_str);
 				break;
 				case 2:
-					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
-					btn_str += "<li id='page-2' class='page-item active' page-number='2'>2</li>";
-					btn_str += "<li id='page-3' class='page-item' page-number='3'>3</li>";
-					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
-					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
-					$(".pagenation").append(btn_str);
+					var btn_str = "<li id='page-1' class='page-item page-link' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item page-link active' page-number='2'>2</li>";
+					btn_str += "<li id='page-3' class='page-item page-link' page-number='3'>3</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item page-link' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item page-link' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagination").append(btn_str);
 				break;
 				case (btn_number-1):
-					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
-					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
-					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-					btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
-					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item  active' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
-					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
-					$(".pagenation").append(btn_str);
+					var btn_str = "<li id='page-1' class='page-item page-link' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item page-link' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item page-link page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item page-link  active' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item page-link' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagination").append(btn_str);
 				break;
 				case btn_number:
-					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
-					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
-					btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
-					btn_str += "<li id='page-"+(btn_number)+"' class='page-item active' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
-					$(".pagenation").append(btn_str);
+					var btn_str = "<li id='page-1' class='page-item page-link' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item page-link' page-number='2'>2</li>";
+					btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item page-link' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item page-link active' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagination").append(btn_str);
 				break;
 
 				default:
-					var btn_str = "<li id='page-1' class='page-item' page-number='1'>1</li>";
-					btn_str += "<li id='page-2' class='page-item' page-number='2'>2</li>";
+					var btn_str = "<li id='page-1' class='page-item page-link' page-number='1'>1</li>";
+					btn_str += "<li id='page-2' class='page-item page-link' page-number='2'>2</li>";
 					if(selectPage != 3) {
 						if(selectPage != (btn_number-2)){
-							if((selectPage-2)>2) btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-							btn_str += "<li id='page-"+(selectPage-1)+"' class='page-item' page-number='"+(selectPage-1)+"'>"+(selectPage-1)+"</li>";
-							btn_str += "<li id='page-"+(selectPage)+"' class='page-item active' page-number='"+(selectPage)+"'>"+(selectPage)+"</li>";
-							btn_str += "<li id='page-"+(selectPage+1)+"' class='page-item' page-number='"+(selectPage+1)+"'>"+(selectPage+1)+"</li>";
-							if((selectPage+2)<(btn_number-1)) btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+							if((selectPage-2)>2) btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+							btn_str += "<li id='page-"+(selectPage-1)+"' class='page-item page-link' page-number='"+(selectPage-1)+"'>"+(selectPage-1)+"</li>";
+							btn_str += "<li id='page-"+(selectPage)+"' class='page-item page-link active' page-number='"+(selectPage)+"'>"+(selectPage)+"</li>";
+							btn_str += "<li id='page-"+(selectPage+1)+"' class='page-item page-link' page-number='"+(selectPage+1)+"'>"+(selectPage+1)+"</li>";
+							if((selectPage+2)<(btn_number-1)) btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
 						}else{
-							btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
-							btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item active' page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
+							btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+							btn_str += "<li id='page-"+(btn_number-2)+"' class='page-item page-link active' page-number='"+(btn_number-2)+"'>"+(btn_number-2)+"</li>";
 						}
 					}else{
-						btn_str += "<li id='page-3' class='page-item active' page-number='3'>3</li>";
-						btn_str += "<li id='page-4' class='page-item' page-number='4'>4</li>";
-						btn_str += "<li id='page-ellipsis' class='page-item' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
+						btn_str += "<li id='page-3' class='page-item page-link active' page-number='3'>3</li>";
+						btn_str += "<li id='page-4' class='page-item page-link' page-number='4'>4</li>";
+						btn_str += "<li id='page-ellipsis' class='page-item page-link' page-number='ellipsis'><i class='fa fa-ellipsis'></i></li>";
 					}
-					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
-					btn_str += "<li id='page-"+(btn_number)+"' class='page-item' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
-					$(".pagenation").append(btn_str);
+					btn_str += "<li id='page-"+(btn_number-1)+"' class='page-item page-link' page-number='"+(btn_number-1)+"'>"+(btn_number-1)+"</li>";
+					btn_str += "<li id='page-"+(btn_number)+"' class='page-item page-link' page-number='"+(btn_number)+"'>"+(btn_number)+"</li>";
+					$(".pagination").append(btn_str);
 				break;
 			}
 		}else{
 			for(var loop=1;loop<=btn_number;loop++){
-				if(loop == selectPage) var btn_str = "<li id='page-"+loop+"' class='page-item active' page-number='"+loop+"'>"+loop+"</li>";
-				else var btn_str = "<li id='page-"+loop+"' class='page-item' page-number='"+loop+"'>"+loop+"</li>";
-				$(".pagenation").append(btn_str);
+				if(loop == selectPage) var btn_str = "<li id='page-"+loop+"' class='page-item page-link page-link active' page-number='"+loop+"'>"+loop+"</li>";
+				else var btn_str = "<li id='page-"+loop+"' class='page-item page-link page-link' page-number='"+loop+"'>"+loop+"</li>";
+				$(".pagination").append(btn_str);
 			}
 		}
-		var btn_str = "<li class='page-item first page-number='-2'><i class='fa fa-backward'></i></li>";
-		$(".pagenation").append(btn_str);
-
-		$('.page-selector').on('click',function(event){
+		var btn_str = "<li class='page-item page-link last' page-number='-2'>Next</li>";
+		$(".pagination").append(btn_str);
+		
+		$('.page-item').on('click',function(event){
 			var selectedButtonValue = $(this).attr("page-number") * 1;
 			var CurrentSelectedPage = $(".active").attr("page-number") * 1;
 			if(selectedButtonValue > 0){
@@ -803,6 +763,22 @@
 				}
 			}
 			UserCards();
+		});
+	}
+
+	function UserCards() {
+		var selectedPage = $('.active').attr("page-number") * 1;
+		
+		console.log(selectedPage);
+		
+		$.ajax({
+			url:"{{ URL::to('/dashboard/ticketlist') }}",
+			method:"GET",
+			data:{'offset':selectedPage},
+			success:function(data){
+				$('.support-ticket-table').empty();
+				$('.support-ticket-table').html(data);
+			},
 		});
 	}
 </script>
