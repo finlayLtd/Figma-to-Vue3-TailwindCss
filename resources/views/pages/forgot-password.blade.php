@@ -10,11 +10,20 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/dark-theme.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Forgot password</title>
   </head>
   <body>
-
+  <div id="loading-bg" style="z-index: 9999 !important; display: none;">
+      <div class="loading_new" style="margin:auto;">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      </div>
+  </div>
   <section class="home-hero login">
 
     @if(isset($message) && $message=='success')
@@ -67,7 +76,14 @@
       </div>       
     </div>
   </section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script src="assets/js/scripts.js"></script>
+  <script>
+      $( document ).ready(function() {
+          $('form').submit(function() {
+              $('#loading-bg').css('display', 'flex');
+          });
+      });  
+  </script>
   </body>
 </html>

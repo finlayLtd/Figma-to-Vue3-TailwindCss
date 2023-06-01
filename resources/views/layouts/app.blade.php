@@ -22,6 +22,15 @@
     <title>CrazyRDP</title>
   </head>
   <body>
+    <div id="loading-bg" style="z-index: 9999 !important; display: none;">
+        <div class="loading_new" style="margin:auto;">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        </div>
+    </div>
     <div id="app">
         @auth
         <header class="border-bottom sticky-top">
@@ -87,7 +96,7 @@
                         <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a></li>
                         <li class="nav-item"><a href="{{ url('/support-ticket') }}" class="nav-link">Tickets</a></li>
                         <li class="nav-item"><a href="{{ url('/servers') }}" class="nav-link">Servers</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Invoices</a></li>
+                        <li class="nav-item"><a href="{{ url('/balance') }}" class="nav-link">Invoices</a></li>
                     </ul>
                 </div>
             </nav>
@@ -103,6 +112,11 @@
     <script src="{{asset('assets/js/scripts.js')}}"></script>
     <script>
         $( document ).ready(function() {
+            // display loading icon when fetch data from backend
+            $('form').submit(function() {
+                $('#loading-bg').css('display', 'flex');
+            });
+
             $("#more-products-btn").click(function(){
                 $("#more-products").slideToggle();
             })
