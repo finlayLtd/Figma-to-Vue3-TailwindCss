@@ -71,9 +71,11 @@
 		                <div class="card-item p-4 mb-4 support-item flex-column ">
 
 		                	<div class="d-flex justify-content-between support-item-header">
-		                		<div class="support-item-title">
-		                			<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">Ticket#{{$ticket['tid']}}</span>
-		                		</div>
+								<a href="{{ url('/ticket-detail/' . $ticket['id']) }}">
+									<div class="support-item-title">
+										<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">Ticket#{{$ticket['tid']}}</span>
+									</div>
+								</a>
 		                		<div class="support-item-status">
 		                			<span class="fs-15 color-in-work">{{$ticket['status']}}</span>
 		                		</div>

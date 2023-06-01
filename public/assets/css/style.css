@@ -1921,7 +1921,7 @@ td.remaining-cell::before {
 		height: 100%;
 		background: rgba(0, 0, 0, 0.5);
 	
-		z-index: 9999;
+		z-index: 9998;
 		padding-top: 150px;
 	}
 	
@@ -2958,4 +2958,89 @@ section.login {
 
 #file-name-container {
 	display: none;
+}
+
+#loading-bg {
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.2);
+	display: flex;
+	position: absolute;
+}
+
+
+@keyframes rotate {
+	0% {
+	  -webkit-transform: rotate(0deg);
+	  transform: rotate(0deg);
+	}
+	100% {
+	  -webkit-transform: rotate(1turn);
+	  transform: rotate(1turn);
+	}
+  }
+  @keyframes rotateOpacity {
+	0% {
+	  -webkit-transform: rotate(0deg);
+	  transform: rotate(0deg);
+	  opacity: 0.1;
+	}
+	100% {
+	  -webkit-transform: rotate(1turn);
+	  transform: rotate(1turn);
+	  opacity: 1;
+	}
+  }
+
+.loading_new {
+	--speed-of-animation: 0.9s;
+	--gap: 6px;
+	--first-color: #4c86f9;
+	--second-color: #49a84c;
+	--third-color: #f6bb02;
+	--fourth-color: #f6bb02;
+	--fifth-color: #2196f3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	gap: 6px;
+	height: 100px;
+}
+   
+.loading_new span {
+	width: 4px;
+	height: 50px;
+	background: var(--first-color);
+	animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+   
+.loading_new span:nth-child(2) {
+	background: var(--second-color);
+	animation-delay: -0.8s;
+}	
+   
+.loading_new span:nth-child(3) {
+	background: var(--third-color);
+	animation-delay: -0.7s;
+}
+   
+.loading_new span:nth-child(4) {
+	background: var(--fourth-color);
+	animation-delay: -0.6s;
+}
+   
+.loading_new span:nth-child(5) {
+	background: var(--fifth-color);
+	animation-delay: -0.5s;
+}
+
+@keyframes scale {
+	0%, 40%, 100% {
+		transform: scaleY(0.05);
+	}
+
+	20% {
+		transform: scaleY(1);
+	}
 }
