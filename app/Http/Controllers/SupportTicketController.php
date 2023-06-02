@@ -69,11 +69,15 @@ class SupportTicketController extends Controller
     }
 
     public function openticket(Request $request){
+        if($request->message){
+            $message = $request->message;
+        }else $message = ' ';
+        
         $action_command_array = array(
             'action' => 'OpenTicket',
             'deptid' => $request->department,
             'subject' => $request->subject,
-            'message' => $request->message,
+            'message' => $message,
             'clientid' => Auth::user()->client_id
         );
         if($request->service != 0) $action_command_array['serviceid'] = $request->service;
