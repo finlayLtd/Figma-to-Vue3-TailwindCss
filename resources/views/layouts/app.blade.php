@@ -71,7 +71,7 @@
                     <div class="options-toggle-dropdown">
                         <ul>
                             <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="{{asset('assets/img/profile.png')}}" alt="">
-                                {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                                {{ Auth::user()->firstname }}
                             </li>
 
                             <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img  style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">Settings</a></li>

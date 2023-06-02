@@ -57,4 +57,25 @@ class HomeController extends Controller
         
         return view('tables/dashboard-tickettable',compact('tickets','total_tickets'));
     }
+
+    public function change_name(Request $request){
+        $response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'UpdateClient',
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
+        ]);
+
+        session()->put(config('whmcs.session_key'), (new \Sburina\Whmcs\Client)->post([
+            'action' => 'getClientsDetails',
+            'email' => 'hiraisin424@gmail.com',
+        ]));
+
+        if($response['result']=='success') $message = 'success';
+        else $message = 'failed';
+        
+        return view('pages/settings',compact('message'));
+    }
+
+    
 }

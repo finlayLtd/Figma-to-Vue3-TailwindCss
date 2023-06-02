@@ -48,6 +48,8 @@ Route::group([
 
     Route::get('/forgot_password', 'ForgotPasswordController@index')->name('forgot_password');
     Route::post('/send_forgot_email', 'ForgotPasswordController@send_forgot_email')->name('send_forgot_email');
+    Route::post('/change_name', 'HomeController@change_name')->name('change_name');
+    
 });
 
 

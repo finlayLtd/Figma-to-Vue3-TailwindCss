@@ -1,13 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="overview">
+<section class="overview" style="position: relative;">
+	
+	
 	<div class="container">
+		@if(isset($message) && $message=='success')
+		<div class="badge reset-success">
+			<img src="assets/img/reset-success.svg" alt=""> Successfully changed profile.
+		</div>
+		@endif
+
+		@if(isset($message) && $message=='failed')
+		<div class="badge reset-success" style="background: crimson;">
+			<img src="assets/img/reset-success.svg" alt=""> Cannot access to server.
+		</div>
+		@endif
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
 				<h2 class="title mb-0">Settings</h2>				
 			</div>
 		</div>
+
+		
 
 		<div class="sub-section overview-tab">
           <div class="row justify-content-between align-items-center ">
@@ -35,49 +50,43 @@
 
               	<div class="tab-inner mb-3">
 			          	<div class="row">
-											<h3 class="title mb-4">Profile</h3>
-					  		 	</div>
+							<h3 class="title mb-4">Profile</h3>
+						</div>
 					  		 	<div class="divider"></div>
 					  		 	<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
 
-			              	<div class="col-12 col-lg-6 tab-inner py-0 p-mb-0">
-			              		<h3 class="fs-15 mb-1">Change Avatar</h3>
+								<div class="col-12 col-lg-6 tab-inner py-0 p-mb-0">
+									<h3 class="fs-15 mb-1">Change Avatar</h3>
 
-			              		<div class="settings-header mt-4">
-			              			<img src="assets/img/profile.png" alt="">
-			              			<button class="btn-dark change-profile-btn fs-15"><img src="assets/img/icon-upload.svg" alt="">Change</button>
-			              			<button class="btn-red delete-profile-btn  fs-15"><img src="assets/img/icon-delete.svg" alt="">Delete</button>
-			              		</div>	
+									<div class="settings-header mt-4">
+										<img src="assets/img/profile.png" alt="">
+										<button class="btn-dark change-profile-btn fs-15"><img src="assets/img/icon-upload.svg" alt="">Change</button>
+										<button class="btn-red delete-profile-btn  fs-15"><img src="assets/img/icon-delete.svg" alt="">Delete</button>
+									</div>	
 
-			              		<div class="divider" style="margin:20px 0"></div>
+									<div class="divider" style="margin:20px 0"></div>
 
-			              		<h3 class="fs-15 mb-4">Change Nickname</h3>
-												<p class="fs-13-5">Current nickname</p>
+									<h3 class="fs-15 mb-4">Change Profile</h3>
+									<form method="POST" action="{{ route('change_name') }}">
+                						@csrf
+										<p class="fs-13-5">First Name</p>
+										<div class="overview-input mb-4">
+											<div class="d-inline current-nickname">
+												<input type="text" id="firstname" name="firstname"  placeholder="First Name" required value="{{ Auth::user()->firstname }}">
+											</div>
+										</div>
 
-												<div class="overview-input mb-4">
-													<div class="d-inline current-nickname">
-													<input type="text"  disabled value="Udodov228">
-														
-													</div>
-												</div>
-
-
-												<p class="fs-13-5">New Nickname</p>
-
-												<div class="overview-input mb-4">
-													<input type="text" placeholder="Write new nickname">
-												</div>
-
-												<div class="overview-button-wrapper pt-0 ">											      
-									      	<button class="btn-dark px-4 me-2 hover-dark-light">Change nickname</button>
-												</div>
-
-			             		
-			              	</div>
-
-					  		 	</div>              		
+										<p class="fs-13-5">Last Name</p>
+										<div class="overview-input mb-4">
+											<input type="text" id="lastname" name="lastname" placeholder="Last Name" required value="{{ Auth::user()->lastname }}">
+										</div>
+										<div class="overview-button-wrapper pt-0 ">											      
+											<button type="submit" class="btn-dark px-4 me-2 hover-dark-light" >Change nickname</button>
+										</div>
+									</form>
+								</div>
+						</div>              		
               	</div>
-
 
               </div>
 
