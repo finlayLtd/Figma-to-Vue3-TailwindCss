@@ -54,7 +54,16 @@
 
 
                     <!--Nav Action Buttons-->
-                    <a class="btn-balance btn-login d-lg-block hover-light-dark" href="#">€10.30 <div class="add-balance"><img src="{{asset('assets/img/plus-d.svg')}}" alt=""></div></a>
+                    <a class="btn-balance btn-login d-lg-block hover-light-dark" href="{{ url('/balance') }}">
+                        @if(Auth::user()->currency_code == 'USD')
+                            ${{ Auth::user()->credit }}
+                        @elseif(Auth::user()->currency_code == 'EUR')
+                            €{{ Auth::user()->credit }}
+                        @else
+                            {{ Auth::user()->credit }} {{ Auth::user()->currency_code }}
+                        @endif
+                        <div class="add-balance"><img src="{{asset('assets/img/plus-d.svg')}}" alt=""></div>
+                    </a>
 
                     <div class="profile-area position-relative">
                     <img class="profile-img  options-toggle" src="{{asset('assets/img/profile.png')}}" alt="">
