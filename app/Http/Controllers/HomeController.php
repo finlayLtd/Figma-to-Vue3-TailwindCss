@@ -26,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $total_tickets = 0;
+        $tickets = [];
         $tickets_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetTickets',
             'limitstart' => 0,
@@ -36,7 +37,7 @@ class HomeController extends Controller
         if($tickets_response['totalresults'] > 0){
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
-        }
+        } 
         
         return view('pages/dashboard',compact('tickets','total_tickets'));
     }
