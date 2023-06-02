@@ -74,7 +74,7 @@ class HomeController extends Controller
         if($response['result']=='success') $message = 'success';
         else $message = 'failed';
         
-        return view('pages/settings',compact('message'));
+        return redirect()->route('settings', ['message' => $message]);
     }
 
     
