@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use sburina\Whmcs;
 
 class BalanceController extends Controller
 {
@@ -23,6 +25,14 @@ class BalanceController extends Controller
      */
     public function index()
     {
-        return view('pages/balance');
+        $response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetInvoices',
+            // 'limitstart' => $offset,
+            // 'limitnum' => 10, // Set number of tickets to retrieve per request
+            'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
+            'orderby' => 'invoicenumber'
+        ]);
+        $invoices = $response['invoices']['invoice'];
+        return view('pages/balance',compact('invoices'));
     }
 }

@@ -23,7 +23,13 @@
 										</div>
 									</div>
 									<div class="balance">
-										€<span>10.30</span>
+										@if(Auth::user()->currency_code == 'USD')
+											${{ Auth::user()->credit }}
+										@elseif(Auth::user()->currency_code == 'EUR')
+											€{{ Auth::user()->credit }}
+										@else
+											{{ Auth::user()->credit }} {{ Auth::user()->currency_code }}
+										@endif
 									</div>
 								</div>
 								<div class="balance-card-footer d-flex justify-content-end">
@@ -43,7 +49,13 @@
 										</div>
 									</div>
 									<div class="balance">
-										€<span>150</span>
+										@if(Auth::user()->currency_code == 'USD')
+											${{ Auth::user()->credit }}
+										@elseif(Auth::user()->currency_code == 'EUR')
+											€{{ Auth::user()->credit }}
+										@else
+											{{ Auth::user()->credit }} {{ Auth::user()->currency_code }}
+										@endif
 									</div>
 								</div>
 							</div>						
@@ -73,13 +85,16 @@
 
               <ul class="nav nav-pills three-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Paid</button>
+                  <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
+                </li>
+				<li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-paid-tab" data-bs-toggle="pill" data-bs-target="#pills-paid" type="button" role="tab" aria-controls="pills-paid" aria-selected="false">Paid</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Cancelled</button>
+                  <button class="nav-link" id="pills-unpaid-tab" data-bs-toggle="pill" data-bs-target="#pills-unpaid" type="button" role="tab" aria-controls="pills-unpaid" aria-selected="false">Unpaid</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">In progress</button>
+                  <button class="nav-link" id="pills-cancelled-tab" data-bs-toggle="pill" data-bs-target="#pills-cancelled" type="button" role="tab" aria-controls="pills-cancelled" aria-selected="false">Cancelled</button>
                 </li>                                
               </ul>
 
@@ -88,66 +103,53 @@
 
         <div class="tab-content" id="pills-tabContent">
 
-          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-							<div class="w-100 mb-5 support-table">
+          	<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+				<div class="w-100 mb-5 support-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Invoice</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Invoice Date</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Status</th>
+						<th scope="col" class="text-center">View Invoice</th>
 
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Invoice</th>
-								      <th scope="col">Amount</th>
-								      <th scope="col">Remaining balance</th>
-								      <th scope="col">Date</th>
-								      <th scope="col">Status</th>
-							      	<th scope="col" class="text-center">View Invoice</th>
-
-								    </tr>
-								  </thead>
-								  <tbody>
-								    <tr>
-								      <td>INV-3</td>
-								      <td>€10.30</td>
-								      <td class="remaining-cell"><span>€50.50</span></td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="successful-cell"><span>Successful</span></td>
-							      	<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-								    </tr>
-								    <tr>
-								      <td>INV-3</td>
-								      <td>€10.30.</td>
-								      <td class="remaining-cell"><span>€50.50</span></td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="cancelled-cell"><span>Cancelled</span></td>
-							      	<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-								    </tr>
-								    <tr>
-								      <td>INV-3</td>
-								      <td>€10.30</td>
-								      <td class="remaining-cell"><span>€50.50</span></td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-							      	<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-								    </tr>
-								    <tr>
-								      <td>INV-3</td>
-								      <td>€10.30</td>
-								      <td class="remaining-cell"><span>€50.50</span></td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-							      	<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-								    </tr>
-								    <tr>
-								      <td>INV-3</td>
-								      <td>€10.30</td>
-								      <td class="remaining-cell"><span>€50.50</span></td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-							      	<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-								    </tr>					    					    					    
-								  </tbody>
-								</table>
-							</div>		
-	            <div class="w-100 server-list-pagination">
+						</tr>
+						</thead>
+						<tbody>
+						@foreach($invoices as $invoice)
+							<tr>
+								<td>INV-{{ $invoice['id'] }}</td>
+								<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
+								<td class="date-cell">{{ $invoice['date'] }}</td>
+								<td class="date-cell">{{ $invoice['duedate'] }}</td>
+								@if($invoice['status'] == 'Paid')
+									<td class="successful-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@elseif($invoice['status'] == 'In-progress')
+									<td class="in-progress-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@else
+								<td class="cancelled-cell">
+									<span>
+										{{ $invoice['status'] }}
+									</span>
+								</td>
+								@endif
+								<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+							</tr>
+						@endforeach			    					    					   
+						</tbody>
+					</table>
+				</div>		
+	            <!-- <div class="w-100 server-list-pagination">
 								<nav aria-label="...">
 								  <ul class="pagination">
 								    <li class="page-item disabled first">
@@ -168,65 +170,158 @@
 								    </li>
 								  </ul>
 								</nav>                	
-	            </div>
-          </div>
+	            </div> -->
+          	</div>
 
-          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          	<div class="row mb-5 pe-0">
-							<div class="support-table">
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Number Ticket</th>
-								      <th scope="col">Title</th>
-								      <th scope="col">Request Type</th>
-								      <th scope="col">Date</th>
-								      <th scope="col">Status</th>
+			  <div class="tab-pane fade" id="pills-paid" role="tabpanel" aria-labelledby="pills-paid-tab">
+		 		 <div class="w-100 mb-5 support-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Invoice</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Invoice Date</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Status</th>
+						<th scope="col" class="text-center">View Invoice</th>
 
-								    </tr>
-								  </thead>
-								  <tbody>
-								    <tr>
-								      <td>#123</td>
-								      <td>Name about yes request..</td>
-								      <td class="refund-request">Refund Request</td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="successful-cell"><span>Successful</span></td>
-								    </tr>
-								    <tr>
-								      <td>#123</td>
-								      <td>Name about yes request..</td>
-								      <td class="refund-request">Refund Request</td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="cancelled-cell"><span>Cancelled</span></td>
-								    </tr>
-								    <tr>
-								      <td>#123</td>
-								      <td>Name about yes request..</td>
-								      <td class="refund-request">Refund Request</td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-								    </tr>
-								    <tr>
-								      <td>#123</td>
-								      <td>Name about yes request..</td>
-								      <td class="refund-request">Refund Request</td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-								    </tr>
-								    <tr>
-								      <td>#123</td>
-								      <td>Name about yes request..</td>
-								      <td class="refund-request">Refund Request</td>
-								      <td class="date-cell">2023-13-03</td>
-								      <td class="in-progress-cell"><span>In progress</span></td>
-								    </tr>					    					    					    
-								  </tbody>
-								</table>
-							</div>		
-		   			</div>  	
-          </div>
-        </div>
+						</tr>
+						</thead>
+						<tbody>
+						@foreach($invoices as $invoice)
+							@if($invoice['status'] == 'Paid')
+							<tr>
+								<td>INV-{{ $invoice['id'] }}</td>
+								<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
+								<td class="date-cell">{{ $invoice['date'] }}</td>
+								<td class="date-cell">{{ $invoice['duedate'] }}</td>
+								@if($invoice['status'] == 'Paid')
+									<td class="successful-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@elseif($invoice['status'] == 'In-progress')
+									<td class="in-progress-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@else
+								<td class="cancelled-cell">
+									<span>
+										{{ $invoice['status'] }}
+									</span>
+								</td>
+								@endif
+								<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+							</tr>
+							@endif
+						@endforeach			    					    					   
+						</tbody>
+					</table>
+				</div>		
+			</div>
+
+          	<div class="tab-pane fade" id="pills-unpaid" role="tabpanel" aria-labelledby="pills-unpaid-tab">
+		 		 <div class="w-100 mb-5 support-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Invoice</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Invoice Date</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Status</th>
+						<th scope="col" class="text-center">View Invoice</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						@foreach($invoices as $invoice)
+							@if($invoice['status'] == 'Unpaid')
+							<tr>
+								<td>INV-{{ $invoice['id'] }}</td>
+								<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
+								<td class="date-cell">{{ $invoice['date'] }}</td>
+								<td class="date-cell">{{ $invoice['duedate'] }}</td>
+								@if($invoice['status'] == 'Paid')
+									<td class="successful-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@elseif($invoice['status'] == 'In-progress')
+									<td class="in-progress-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@else
+								<td class="cancelled-cell">
+									<span>
+										{{ $invoice['status'] }}
+									</span>
+								</td>
+								@endif
+								<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+							</tr>
+							@endif
+						@endforeach			    					    					   
+						</tbody>
+					</table>
+				</div>		
+			</div>
+
+			<div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
+		 		 <div class="w-100 mb-5 support-table">
+					<table class="table">
+						<thead>
+						<tr>
+							<th scope="col">Invoice</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Invoice Date</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Status</th>
+						<th scope="col" class="text-center">View Invoice</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						@foreach($invoices as $invoice)
+							@if($invoice['status'] == 'Cancelled')
+							<tr>
+								<td>INV-{{ $invoice['id'] }}</td>
+								<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
+								<td class="date-cell">{{ $invoice['date'] }}</td>
+								<td class="date-cell">{{ $invoice['duedate'] }}</td>
+								@if($invoice['status'] == 'Paid')
+									<td class="successful-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@elseif($invoice['status'] == 'In-progress')
+									<td class="in-progress-cell">
+										<span>
+											{{ $invoice['status'] }}
+										</span>
+									</td>
+								@else
+								<td class="cancelled-cell">
+									<span>
+										{{ $invoice['status'] }}
+									</span>
+								</td>
+								@endif
+								<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+							</tr>
+							@endif
+						@endforeach			    					    					   
+						</tbody>
+					</table>
+				</div>		
+			</div>
       </div>
 		</div>
 	</div>
