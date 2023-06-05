@@ -2923,11 +2923,6 @@ section.login {
 .settings-tab-content .overview-button-wrapper button {
 	width: 100%;
 }
-@media only screen and (min-width:992px) {
-	.settings-tab-border {
-		border-right: 1px solid rgba(23, 30, 38, 0.08);
-	}	
-}
 
 .btn-chevron.options-toggle {
 	padding: 8px 37px !important;

@@ -32,9 +32,9 @@ class BalanceController extends Controller
             'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
             'orderby' => 'invoicenumber'
         ]);
-        if(count($response['invoices'])!=0){
+        if (count($response['invoices']) != 0) {
             $invoices = $response['invoices']['invoice'];
         } else $invoices = [];
-        return view('pages/balance',compact('invoices'));
+        return view('pages/balance', compact('invoices'));
     }
 }
