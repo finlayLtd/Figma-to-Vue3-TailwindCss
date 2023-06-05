@@ -25,7 +25,7 @@ class ForgotPasswordController extends Controller
     {
         return view('pages/forgot-password');
     }
-    
+
     public function send_forgot_email(Request $request)
     {
         $reset_response = (new \Sburina\Whmcs\Client)->post([
@@ -33,10 +33,10 @@ class ForgotPasswordController extends Controller
             'email' => $request->email,
         ]);
 
-        if($reset_response['result'] == 'success'){
+        if ($reset_response['result'] == 'success') {
             $message = 'success';
         } else $message = 'failed';
 
-        return view('pages/forgot-password',compact('message'));
+        return view('pages/forgot-password', compact('message'));
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use sburina\Whmcs;
 
 class SettingsController extends Controller
 {
@@ -23,6 +25,15 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('pages/settings');
+        $response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetEmails',
+            // 'limitstart' => $offset,
+            // 'limitnum' => 10, // Set number of tickets to retrieve per request
+            'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
+        ]);
+        if (count($response['emails']) != 0) {
+            $emails = $response['emails']['email'];
+        } else $emails = [];
+        return view('pages/settings', compact('emails'));
     }
 }

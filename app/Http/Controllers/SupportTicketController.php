@@ -35,11 +35,11 @@ class SupportTicketController extends Controller
             'limitnum' => 10, // Set number of tickets to retrieve per request
             'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
         ]);
-        
+
         $tickets_status = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetSupportStatuses'
         ]);
-        
+
         $order_info =  (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetOrders',
             'userid' => Auth::user()->client_id,
@@ -48,31 +48,32 @@ class SupportTicketController extends Controller
         $departments_info =  (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetSupportDepartments'
         ]);
-        if($order_info['totalresults'] > 0){
+        if ($order_info['totalresults'] > 0) {
             $orders = $order_info['orders']['order'];
         }
 
-        if($departments_info['totalresults'] > 0){
+        if ($departments_info['totalresults'] > 0) {
             $departments = $departments_info['departments']['department'];
         }
 
 
-        if($tickets_response['totalresults'] > 0){
+        if ($tickets_response['totalresults'] > 0) {
             $tickets = $tickets_response['tickets']['ticket'];
         }
 
-        if($tickets_status['totalresults'] > 0){
+        if ($tickets_status['totalresults'] > 0) {
             $status = $tickets_status['statuses']['status'];
         }
-        
-        return view('pages/support-ticket',compact('tickets','status','departments','orders'));
+
+        return view('pages/support-ticket', compact('tickets', 'status', 'departments', 'orders'));
     }
 
-    public function openticket(Request $request){
-        if($request->message){
+    public function openticket(Request $request)
+    {
+        if ($request->message) {
             $message = $request->message;
-        }else $message = ' ';
-        
+        } else $message = ' ';
+
         $action_command_array = array(
             'action' => 'OpenTicket',
             'deptid' => $request->department,
@@ -80,10 +81,10 @@ class SupportTicketController extends Controller
             'message' => $message,
             'clientid' => Auth::user()->client_id
         );
-        if($request->service != 0) $action_command_array['serviceid'] = $request->service;
-        
+        if ($request->service != 0) $action_command_array['serviceid'] = $request->service;
+
         $created_ticket_info =  (new \Sburina\Whmcs\Client)->post($action_command_array);
-        
+
         return redirect()->route('support-ticket');
     }
 }

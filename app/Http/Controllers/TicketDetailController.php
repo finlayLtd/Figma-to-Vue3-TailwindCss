@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Auth;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class TicketDetailController extends Controller
             'ticketid' => $ticket_id,
         ]);
 
-        return view('pages/ticket-detail', compact('ticket_id','ticket_detail'));
+        return view('pages/ticket-detail', compact('ticket_id', 'ticket_detail'));
     }
 
     public function sendReply(Request $request)
@@ -38,11 +39,11 @@ class TicketDetailController extends Controller
 
         $ticket_id = $request->ticket_id;
         $clientid = Auth::user()->client_id;
-        if($request->message){
+        if ($request->message) {
             $message = $request->message;
         } else $message = ' ';
 
-        if($request->file){
+        if ($request->file) {
             $addTicketReply = (new \Sburina\Whmcs\Client)->post([
                 'action' => 'AddTicketReply',
                 'ticketid' => $ticket_id,
@@ -50,7 +51,7 @@ class TicketDetailController extends Controller
                 'message' => $message,
                 'attachments' => base64_encode(json_encode([['name' => $request->file('file')->getClientOriginalName(), 'data' => base64_encode(file_get_contents($request->file))]])),
             ]);
-        } else{
+        } else {
             $addTicketReply = (new \Sburina\Whmcs\Client)->post([
                 'action' => 'AddTicketReply',
                 'ticketid' => $ticket_id,
@@ -65,8 +66,5 @@ class TicketDetailController extends Controller
         ]);
 
         return redirect()->route('ticket-detail', ['id' => $ticket_id]);
-        
     }
-
-    
 }
