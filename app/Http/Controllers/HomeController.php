@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Auth;
 use sburina\Whmcs;
+use App\Enduser;
 
 class HomeController extends Controller
 {
@@ -38,7 +40,7 @@ class HomeController extends Controller
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
         }
-
+        $this->getVPSList();
         return view('pages/dashboard', compact('tickets', 'total_tickets'));
     }
 
@@ -78,5 +80,19 @@ class HomeController extends Controller
         else $message = 'failed';
 
         return redirect()->route('settings', ['message' => $message]);
+    }
+
+    private function getVPSList(){
+        $key =  'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
+        $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
+        $ip = '37.59.33.165';
+        
+        
+        $v = new Enduser($ip, $key, $pass);
+
+        $vps = $v->listvs();
+        
+        print_r($vps);exit;
+        // return $vmList;
     }
 }
