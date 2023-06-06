@@ -6,7 +6,7 @@
         <th scope="col">Priority</th>
         <th scope="col">Date</th>
         <th scope="col">Status</th>
-        <th scope="col" class="text-center">View Invoice</th>
+        <!-- <th scope="col" class="text-center">View Invoice</th> -->
     </tr>
     </thead>
     <tbody>
@@ -17,9 +17,9 @@
             <td class="refund-request">{{$ticket['priority']}}</td>
             <td class="date-cell">{{$ticket['date']}}</td>
             <td class="successful-cell"><span>{{$ticket['status']}}</span></td>
-            <td class="text-center">
+            <!-- <td class="text-center">
                 <a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a>
-            </td>
+            </td> -->
         </tr>
     @endforeach			    					    					    
     </tbody>
