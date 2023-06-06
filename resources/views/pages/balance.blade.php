@@ -120,7 +120,11 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center">
+											<a onclick="windowOpen({{ $invoice['id'] }})">
+												<img src="assets/img/eye-open.svg" class="icon-password view-invoice">
+											</a>
+										</td>
 									</tr>
 									@endforeach
 								</tbody>
@@ -191,7 +195,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -241,7 +245,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -291,7 +295,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="#"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -344,9 +348,58 @@
 
 					</div>
 				</div>
-				<button class="btn-dark d-block">Continue</button>
+				<button class="btn-dark d-block" onclick="windowPay()">Continue</button>
 			</div>
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('script')
+<script>
+let Window;
+          
+// Function that open the new Window
+function windowOpen(invoice_id) {
+	var leftPosition = (window.screen.width / 2) - (800 / 2);
+  	var topPosition = (window.screen.height / 2) - (600 / 2);
+	  var newWindow = window.open(
+		"https://devmach.xyz/viewinvoice.php?id="+invoice_id,
+		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
+		newWindow.addEventListener('load', function() {
+    // Get the document object of the newly opened window
+    var doc = newWindow.document;
+	console.log('doc');
+	alert(doc);
+    
+    // Replace the content of the body tag with some Javascript code
+    // doc.body.innerHTML = `<div>123</div>`;
+  });
+}
+
+function windowPay(){
+	var leftPosition = (window.screen.width / 2) - (800 / 2);
+  	var topPosition = (window.screen.height / 2) - (600 / 2);
+	var newWindow = window.open(
+		"https://devmach.xyz/clientarea.php?action=addfunds",
+		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
+}
+
+// Attach click event listener to the new window object
+// Window.addEventListener("click", function(event) {
+// 	console.log(event);
+// 	Window.close();
+    // Check if the clicked element is an <a> tag with an href attribute that ends with '/back'
+    // if (event.target.tagName === "a" && event.target.getAttribute("href").endsWith("/action=invoices")) {
+    //   // Handle the click event as needed, e.g. close the window
+    //   Window.close();
+    //   event.preventDefault(); // prevent the link from navigating to a different page
+    // }
+//   });
+
+// function that Closes the open Window
+function windowClose() {
+	Window.close();
+}
+</script>
 @endsection

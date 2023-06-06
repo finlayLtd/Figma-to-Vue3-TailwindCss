@@ -71,7 +71,7 @@ class HomeController extends Controller
 
         session()->put(config('whmcs.session_key'), (new \Sburina\Whmcs\Client)->post([
             'action' => 'getClientsDetails',
-            'email' => 'hiraisin424@gmail.com',
+            'email' => Auth::user()->email,
         ]));
 
         if ($response['result'] == 'success') $message = 'success';
