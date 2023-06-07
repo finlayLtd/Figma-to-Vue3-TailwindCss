@@ -40,7 +40,7 @@ class HomeController extends Controller
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
         }
-        $this->getVPSList();
+        // $this->getVPSList();
         return view('pages/dashboard', compact('tickets', 'total_tickets'));
     }
 

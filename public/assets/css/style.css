@@ -2420,6 +2420,10 @@ section.overview .title {
 	padding: 8px 12px;
 }
 
+.selectBoxes input{
+   width: auto !important;
+}
+
 .overview-input input:focus {
 	outline: none;
 }
@@ -3038,4 +3042,19 @@ section.login {
 	20% {
 		transform: scaleY(1);
 	}
+}
+
+.managePermissionBtn{
+	padding: 0.25rem 0.5rem;
+    font-size: .875rem;
+    border-radius: 0.2rem;
+}
+
+.checkbox-inline, .radio-inline {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
 }

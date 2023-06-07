@@ -68,7 +68,7 @@
 										@if (!empty($reply['attachment']))
 										<div class="message-body message-attachment-body" style="width: fit-content; margin-left: auto;">
 											<div>
-												<a class="blackColor" href="https://devmach.xyz/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
+												<a class="blackColor" href="{{ env('WHMCS_URL') }}/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
 													<img src="{{ asset('assets/img/download_icon.png') }}" style="width: 24px;" alt="">
 													<span class="text-decoration-underline">{{ $reply['attachment'] }}</span>
 												</a>
