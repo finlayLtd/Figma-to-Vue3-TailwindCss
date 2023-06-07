@@ -121,6 +121,14 @@
 
     <script src="{{asset('assets/js/scripts.js')}}"></script>
     <script>
+        let Window;// this window is the window where all components can access
+
+        function windowClose() {
+            if (Window && !Window.closed) {
+                Window.close();
+            }
+        }
+
         $(document).ready(function() {
             // display loading icon when fetch data from backend
             $('form').submit(function() {

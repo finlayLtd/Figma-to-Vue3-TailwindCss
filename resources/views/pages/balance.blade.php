@@ -44,7 +44,7 @@
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
 				<div class="row mb-3 mb-lg-5 pe-0">
-					<h3 class="col-md-3 sub-title pt-2">Transaction History</h3>
+					<h3 class="col-md-3 sub-title pt-2">My Invoices</h3>
 
 					<div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
 
@@ -107,7 +107,7 @@
 												{{ $invoice['status'] }}
 											</span>
 										</td>
-										@elseif($invoice['status'] == 'In-progress')
+										@elseif($invoice['status'] == 'Unpaid')
 										<td class="in-progress-cell">
 											<span>
 												{{ $invoice['status'] }}
@@ -182,7 +182,7 @@
 												{{ $invoice['status'] }}
 											</span>
 										</td>
-										@elseif($invoice['status'] == 'In-progress')
+										@elseif($invoice['status'] == 'Unpaid')
 										<td class="in-progress-cell">
 											<span>
 												{{ $invoice['status'] }}
@@ -232,7 +232,7 @@
 												{{ $invoice['status'] }}
 											</span>
 										</td>
-										@elseif($invoice['status'] == 'In-progress')
+										@elseif($invoice['status'] == 'Unpaid')
 										<td class="in-progress-cell">
 											<span>
 												{{ $invoice['status'] }}
@@ -282,7 +282,7 @@
 												{{ $invoice['status'] }}
 											</span>
 										</td>
-										@elseif($invoice['status'] == 'In-progress')
+										@elseif($invoice['status'] == 'Unpaid')
 										<td class="in-progress-cell">
 											<span>
 												{{ $invoice['status'] }}
@@ -325,7 +325,7 @@
 			</div>
 			<div class="modal-main">
 				<div class="main-title">
-					<p>Choose Payment method</p>
+					<p>Available Payment method</p>
 				</div>
 				<div class="modal-buttons">
 					<button class="modal-payment"><img src="assets/img/bitcoin.png" alt=""> Bitcoin</button>
@@ -340,8 +340,8 @@
 
 				</div>
 				<div class="amounts">
-					<h4>Amounts</h4>
-					<input type="text" value="321" placeholder="">
+					<!-- <h4>Amounts</h4> -->
+					<!-- <input type="text" value="321" placeholder=""> -->
 					<div class="amount-footer">
 						<span>Amount of one deposit</span>
 						<span>€10,00 - €1.000,00</span>
@@ -357,49 +357,30 @@
 
 @section('script')
 <script>
-let Window;
-          
 // Function that open the new Window
 function windowOpen(invoice_id) {
+	windowClose();
 	var leftPosition = (window.screen.width / 2) - (800 / 2);
   	var topPosition = (window.screen.height / 2) - (600 / 2);
-	  var newWindow = window.open(
-		"https://devmach.xyz/viewinvoice.php?id="+invoice_id,
+	var originalUrl = "{{ env('WHMCS_URL') }}/viewinvoice.php?id="+invoice_id;
+	Window = window.open(
+		originalUrl,
 		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
-		newWindow.addEventListener('load', function() {
-    // Get the document object of the newly opened window
-    var doc = newWindow.document;
-	console.log('doc');
-	alert(doc);
-    
-    // Replace the content of the body tag with some Javascript code
-    // doc.body.innerHTML = `<div>123</div>`;
-  });
+	Window.focus();
 }
 
 function windowPay(){
+	windowClose();
 	var leftPosition = (window.screen.width / 2) - (800 / 2);
   	var topPosition = (window.screen.height / 2) - (600 / 2);
-	var newWindow = window.open(
-		"https://devmach.xyz/clientarea.php?action=addfunds",
+	Window = window.open(
+		"{{ env('WHMCS_URL') }}/clientarea.php?action=addfunds",
 		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
+	Window.focus();
 }
 
-// Attach click event listener to the new window object
-// Window.addEventListener("click", function(event) {
-// 	console.log(event);
-// 	Window.close();
-    // Check if the clicked element is an <a> tag with an href attribute that ends with '/back'
-    // if (event.target.tagName === "a" && event.target.getAttribute("href").endsWith("/action=invoices")) {
-    //   // Handle the click event as needed, e.g. close the window
-    //   Window.close();
-    //   event.preventDefault(); // prevent the link from navigating to a different page
-    // }
-//   });
 
 // function that Closes the open Window
-function windowClose() {
-	Window.close();
-}
+
 </script>
 @endsection

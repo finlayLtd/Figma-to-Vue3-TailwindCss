@@ -87,7 +87,9 @@ class HomeController extends Controller
             $tickets = $tickets_response['tickets']['ticket'];
         }
         // $this->getVPSList();
+
         return view('pages/dashboard', compact('tickets', 'total_tickets', 'states','state_order'));
+
     }
 
     public function gettickets(Request $request)
