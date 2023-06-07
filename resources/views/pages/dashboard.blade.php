@@ -110,6 +110,21 @@
 													</div>
 												</div>
 											</div>
+											<div class="server-list-item">
+												<div class="server-list-item-wrapper">
+													<div class="image-wrapper">
+														<img src="assets/img/flag-nl.png" alt="">                    			
+													</div>
+													<div class="list-item-detail">
+														<h2 class="list-name">
+															Netherlands
+														</h2>
+														<h3 class="detail">
+															1x Intel E5-2697v3 (14C, 28T)
+														</h3>                    			
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								@endforeach
