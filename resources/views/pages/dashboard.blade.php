@@ -60,6 +60,7 @@
 						@else <div class="tab-pane fade" id="pills-{{$state}}" role="tabpanel" aria-labelledby="pills-{{$state}}-tab">
 						@endif
 							<div class="row mb-5">
+								@if(count($state_order))
 								@foreach($state_order[$state] as $order)
 									<div class="col-12 col-lg-4 col-md-6 col-sm-12">
 										<div class="card-item p-4 mb-4">
@@ -112,6 +113,7 @@
 										</div>
 									</div>
 								@endforeach
+								@endif
 							</div>
 						</div>	
 					@endforeach
