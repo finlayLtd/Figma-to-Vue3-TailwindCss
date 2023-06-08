@@ -71,10 +71,10 @@
 													</div>
 													<div class="list-item-detail">
 														<h2 class="list-name">
-															{{$order['lineitems']['lineitem'][0]['product']}}
+															{{$order['name']}}
 														</h2>
 														<h3 class="detail">
-															{{$order['lineitems']['lineitem'][0]['domain']}}
+															{{$order['configoptions']['configoption'][1]['value']}}
 														</h3>
 														<div class="server-list-options">
 															<div class="options-toggle">
@@ -97,10 +97,10 @@
 													</div>
 													<div class="list-item-detail">
 														<h2 class="list-name">
-															{{$order['ipaddress']}}
+															{{$order['dedicatedip']}}
 														</h2>
 														<h3 class="detail">
-															Created at {{$order['date']}}
+															Created at {{$order['regdate']}}
 														</h3>                    			
 													</div>
 													<div class="server-list-options">
@@ -117,7 +117,7 @@
 													</div>
 													<div class="list-item-detail">
 														<h2 class="list-name">
-															Netherlands
+															{{$order['groupname']}}
 														</h2>
 														<h3 class="detail">
 															1x Intel E5-2697v3 (14C, 28T)

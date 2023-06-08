@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use sburina\Whmcs;
 use App\Enduser;
+use App\Admin;
 
 class HomeController extends Controller
 {
@@ -47,29 +48,34 @@ class HomeController extends Controller
             array_push($states,$state_info['title']);
         asort($states);
 
-        $orders_response = (new \Sburina\Whmcs\Client)->post([
-            'action' => 'GetOrders',
-            'limitstart' => 0,
-            'limitnum' => 10, // Set number of tickets to retrieve per request
-            'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
-        ]);
-
+        // $orders_response = (new \Sburina\Whmcs\Client)->post([
+        //     'action' => 'GetOrders',
+        //     'limitstart' => 0,
+        //     'limitnum' => 10, // Set number of tickets to retrieve per request
+        //     'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
+        // ]);
+        // print_r($orders_response);exit;
         // $products_response = (new \Sburina\Whmcs\Client)->post([
         //     'action' => 'GetProducts',
         // ]);
-        
+
+        $orders_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetClientsProducts',
+            'clientid' => Auth::user()->client_id,
+        ]);
+        // print_r($client_products_response);exit;
         // if ($products_response['totalresults'] > 0) {
-        //     foreach ($products_response['products']['product'] as $key => $product) {
-        //         // unset($products_response['products']['product'][$key]['pricing']);
-        //         // unset($products_response['products']['product'][$key]['configoptions']);
-        //     }
-        //    // print_r($products_response['products']['product']);exit;
-        //     $products = $products_response['products']['product'];
+            // foreach ($products_response['products']['product'] as $key => $product) {
+                // unset($products_response['products']['product'][$key]['pricing']);
+                // unset($products_response['products']['product'][$key]['configoptions']);
+            // }
+           // print_r($products_response['products']['product']);exit;
+            // $products = $products_response['products']['product'];
         // }
         // print_r($products);exit;
         if ($orders_response['totalresults'] > 0) {
             $total_tickets = $orders_response['totalresults'];
-            $orders = $orders_response['orders']['order'];
+            $orders = $orders_response['products']['product'];
 
             foreach($states as $state)
                 foreach($orders as $order)
@@ -80,13 +86,14 @@ class HomeController extends Controller
                     if($order['status'] == $state) array_push($state_order[$state],$order);
         }
         
-        
+        // print_r($state_order);exit;
 
         if ($tickets_response['totalresults'] > 0) {
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
         }
-        // $this->getVPSList();
+
+        // $vps = $this->getVPSList();
 
         return view('pages/dashboard', compact('tickets', 'total_tickets', 'states','state_order'));
 
@@ -136,8 +143,9 @@ class HomeController extends Controller
         $ip = '37.59.33.165';
         
         
-        $v = new Enduser($ip, $key, $pass);
-
+        $v = new Admin($ip, $key, $pass);
+        // $post = array();
+        // $post['user'] = Auth::user()->userid;
         $vps = $v->listvs();
         
         print_r($vps);exit;
