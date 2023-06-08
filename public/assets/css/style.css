@@ -2131,21 +2131,22 @@ section.overview .title {
 }
 
 .due-date {
-		display: flex;
-    padding: 16px;
-    margin: -22px -15px 0 -15px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid rgba(23, 30, 38, 0.08);
+	display: flex;
+    padding: none;
+    margin: none;
+    border-bottom: none;
 }
 
 .date-image-wrapper {
 	margin-right: 15px;
 }
+
 .due-date-title {
 	font-weight: 500;
 	font-size: 15.5px;
 	margin-bottom: 0;
 }
+
 .due-date-info span {
 	font-size: 13px;
 	line-height: 100%;

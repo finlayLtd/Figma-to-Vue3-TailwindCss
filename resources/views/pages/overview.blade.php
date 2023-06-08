@@ -28,12 +28,6 @@
 									<span>2023-17-05</span>
 								</div>
 							</div>
-							<div class="overview-button-wrapper d-flex justify-content-between">
-								<button class="btn-dark hover-dark-light">Update VM</button>
-								<button class="btn-red">Request for cancellation</button>
-
-							</div>
-
 						</div>
 					</div>
 
@@ -46,18 +40,6 @@
 									<tr>
 										<td>Public IPv4</td>
 										<td class="clipboard-input" data-copy="147.189.161.205">147.189.161.205</td>
-										<td><img src="assets/img/copy.svg" class="icon-clipboard"></td>
-									</tr>
-
-									<tr>
-										<td>Public IPv6</td>
-										<td class="clipboard-input" data-copy="147.189.161.205">147.189.161.205</td>
-										<td><img src="assets/img/copy.svg" class="icon-clipboard"></td>
-									</tr>
-
-									<tr>
-										<td>Private IPv4</td>
-										<td class="privatev4"><span class="clipboard-input" data-copy="2400:8d60:0002:0000:0000:0001:37b5:388b">2400:8d60:0002:0000:0000:0001:37b5:388b</span></td>
 										<td><img src="assets/img/copy.svg" class="icon-clipboard"></td>
 									</tr>
 
@@ -104,18 +86,6 @@
 										<td>5 GB</td>
 										<td></td>
 									</tr>
-
-									<tr>
-										<td><img src="assets/img/speedometer.png" alt=""> Bandwidth</td>
-										<td>1500 GB</td>
-										<td><img src="assets/img/info.svg" class="icon-clipboard"></td>
-									</tr>
-
-									<tr>
-										<td><img src="assets/img/simcard-2.png" alt=""> Backup Plan</td>
-										<td>Free</td>
-										<td><img src="assets/img/info.svg" class="icon-password"></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -148,27 +118,19 @@
 								<button class="nav-link" id="pills-reinstall-tab" data-bs-toggle="pill" data-bs-target="#pills-reinstall" type="button" role="tab" aria-controls="pills-reinstall" aria-selected="false">Reinstall</button>
 							</li>
 
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-clone-tab" data-bs-toggle="pill" data-bs-target="#pills-clone" type="button" role="tab" aria-controls="pills-clone" aria-selected="false">Clone</button>
-							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-firewall-tab" data-bs-toggle="pill" data-bs-target="#pills-firewall" type="button" role="tab" aria-controls="pills-firewall" aria-selected="false">Firewall</button>
-							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-backup-tab" data-bs-toggle="pill" data-bs-target="#pills-backup" type="button" role="tab" aria-controls="pills-backup" aria-selected="false">Backup</button>
-							</li>
+					
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-management-tab" data-bs-toggle="pill" data-bs-target="#pills-management" type="button" role="tab" aria-controls="pills-management" aria-selected="false">IP Address Management</button>
 							</li>
+							
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-vnc-tab" data-bs-toggle="pill" data-bs-target="#pills-vnc" type="button" role="tab" aria-controls="pills-vnc" aria-selected="false">VNC</button>
 							</li>
+
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-billing-tab" data-bs-toggle="pill" data-bs-target="#pills-billing" type="button" role="tab" aria-controls="pills-billing" aria-selected="false">Billing</button>
 							</li>
-							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-upgrade-tab" data-bs-toggle="pill" data-bs-target="#pills-upgrade" type="button" role="tab" aria-controls="pills-upgrade" aria-selected="false">Upgrade</button>
-							</li>
+
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings" aria-selected="false">Settings</button>
 							</li>
@@ -316,43 +278,6 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="divider"></div>
-							<div class="row pt-4">
-								<h3 class="title fs-17">Networking</h3>
-							</div>
-							<div class="row px-12 pt-3">
-								<div class="general-info bg-white overview-col2 d-flex w-100 mb-4">
-
-									<div class="col-md-6">
-
-										<div class="col-content-wrapper">
-											<div class="img-wrapper">
-												<img src="assets/img/cloud-connection.png" alt="">
-											</div>
-											<div class="info">
-												<h4 class="title2">Public Network <span class="text-color-light">|</span> Ethernet 0</h4>
-												<p class="description2">147.189.161.205</p>
-												<p class="description2" style="word-break: break-all;">2400:8d60:0002:0000:0000:0001:37b5:388b</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-
-										<div class="col-content-wrapper">
-											<div class="img-wrapper">
-												<img src="assets/img/cloud-connection.png" alt="">
-											</div>
-											<div class="info">
-												<h4 class="title2">Public Network <span class="text-color-light">|</span> Ethernet 1</h4>
-												<p class="description2">10.1.1.80</p>
-											</div>
-										</div>
-									</div>
-
-
-								</div>
-							</div>
 						</div>
 					</div>
 
@@ -443,161 +368,6 @@
 
 
 
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<!--clone-->
-					<div class="tab-pane fade" id="pills-clone" role="tabpanel" aria-labelledby="pills-clone-tab">
-						<div class="tab-inner mb-3">
-							<div class="row">
-								<h3 class="title">Clone VM</h3>
-								<p class="description mb-4">Clone virtual machines, avoid the hassle of setting up the same thing.</p>
-							</div>
-							<div class="divider"></div>
-							<div class="row px-0 pt-4">
-								<div class="col-md-12 d-flex flex-column align-items-start">
-
-									<p class="fs-13-5">Virtual Machine to Clone</p>
-
-									<div class="overview-select">
-										<select name="" id="">
-											<option value="">Service ID : 25896 | papa-efyu-01.evoxt.com</option>
-											<option value="">Service ID : 25896 | papa-efyu-01.evoxt.com</option>
-											<option value="">Service ID : 25896 | papa-efyu-01.evoxt.com</option>
-										</select>
-									</div>
-
-									<p class="fs-13-5 mt-4 mb-2">New VM Label</p>
-									<p class="fs-12">Set a name to identify the new servers from others</p>
-									<div class="overview-input">
-										<input type="text" placeholder="Virtual Machine Name">
-									</div>
-
-
-									<p class="fs-13-5 mt-4 mb-2">Quantity</p>
-									<p class="fs-12">Number of clones</p>
-									<div class="overview-input">
-										<input type="number">
-									</div>
-
-
-									<p class="fs-13-5 mt-4 mb-2">Promo Code</p>
-									<div class="overview-input">
-										<input type="text" style="max-width: 200px;" placeholder="Promocode">
-									</div>
-
-									<div class="overview-button-wrapper">
-										<button class="btn-dark px-4 hover-dark-light">Clone VM</button>
-									</div>
-
-
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!--firewall-->
-					<div class="tab-pane fade" id="pills-firewall" role="tabpanel" aria-labelledby="pills-firewall-tab">
-						<div class="tab-inner mb-3">
-							<div class="row">
-								<h3 class="title mb-4">Firewall</h3>
-							</div>
-							<div class="divider"></div>
-							<div class="row px-0 pt-4">
-								<div class="col-md-12 d-flex flex-column flex-lg-row align-items-start">
-									<ul class="nav nav-pills mb-3 mb-md-0 mb-lg-0 d-flex flex-column inner-tab-pills" id="pills-tab" role="tablist">
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link active" id="pills-ipv4-tab" data-bs-toggle="pill" data-bs-target="#pills-ipv4" type="button" role="tab" aria-controls="pills-ipv4" aria-selected="false">IPv4</button>
-										</li>
-										<li class="nav-item" role="presentation">
-											<button class="nav-link" id="pills-ipv6-tab" data-bs-toggle="pill" data-bs-target="#pills-ipv6" type="button" role="tab" aria-controls="pills-ipv6" aria-selected="false">IPv6</button>
-										</li>
-									</ul>
-
-									<div class="tab-content w-100" id="pills-tabContent">
-										<!--ipv4-->
-										<div class="tab-pane fade  show active" id="pills-ipv4" role="tabpanel" aria-labelledby="pills-ipv4-tab">
-											<div class="tab-inner text-center">
-												<p class="fs-15">Enable Firewall IPv4 to get started</p>
-												<div class="overview-button-wrapper">
-													<button class="btn-dark px-4 hover-dark-light">Enable Firewall IPv4</button>
-												</div>
-											</div>
-										</div>
-										<!--ipv6-->
-										<div class="tab-pane fade" id="pills-ipv6" role="tabpanel" aria-labelledby="pills-ipv6-tab">
-											<div class="tab-inner text-center">
-												<p class="fs-15">Enable Firewall IPv6 to get started</p>
-												<div class="overview-button-wrapper">
-													<button class="btn-dark px-4 hover-dark-light">Enable Firewall IPv6</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!--backup-->
-					<div class="tab-pane fade" id="pills-backup" role="tabpanel" aria-labelledby="pills-backup-tab">
-						<div class="tab-inner mb-3">
-							<div class="row">
-								<h3 class="title">Backup</h3>
-								<p class="description mb-4">Backup and Restore.</p>
-							</div>
-							<div class="divider"></div>
-							<div class="row px-2 pt-4">
-
-								<div class="support-table v-align-middle p-0">
-
-									<table class="table">
-										<thead>
-											<tr>
-												<th scope="col">File Name</th>
-												<th scope="col">Backup Date (YYYY/MM/DD)</th>
-												<th scope="col">Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>21199_2023-04-24-16_51_48</td>
-												<td class="date-cell">2023-13-03</td>
-												<td>
-													<div class="overview-button-wrapper pt-0">
-														<button class="btn-dark hover-dark-light">Restore</button>
-														<button class="btn-light bg-gray hover-light-dark">Restore to new VM</button>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td>21199_2023-04-24-16_51_48-3</td>
-												<td class="date-cell">2023-13-03</td>
-												<td>
-													<div class="overview-button-wrapper pt-0">
-														<button class="btn-dark hover-dark-light">Restore</button>
-														<button class="btn-light bg-gray hover-light-dark">Restore to new VM</button>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-
-						<div class="tab-inner">
-							<div class="row">
-								<div class="text-center">
-									<p class="fs-15 mb-0 ">Date time shown above are based on GMT+0</p>
-									<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center">
-										<button class="btn-dark px-4 mb-2 w-200">Enable Firewall IPv6</button>
-										<button class="btn-light bg-gray w-200 px-4">Purchase Backup Plan</button>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -917,228 +687,6 @@
 											</div>
 										</div>
 
-
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!--upgrade-->
-					<div class="tab-pane fade" id="pills-upgrade" role="tabpanel" aria-labelledby="pills-upgrade-tab">
-						<div class="tab-inner billing mb-3">
-							<div class="row">
-								<h3 class="title mb-4">Upgrade Virtual Machine</h3>
-								<p class="description mb-4">Outgrown your server? Upgrade now.</p>
-							</div>
-							<div class="divider"></div>
-							<div class="row px-0 pt-4">
-								<div class="col-md-12 d-flex flex-column flex-lg-row align-items-start">
-
-
-									<ul class="nav nav-pills mb-3 mb-md-0 mb-lg-0 d-flex flex-column inner-tab-pills sc-mobile no-border-mobile" id="pills-tab" role="tablist">
-
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link active" id="pills-plan-tab" data-bs-toggle="pill" data-bs-target="#pills-plan" type="button" role="tab" aria-controls="pills-plan" aria-selected="false">Plan</button>
-										</li>
-
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-network-tab" data-bs-toggle="pill" data-bs-target="#pills-network" type="button" role="tab" aria-controls="pills-network" aria-selected="false">Network</button>
-										</li>
-
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-cpu-tab" data-bs-toggle="pill" data-bs-target="#pills-cpu" type="button" role="tab" aria-controls="pills-cpu" aria-selected="false">CPU</button>
-										</li>
-
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-ram-tab" data-bs-toggle="pill" data-bs-target="#pills-ram" type="button" role="tab" aria-controls="pills-ram" aria-selected="false">RAM</button>
-										</li>
-
-										<li class="nav-item" role="presentation">
-											<button class="nav-link" id="pills-backupplan-tab" data-bs-toggle="pill" data-bs-target="#pills-backupplan" type="button" role="tab" aria-controls="pills-backupplan" aria-selected="false">Backup Plan</button>
-										</li>
-
-									</ul>
-
-									<div class="tab-content w-100" id="pills-tabContent">
-
-										<!--plan-->
-										<div class="tab-pane fade  show active" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Upgrade Service Plan</h3>
-												<div class="divider" style="margin:20px 0"></div>
-
-												<div class="tab-inner pt-0 p-mb-0">
-													<div class="row">
-														<div style="text-align: center;margin: 0 auto;" class="text-center sc-mobile pt-3">
-
-															<div class="overview-select d-inline-block mb-3">
-																<select name="" id="">
-																	<option value="">VM-0.75 | 1 vCore (3.5 GHz), 1 GB RAM, 10 GB Storage & 0.5 TB Bandwidth</option>
-																	<option value="">VM-0.75 | 1 vCore (3.5 GHz), 1 GB RAM, 10 GB Storage & 0.5 TB Bandwidth</option>
-																	<option value="">VM-0.75 | 1 vCore (3.5 GHz), 1 GB RAM, 10 GB Storage & 0.5 TB Bandwidth</option>
-																</select>
-															</div>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center pt-0 pb-4">
-																<button class="btn-dark px-4 hover-dark-light">Upgrade Plan</button>
-															</div>
-
-															<a style="color:#0078D4;" class="fs-13" href="#">View the prices of plans and specifications here</a>
-
-															<p class="fs-13 mt-1 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">Note: A power cycle is needed after upgrading to apply the upgrade.</p>
-
-														</div>
-													</div>
-												</div>
-
-
-
-
-											</div>
-										</div>
-
-										<!--network-->
-										<div class="tab-pane fade" id="pills-network" role="tabpanel" aria-labelledby="pills-network-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Buy Extra Monthly Bandwidth</h3>
-												<div class="divider" style="margin:20px 0"></div>
-
-												<div class="tab-inner  pt-0">
-													<div class="row">
-														<div style="text-align: center;margin: 0 auto; max-width: 626px;" class="text-center">
-
-															<div class="overview-select d-inline-block mb-3">
-																<select name="" id="">
-																	<option value="">Extra 500 GB monthly | +$2 /month</option>
-																	<option value="">Extra 500 GB monthly | +$2 /month</option>
-																	<option value="">Extra 500 GB monthly | +$2 /month</option>
-																</select>
-															</div>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center pt-0 pb-4">
-																<button class="btn-dark px-4 hover-dark-light">Upgrade Bandwidth</button>
-															</div>
-
-															<p class="fs-13 mt-1 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">If the extra bandwidth you order has decimals, this will be automatically rounded up. Example: You have 500GB extra bandwidth and you order an extra 2 TB, this will be rounded up to 3 TB</p>
-
-														</div>
-													</div>
-												</div>
-
-
-
-
-											</div>
-										</div>
-
-										<!--cpu-->
-										<div class="tab-pane fade" id="pills-cpu" role="tabpanel" aria-labelledby="pills-cpu-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Upgrade CPU</h3>
-												<div class="divider" style="margin:20px 0"></div>
-
-												<div class="tab-inner  pt-0">
-													<div class="row">
-														<div style="text-align: center;margin: 0 auto; max-width: 626px;" class="text-center">
-
-															<div class="overview-select d-inline-block mb-3">
-																<select name="" id="">
-																	<option value="">1 Extra vCore | +$3 /month</option>
-																	<option value="">1 Extra vCore | +$3 /month</option>
-																	<option value="">1 Extra vCore | +$3 /month</option>
-																</select>
-															</div>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center pt-0 pb-4">
-																<button class="btn-dark px-4 hover-dark-light">Upgrade Bandwidth</button>
-															</div>
-
-															<p class="fs-13 mt-1 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">If the extra bandwidth you order has decimals, this will be automatically rounded up. Example: You have 500GB extra bandwidth and you order an extra 2 TB, this will be rounded up to 3 TB</p>
-
-														</div>
-													</div>
-												</div>
-
-
-
-
-											</div>
-										</div>
-
-										<!--ram-->
-										<div class="tab-pane fade" id="pills-ram" role="tabpanel" aria-labelledby="pills-ram-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Upgrade RAM</h3>
-												<div class="divider" style="margin:20px 0"></div>
-
-												<div class="tab-inner  pt-0">
-													<div class="row">
-														<div style="text-align: center;margin: 0 auto;" class="text-center">
-
-															<div class="overview-select d-inline-block mb-3">
-																<select name="" id="">
-																	<option value="">1 GB RAM | +$2 /month</option>
-																	<option value="">1 GB RAM | +$2 /month</option>
-																	<option value="">1 GB RAM | +$2 /month</option>
-																</select>
-															</div>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center pt-0 pb-4">
-																<button class="btn-dark px-4 hover-dark-light">Upgrade Bandwidth</button>
-															</div>
-
-															<p class="fs-13 mt-1 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">Note: A power cycle is needed after upgrading to apply the upgrade.</p>
-
-														</div>
-													</div>
-												</div>
-
-
-
-
-											</div>
-										</div>
-
-										<!--backupplan-->
-										<div class="tab-pane fade" id="pills-backupplan" role="tabpanel" aria-labelledby="pills-backupplan-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Purchase a Backup Plan</h3>
-												<div class="divider" style="margin:20px 0"></div>
-
-												<div class="tab-inner pt-0">
-													<div class="row">
-														<div style="text-align: center;margin: 0 auto; max-width:491px" class="text-center">
-
-															<p class="fs-13 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">Backup Plan's price depends on your virtual machine's storage size. Your virtual machine has 5 GB of storage. The backup plan will be $0.5 per month</p>
-
-
-															<p class="fs-13 mt-1 inner-sub-title" style="color: rgba(23, 30, 38, 0.75); ">Backup Plan will include daily backup with<br>
-																- 5 Rotating copies<br>
-																- 5 Manual backup per month<br>
-																- 5 Backup restores per month<br> </p>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center pt-0">
-																<button class="btn-dark px-4 hover-dark-light">Purchase Backup Plan</button>
-															</div>
-
-
-
-														</div>
-													</div>
-												</div>
-
-
-
-
-											</div>
-										</div>
 
 
 									</div>

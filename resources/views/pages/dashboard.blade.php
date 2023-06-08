@@ -11,7 +11,6 @@
 				<ul>
 					<li><a href="{{ url('/create-dedicated-server') }}">Create Dedicated Server</a></li>
 					<li><a href="{{ url('/create-vps-server') }}">Create VPS</a></li>
-					<li><a href="{{ url('/create-vps-server') }}">Create Storage Server</a></li>
 				</ul>
 			</div>
 		</div>
@@ -82,7 +81,7 @@
 															</div>
 															<div class="options-toggle-dropdown">
 																<ul>
-																	<li><a href="#">Launch Control Panel</a></li>
+																	<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 																	<li><a href="#">View Invoices</a></li>
 																</ul>
 															</div>                    			
