@@ -3,9 +3,16 @@
 @section('content')
 <section class="dashboard">
 	<div class="container">
-		<div class="d-flex justify-content-between align-items-center title-button-wrapper">
+		<div class="d-flex justify-content-between align-items-center title-button-wrapper position-relative">
 			<h2 class="title mb-0">Servers </h2>
-			<button type="submit" class="btn btn-dark btn-chevron chevron-dark hover-dark-light">Create Server</button>
+			<button type="submit" class="btn btn-dark btn-chevron chevron-dark hover-dark-light options-toggle">Create Server</button>
+
+			<div class="options-toggle-dropdown create-server">
+				<ul>
+					<li><a href="{{ url('/create-dedicated-server') }}">Create Dedicated Server</a></li>
+					<li><a href="{{ url('/create-vps-server') }}">Create VPS</a></li>
+				</ul>
+			</div>
 		</div>
 
 		<div class="sub-section server-list-tab">
@@ -76,7 +83,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -141,7 +148,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -206,7 +213,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -299,7 +306,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -423,7 +430,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -489,7 +496,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
@@ -555,7 +562,7 @@
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
-														<li><a href="#">Launch Control Panel</a></li>
+														<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>

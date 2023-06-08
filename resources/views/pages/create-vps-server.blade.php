@@ -6,23 +6,6 @@
 <section class="dashboard">
 	<div class="container">
 		<h2 class="title">Create Dedicated Server</h2>
-		<div class="sub-section">
-			<h3 class="sub-title">Choose a server</h3>
-			<div class="row server-item-wrapper">
-				<div class="server-item">
-					<img src="assets/img/server-driver.png">
-					<span>Dedicated</span>
-				</div>
-				<div class="server-item">
-					<img src="assets/img/server-storage.png">
-					<span>Storage</span>
-				</div>
-				<div class="server-item">
-					<img src="assets/img/server-streaming.png">
-					<span>Streaming</span>
-				</div>
-			</div>
-		</div>
 
 		<div class="sub-section">
 			<h3 class="sub-title">Choose a OS</h3>
@@ -336,11 +319,11 @@
 				<div class="configure-server-form">
 					<form>
 						<div class="mb-3">
-							<label for="exampleInputEmail1" class="form-label">Email address</label>
-							<input type="email" class="form-control" placeholder="Enter your email address" id="exampleInputEmail1" aria-describedby="emailHelp">
+							<label for="exampleInputEmail1" class="form-label">VPS Hostname</label>
+							<input type="email" class="form-control" placeholder="Enter your VPS Hostname" id="exampleInputEmail1" aria-describedby="emailHelp" value="realTest.com">
 						</div>
 						<div class="mb-4">
-							<label for="exampleInputPassword1" class="form-label">Password</label>
+							<label for="exampleInputPassword1" class="form-label">VPS Password</label>
 							<input type="password" class="form-control" placeholder="••••••••••" id="exampleInputPassword1">
 						</div>
 						<div class="mb-3 text-end">

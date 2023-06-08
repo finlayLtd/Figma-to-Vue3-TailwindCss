@@ -150,12 +150,12 @@
 				<div class="configure-server-form">
 					<form>
 						<div class="mb-3">
-							<label for="exampleInputEmail1" class="form-label">Email address</label>
-							<input type="email" placeholder="Enter your email address" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+							<label for="exampleInputEmail1" class="form-label">Dedicated Server Hostname</label>
+							<input type="email" class="form-control" placeholder="Enter your VPS Hostname" id="exampleInputEmail1" aria-describedby="emailHelp" value="realTest.com">
 						</div>
 						<div class="mb-4">
-							<label for="exampleInputPassword1" class="form-label">Password</label>
-							<input type="password" placeholder="••••••••••" class="form-control" id="exampleInputPassword1">
+							<label for="exampleInputPassword1" class="form-label">Server Password</label>
+							<input type="password" class="form-control" placeholder="••••••••••" id="exampleInputPassword1">
 						</div>
 						<div class="mb-3 text-end">
 							<button type="submit" class="btn btn-dark hover-dark-light">Create Server</button>
