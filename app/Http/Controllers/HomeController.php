@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use DOMDocument;
+use DOMXPath;
 use sburina\Whmcs;
 use App\Enduser;
 use App\Admin;
@@ -33,6 +35,11 @@ class HomeController extends Controller
         $products = [];
         $states = [];
         $state_order = [];
+        $product_group = [
+            '2' => 'VPS-Netherlands',
+            '3' => 'VPS-USA'
+        ];
+        
         $tickets_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetTickets',
             'limitstart' => 0,
@@ -48,32 +55,56 @@ class HomeController extends Controller
             array_push($states, $state_info['title']);
         asort($states);
 
-        // $orders_response = (new \Sburina\Whmcs\Client)->post([
-        //     'action' => 'GetOrders',
-        //     'limitstart' => 0,
-        //     'limitnum' => 10, // Set number of tickets to retrieve per request
-        //     'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
-        // ]);
-        // print_r($orders_response);exit;
-        // $products_response = (new \Sburina\Whmcs\Client)->post([
-        //     'action' => 'GetProducts',
-        // ]);
-
-
         $orders_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetClientsProducts',
             'clientid' => Auth::user()->client_id,
         ]);
-        // print_r($client_products_response);exit;
-        // if ($products_response['totalresults'] > 0) {
-            // foreach ($products_response['products']['product'] as $key => $product) {
+
+        $products_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetProducts',
+        ]);
+
+        // $products_group_response = (new \Sburina\Whmcs\Client)->post([
+        //     'action' => 'GetProductGroups',
+        // ]);
+
+        // print_r($products_group_response);exit;
+
+        if ($products_response['totalresults'] > 0) {
+            foreach ($products_response['products']['product'] as $key => $product) {
                 // unset($products_response['products']['product'][$key]['pricing']);
                 // unset($products_response['products']['product'][$key]['configoptions']);
-            // }
-           // print_r($products_response['products']['product']);exit;
-            // $products = $products_response['products']['product'];
-        // }
+            }
+            $products = $products_response['products']['product'];
+        }
+
         // print_r($products);exit;
+        if(count($products)){
+            foreach($products as $key=>$product){
+                $products[$key]['server_info'] = array();
+                $doc = new DOMDocument();
+                $doc->loadHTML($product['description']);
+                $xpath = new DOMXPath($doc);
+
+                $items = $xpath->query('//ul[@class="list-unstyled pricing-feature-list"]/li');
+
+                foreach ($items as $item) {
+                    $span = $item->getElementsByTagName('span')->item(0);
+                    $span_value = $span->nodeValue;
+                    $value = trim($item->firstChild->nextSibling->nodeValue);
+
+                    array_push($products[$key]['server_info'],$span_value." ".$value);
+                }
+
+                // $products_stock_response = (new \Sburina\Whmcs\Client)->post([
+                //     'action' => 'GetStock',
+                //     'pid'=>$product['pid']
+                // ]);
+
+                // print_r($products_stock_response);exit;
+            }
+        }
+
         if ($orders_response['totalresults'] > 0) {
             $total_tickets = $orders_response['totalresults'];
             $orders = $orders_response['products']['product'];
@@ -83,9 +114,38 @@ class HomeController extends Controller
                     $state_order[$state] = [];
 
             foreach ($states as $state)
-                foreach ($orders as $order)
-                    if ($order['status'] == $state) array_push($state_order[$state], $order);
+                foreach ($orders as $order){
+                    if ($order['status'] == $state) {
+                        array_push($state_order[$state], $order);
+                        $last_index = count($state_order[$state]) - 1;
+                        if(strpos($order['configoptions']['configoption'][1]['value'],'Netherlands') !== false){
+                            $state_order[$state][$last_index]['flag'] = 'flag-en';
+                        }else{
+                            $state_order[$state][$last_index]['flag'] = 'flag-nl';
+                        }
+                        
+                        $system = explode('-',$order['configoptions']['configoption'][1]['value'])[0];
+                        switch($system){
+                            case 'windows':
+                                $state_order[$state][$last_index]['sys_log'] = 'windows'; break;
+                            case 'ubuntu':
+                                $state_order[$state][$last_index]['sys_log'] = 'ubuntu'; break;
+                            case 'centos':
+                                $state_order[$state][$last_index]['sys_log'] = 'centos'; break;
+                            case 'debian':
+                                $state_order[$state][$last_index]['sys_log'] = 'debian'; break;
+                            case 'almalinux':
+                                $state_order[$state][$last_index]['sys_log'] = 'almalinux'; break;
+                            case 'fedora':
+                                $state_order[$state][$last_index]['sys_log'] = 'fedora'; break;
+                            case 'rocky':
+                                $state_order[$state][$last_index]['sys_log'] = 'rocky'; break;
+                        }
+                    }
+                }
         }
+        
+        
 
         if ($tickets_response['totalresults'] > 0) {
             $total_tickets = $tickets_response['totalresults'];
@@ -94,7 +154,7 @@ class HomeController extends Controller
 
         // $vps = $this->getVPSList();
 
-        return view('pages/dashboard', compact('tickets', 'total_tickets', 'states', 'state_order'));
+        return view('pages/dashboard', compact('tickets', 'total_tickets', 'states', 'state_order', 'products', 'product_group'));
     }
 
     public function gettickets(Request $request)
@@ -270,9 +330,9 @@ class HomeController extends Controller
         // $post['user'] = Auth::user()->userid;
 
         $vps = $v->listvs();
-
+        // print_r(count($vps));exit;
         print_r($vps);
-        exit;
+        // exit;
         // return $vmList;
     }
 }
