@@ -102,7 +102,7 @@
 
             <div class="progress" id="passwordStrengthBar">
               <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                <span class="sr-only">New Password Rating: 0%</span>
+                <span class="sr-only">Password Rating: 0%</span>
               </div>
             </div>
 
@@ -134,46 +134,42 @@
       $('form').submit(function() {
         $('#loading-bg').css('display', 'flex');
       });
+      
       // password robustness check
       jQuery("#password").keyup(function() {
-		var pwStrengthErrorThreshold = 50;
-		var pwStrengthWarningThreshold = 75;
+        var pwStrengthErrorThreshold = 50;
+        var pwStrengthWarningThreshold = 75;
 
-		var $newPassword1 = jQuery("#newPassword1");
-		var pw = jQuery("#password").val();
-		var pwlength = (pw.length);
-		if (pwlength > 5) pwlength = 5;
-		var numnumeric = pw.replace(/[0-9]/g, "");
-		var numeric = (pw.length - numnumeric.length);
-		if (numeric > 3) numeric = 3;
-		var symbols = pw.replace(/\W/g, "");
-		var numsymbols = (pw.length - symbols.length);
-		if (numsymbols > 3) numsymbols = 3;
-		var numupper = pw.replace(/[A-Z]/g, "");
-		var upper = (pw.length - numupper.length);
-		if (upper > 3) upper = 3;
-		var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
-		if (pwstrength < 0) pwstrength = 0;
-		if (pwstrength > 100) pwstrength = 100;
+        var pw = jQuery("#password").val();
+        var pwlength = (pw.length);
+        if (pwlength > 5) pwlength = 5;
+        var numnumeric = pw.replace(/[0-9]/g, "");
+        var numeric = (pw.length - numnumeric.length);
+        if (numeric > 3) numeric = 3;
+        var symbols = pw.replace(/\W/g, "");
+        var numsymbols = (pw.length - symbols.length);
+        if (numsymbols > 3) numsymbols = 3;
+        var numupper = pw.replace(/[A-Z]/g, "");
+        var upper = (pw.length - numupper.length);
+        if (upper > 3) upper = 3;
+        var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
+        if (pwstrength < 0) pwstrength = 0;
+        if (pwstrength > 100) pwstrength = 100;
 
-		$newPassword1.removeClass('has-error has-warning has-success');
-		jQuery("#password").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
-		jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
-		jQuery("#passwordStrengthBar .progress-bar .sr-only").html('New Password Rating: ' + pwstrength + '%');
-		if (pwstrength < pwStrengthErrorThreshold) {
-			$newPassword1.addClass('has-error');
-			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-remove');
-			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-danger");
-		} else if (pwstrength < pwStrengthWarningThreshold) {
-			$newPassword1.addClass('has-warning');
-			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-warning-sign');
-			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-warning");
-		} else {
-			$newPassword1.addClass('has-success');
-			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-ok');
-			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
-		}
-	});
+        jQuery("#password").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
+        jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
+        jQuery("#passwordStrengthBar .progress-bar .sr-only").html('Password Rating: ' + pwstrength + '%');
+        if (pwstrength < pwStrengthErrorThreshold) {
+          jQuery("#password").next('.form-control-feedback').addClass('glyphicon-remove');
+          jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-danger");
+        } else if (pwstrength < pwStrengthWarningThreshold) {
+          jQuery("#password").next('.form-control-feedback').addClass('glyphicon-warning-sign');
+          jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-warning");
+        } else {
+          jQuery("#password").next('.form-control-feedback').addClass('glyphicon-ok');
+          jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
+        }
+      });
     });
   </script>
 </body>

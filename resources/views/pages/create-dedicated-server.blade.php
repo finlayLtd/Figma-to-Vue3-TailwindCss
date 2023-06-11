@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
 <section class="dashboard">
 	<div class="container">
 		<h2 class="title">Create Dedicated Server</h2>
@@ -45,9 +43,7 @@
 					<div class="card-item data-region-card p-4 ">
 						<div class="server-price mb-4">
 							<span class="price">€50<span class="month">/ month</span></span>
-
 						</div>
-
 						<div class="">
 							<ul class="server-features">
 								<li><img src="assets/img/cpu.png" alt="">1x Intel E5-2697v3 (14C, 28T)</li>
@@ -63,7 +59,6 @@
 							</div>
 							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>
 						</div>
-
 					</div>
 				</div>
 
@@ -71,9 +66,7 @@
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
 							<span class="price">€100<span class="month">/ month</span></span>
-
 						</div>
-
 						<div class="">
 							<ul class="server-features">
 								<li><img src="assets/img/cpu.png" alt="">1x Intel E5-2697v3 (14C, 28T)</li>
@@ -95,9 +88,7 @@
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
 							<span class="price">€120<span class="month">/ month</span></span>
-
 						</div>
-
 						<div class="">
 							<ul class="server-features">
 								<li><img src="assets/img/cpu.png" alt="">1x Intel E5-2697v3 (14C, 28T)</li>
@@ -119,9 +110,7 @@
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
 							<span class="price">€150<span class="month">/ month</span></span>
-
 						</div>
-
 						<div class="">
 							<ul class="server-features">
 								<li><img src="assets/img/cpu.png" alt="">1x Intel E5-2697v3 (14C, 28T)</li>
@@ -142,31 +131,93 @@
 			</div>
 		</div>
 
-
-
 		<div class="sub-section">
 			<h3 class="sub-title">Configure Server</h3>
 			<div class="row">
 				<div class="configure-server-form">
 					<form>
 						<div class="mb-3">
-							<label for="exampleInputEmail1" class="form-label">Dedicated Server Hostname</label>
-							<input type="email" class="form-control" placeholder="Enter your VPS Hostname" id="exampleInputEmail1" aria-describedby="emailHelp" value="realTest.com">
+							<label for="email" class="form-label">VPS Hostname</label>
+							<input type="email" class="form-control" placeholder="Enter your VPS Hostname" id="email" name="email" aria-describedby="emailHelp" value="realTest.com">
 						</div>
 						<div class="mb-4">
-							<label for="exampleInputPassword1" class="form-label">Server Password</label>
-							<input type="password" class="form-control" placeholder="••••••••••" id="exampleInputPassword1">
+							<label for="password" class="form-label">VPS Password</label>
+							<input type="password" class="form-control mb-4" placeholder="••••••••••" id="password" name="password" required>
+							<div class="progress" id="passwordStrengthBar">
+							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+								<span class="sr-only">Password Rating: 0%</span>
+							</div>
+							</div>
+							<div class="alert alert-info" style="text-align: left;">
+								<strong>Tips for a good password</strong><br>Use both upper and lowercase characters<br>Include at least one symbol (only ! and @)<br>Don't use dictionary words and special characters
+							</div>
 						</div>
 						<div class="mb-3 text-end">
 							<button type="submit" class="btn btn-dark hover-dark-light">Create Server</button>
 						</div>
-
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </section>
 
+<script>
+$(document).ready(function() {
+	$('form').submit(function() {
+		('#loading-bg').css('display', 'flex');
+	});
+
+	// upgraded code
+	jQuery("#password").keyup(function() {
+		var pwStrengthErrorThreshold = 50;
+		var pwStrengthWarningThreshold = 75;
+
+		var pw = jQuery("#password").val();
+
+		// Check if the password contains any disallowed special symbols
+		if (/[^A-Za-z0-9!@]/.test(pw)) {
+			alert("Invalid character detected. Only '!' and '@' are allowed as special symbols.");
+			// Revert the password input to the previous value
+			jQuery("#password").val(prevPassword);
+			return;
+		}
+
+		// Update the previous password value
+		prevPassword = pw;
+
+		var pwlength = (pw.length);
+		if (pwlength > 5) pwlength = 5;
+		var numnumeric = pw.replace(/[0-9]/g, "");
+		var numeric = (pw.length - numnumeric.length);
+		if (numeric > 3) numeric = 3;
+
+		// Update the regular expression to only match "!" and "@"
+		var symbols = pw.replace(/[!@]/g, "");
+		var numsymbols = (pw.length - symbols.length);
+		if (numsymbols > 3) numsymbols = 3;
+
+		var numupper = pw.replace(/[A-Z]/g, "");
+		var upper = (pw.length - numupper.length);
+		if (upper > 3) upper = 3;
+		var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
+		if (pwstrength < 0) pwstrength = 0;
+		if (pwstrength > 100) pwstrength = 100;
+
+		jQuery("#password").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
+		jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
+		jQuery("#passwordStrengthBar .progress-bar .sr-only").html('Password Rating: ' + pwstrength + '%');
+		if (pwstrength < pwStrengthErrorThreshold) {
+			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-remove');
+			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-danger");
+		} else if (pwstrength < pwStrengthWarningThreshold) {
+			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-warning-sign');
+			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-warning");
+		} else {
+			jQuery("#password").next('.form-control-feedback').addClass('glyphicon-ok');
+			jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
+		}
+	});
+});
+</script>
 @endsection

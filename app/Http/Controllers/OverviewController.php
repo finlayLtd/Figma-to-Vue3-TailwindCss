@@ -21,8 +21,9 @@ class OverviewController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages/overview');
+        $vps_id  = $request->vps_id;
+        return view('pages/overview', compact('vps_id'));
     }
 }
