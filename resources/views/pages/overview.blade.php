@@ -5,7 +5,7 @@
 	<div class="container">
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
-				<img src="assets/img/ubuntu-overview.png" alt="">
+				<img src="{{asset('assets/img/ubuntu-overview.png')}}" alt="">
 				<h2 class="title mb-0">Papa-efyu-01.evoxt.com</h2>
 			</div>
 			<div class="overview-info">
@@ -21,7 +21,7 @@
 						<div class="card-item vm-actions">
 							<div class="due-date">
 								<div class="date-image-wrapper">
-									<img src="assets/img/calendar.svg" alt="">
+									<img src="{{asset('assets/img/calendar.svg')}}" alt="">
 								</div>
 								<div class="due-date-info">
 									<h2 class="due-date-title">Due Date</h2>
@@ -40,13 +40,13 @@
 									<tr>
 										<td>Public IPv4</td>
 										<td class="clipboard-input" data-copy="147.189.161.205">147.189.161.205</td>
-										<td><img src="assets/img/copy.svg" class="icon-clipboard"></td>
+										<td><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
 									<tr>
 										<td>Username</td>
 										<td class="clipboard-input" data-copy="root">root</td>
-										<td><img src="assets/img/copy.svg" class="icon-clipboard"></td>
+										<td><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
 									<tr>
@@ -54,7 +54,7 @@
 										<td>
 											<input class="clipboard-input" data-copy="12345678" disabled type="password" value="12345678">
 										</td>
-										<td><img src="assets/img/eye.svg" class="icon-password eye-closed"><img src="assets/img/eye-open.svg" class="icon-password eye-open" style="display:none"><img src="assets/img/copy.svg" class="icon-clipboard"></td>
+										<td><img src="{{asset('assets/img/eye.svg')}}" class="icon-password eye-closed"><img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password eye-open" style="display:none"><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
 								</tbody>
@@ -70,19 +70,19 @@
 								<tbody>
 
 									<tr>
-										<td><img src="assets/img/cpu.png" alt="">CPU</td>
+										<td><img src="{{asset('assets/img/cpu.png')}}" alt="">CPU</td>
 										<td>12vCore</td>
 										<td></td>
 									</tr>
 
 									<tr>
-										<td><img src="assets/img/ram.png" alt="">Ram</td>
+										<td><img src="{{asset('assets/img/ram.png')}}" alt="">Ram</td>
 										<td>512 MB</td>
 										<td></td>
 									</tr>
 
 									<tr>
-										<td><img src="assets/img/hard-disk.png" alt="">Storage</td>
+										<td><img src="{{asset('assets/img/hard-disk.png')}}" alt="">Storage</td>
 										<td>5 GB</td>
 										<td></td>
 									</tr>
@@ -155,7 +155,7 @@
 
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img class="not-filterable" src="assets/img/flag-nl.png" alt="">
+												<img class="not-filterable" src="{{asset('assets/img/flag-nl.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Netherlands, Amsterdam</h4>
@@ -166,7 +166,7 @@
 									<div class="col-12 col-lg-4 col-md-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img class="not-filterable" src="assets/img/windows-logo.png" alt="">
+												<img class="not-filterable" src="{{asset('assets/img/windows-logo.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Papa-efyu-01.evoxt.com</h4>
@@ -187,7 +187,7 @@
 									<div class="col-12 col-lg-4 col-md-12">
 										<div class="col-content-wrapper">
 											<div class="img-wrapper">
-												<img class="dark-img-filter" src="assets/img/cloud-connection.png" alt="">
+												<img class="dark-img-filter" src="{{asset('assets/img/cloud-connection.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">192.178.12.14</h4>
@@ -202,13 +202,13 @@
 								</div>
 								<div class="d-flex justify-content-end px-0 server-btn-options">
 									<button class="btn img-btn me-0 me-lg-2">
-										<img src="assets/img/power.svg" alt="">Shutdown
+										<img src="{{asset('assets/img/power.svg')}}" alt="">Shutdown
 									</button>
 									<button class="btn img-btn me-0 me-lg-2">
-										<img src="assets/img/reboot.svg" alt="">Reboot
+										<img src="{{asset('assets/img/reboot.svg')}}" alt="">Reboot
 									</button>
 									<button class="btn img-btn mt-2 mt-lg-0">
-										<img class="dark-img-filter" src="assets/img/power-off.svg" alt="">Power Off
+										<img class="dark-img-filter" src="{{asset('assets/img/power-off.svg')}}" alt="">Power Off
 									</button>
 								</div>
 							</div>
@@ -224,7 +224,7 @@
 									<div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img src="assets/img/cpu.png" alt="">
+												<img src="{{asset('assets/img/cpu.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">CPU</h4>
@@ -235,7 +235,7 @@
 									<div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img src="assets/img/ram.png" alt="">
+												<img src="{{asset('assets/img/ram.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">RAM</h4>
@@ -246,7 +246,7 @@
 									<div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img src="assets/img/hard-disk.png" alt="">
+												<img src="{{asset('assets/img/hard-disk.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Storage</h4>
@@ -257,7 +257,7 @@
 									<div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img src="assets/img/speedometer.png" alt="">
+												<img src="{{asset('assets/img/speedometer.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Network Speed</h4>
@@ -268,7 +268,7 @@
 									<div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper">
 											<div class="img-wrapper">
-												<img src="assets/img/cable.png" alt="">
+												<img src="{{asset('assets/img/cable.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Bandwith</h4>
@@ -296,14 +296,14 @@
 
 									<div class="col-content-wrapper">
 
-										<img class="dark-img-filter" src="assets/img/cart1.png" alt="">
+										<img class="dark-img-filter" src="{{asset('assets/img/cart1.png')}}" alt="">
 
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="col-content-wrapper">
 
-										<img class="dark-img-filter" src="assets/img/cart2.png" alt="">
+										<img class="dark-img-filter" src="{{asset('assets/img/cart2.png')}}" alt="">
 
 
 									</div>

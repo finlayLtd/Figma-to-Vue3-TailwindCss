@@ -34,7 +34,7 @@ Route::group([
 
     Route::get('/create-vps-server', 'CreateVpsServerController@index')->name('create-vps-server');
 
-    Route::get('/overview', 'OverviewController@index')->name('overview');
+    Route::get('/overview/{vps_id}', 'OverviewController@index')->name('overview');
 
     Route::get('/servers', 'ServersController@index')->name('servers');
 

@@ -81,7 +81,7 @@
 															</div>
 															<div class="options-toggle-dropdown">
 																<ul>
-																	<li><a href="{{ url('/overview') }}">Launch Control Panel</a></li>
+																	<li><a href="{{ url('/overview/1') }}">Launch Control Panel</a></li>
 																	<li><a href="#">View Invoices</a></li>
 																</ul>
 															</div>                    			
