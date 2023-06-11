@@ -127,6 +127,10 @@
 										</div>
 									</div>
 								@endforeach
+								@else
+									@if($state == 'Active')
+									<h5 style="margin-top: 20px; text-align: center;">You don’t have an active product yet</h5>
+									@endif
 								@endif
 							</div>
 						</div>	
