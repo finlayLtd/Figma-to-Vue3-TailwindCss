@@ -3142,3 +3142,7 @@ section.login {
 .glyphicon-warning-sign:before {
     content: "\e107";
 }
+
+.register-wrapper{
+	padding-top: 0px !important;
+}
