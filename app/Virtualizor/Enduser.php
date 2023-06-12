@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Virtualizor;
 
 //////////////////////////////////////////////////////////////
 //===========================================================
@@ -25,9 +25,9 @@ namespace App;
 
 class Enduser {
 	
-	var $key = '';
-	var $pass = '';
-	var $ip = '';
+	var $key = 'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
+	var $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
+	var $ip = '37.59.33.165';
 	var $port = 4083;
 	var $protocol = 'https';
 	var $error = array();

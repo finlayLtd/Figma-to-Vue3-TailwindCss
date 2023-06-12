@@ -8,8 +8,7 @@ use Auth;
 use DOMDocument;
 use DOMXPath;
 use sburina\Whmcs;
-use App\Enduser;
-use App\Admin;
+use App\Virtualizor\Admin;
 
 class HomeController extends Controller
 {
@@ -21,6 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->virtualizorAdmin = new Admin();
     }
 
     /**
@@ -64,21 +64,10 @@ class HomeController extends Controller
             'action' => 'GetProducts',
         ]);
 
-        // $products_group_response = (new \Sburina\Whmcs\Client)->post([
-        //     'action' => 'GetProductGroups',
-        // ]);
-
-        // print_r($products_group_response);exit;
-
         if ($products_response['totalresults'] > 0) {
-            foreach ($products_response['products']['product'] as $key => $product) {
-                // unset($products_response['products']['product'][$key]['pricing']);
-                // unset($products_response['products']['product'][$key]['configoptions']);
-            }
             $products = $products_response['products']['product'];
         }
 
-        // print_r($products);exit;
         if(count($products)){
             foreach($products as $key=>$product){
                 $products[$key]['server_info'] = array();
@@ -95,16 +84,8 @@ class HomeController extends Controller
 
                     array_push($products[$key]['server_info'],$span_value." ".$value);
                 }
-
-                // $products_stock_response = (new \Sburina\Whmcs\Client)->post([
-                //     'action' => 'GetStock',
-                //     'pid'=>$product['pid']
-                // ]);
-
-                // print_r($products_stock_response);exit;
             }
         }
-
         if ($orders_response['totalresults'] > 0) {
             $total_tickets = $orders_response['totalresults'];
             $orders = $orders_response['products']['product'];
@@ -117,14 +98,28 @@ class HomeController extends Controller
                 foreach ($orders as $order){
                     if ($order['status'] == $state) {
                         array_push($state_order[$state], $order);
+                        
                         $last_index = count($state_order[$state]) - 1;
-                        if(strpos($order['configoptions']['configoption'][1]['value'],'Netherlands') !== false){
-                            $state_order[$state][$last_index]['flag'] = 'flag-en';
-                        }else{
+                        if(strpos($order['groupname'],'Netherlands') !== false){
                             $state_order[$state][$last_index]['flag'] = 'flag-nl';
+                        }else{
+                            $state_order[$state][$last_index]['flag'] = 'flag-en';
                         }
                         
-                        $system = explode('-',$order['configoptions']['configoption'][1]['value'])[0];
+                        if($state == 'Active'){
+                            $page = 0;
+                            $reslen = 0;
+                            //For Searching
+                            $post = array();
+                            $post['vpsid'] = $order['customfields']['customfield'][1]['value'];
+                            $vps_info = $this->virtualizorAdmin->listvs($page ,$reslen ,$post);
+                            $vps_info = $vps_info[$post['vpsid']];
+                            $system = explode('-',$vps_info['os_name'])[0];
+
+                        }else{
+                            $system = explode('-',$order['configoptions']['configoption'][1]['value'])[0];
+                        }
+
                         switch($system){
                             case 'windows':
                                 $state_order[$state][$last_index]['sys_log'] = 'windows'; break;
@@ -145,14 +140,10 @@ class HomeController extends Controller
                 }
         }
         
-        
-
         if ($tickets_response['totalresults'] > 0) {
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
         }
-
-        // $vps = $this->getVPSList();
 
         return view('pages/dashboard', compact('tickets', 'total_tickets', 'states', 'state_order', 'products', 'product_group'));
     }
@@ -315,24 +306,5 @@ class HomeController extends Controller
             $users_list = $check_user_response['client']['users']['user'];
         }
         return view('pages/settings_userManage', compact('users_list', 'message'));
-    }
-
-
-
-    private function getVPSList()
-    {
-        $key =  'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
-        $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
-        $ip = '37.59.33.165';
-               
-        $v = new Admin($ip, $key, $pass);
-        // $post = array();
-        // $post['user'] = Auth::user()->userid;
-
-        $vps = $v->listvs();
-        // print_r(count($vps));exit;
-        print_r($vps);
-        // exit;
-        // return $vmList;
     }
 }
