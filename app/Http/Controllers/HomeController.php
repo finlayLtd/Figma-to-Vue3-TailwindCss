@@ -30,6 +30,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // var_dump(Auth::user());
+        // exit();
         $total_tickets = 0;
         $tickets = [];
         $products = [];

@@ -73,10 +73,11 @@
                             <div class="options-toggle-dropdown">
                                 <ul>
                                     <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="{{asset('assets/img/profile.png')}}" alt="">
-                                        {{ Auth::user()->firstname }}
+                                        {{ Auth::user()->originUserData['firstname'] }}
                                     </li>
 
                                     <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">Settings</a></li>
+                                    <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">Switch Account</a></li>
                                     <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/messages.svg')}}" alt="">Support Tickets</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();

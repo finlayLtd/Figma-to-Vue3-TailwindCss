@@ -5,7 +5,7 @@
 
 <section class="dashboard">
 	<div class="container">
-		<h2 class="title">Create Dedicated Server</h2>
+		<h2 class="title">Create VPS Server</h2>
 
 		<div class="sub-section">
 			<h3 class="sub-title">Choose a OS</h3>
