@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Virtualizor;
 //////////////////////////////////////////////////////////////
 //===========================================================
 // api.php
@@ -22,9 +22,9 @@ namespace App;
 
 class Admin {
 	
-	var $key = '';
-	var $pass = '';
-	var $ip = '';
+	var $key = 'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
+	var $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
+	var $ip = '37.59.33.165';
 	var $port = 4085;
 	var $protocol = 'https';
 	var $error = array();
@@ -39,14 +39,11 @@ class Admin {
 	 * @param        int $port (Optional) The port to connect to. Port 4085 is the default. 4084 is non-SSL
 	 * @return       NULL
 	 */
-	function __construct($ip, $key, $pass, $port = 4085){
-		$this->key = $key;
-		$this->pass = $pass;
-		$this->ip = $ip;
-		$this->port = $port;
-		if($port != 4085){
-			$this->protocol = 'http';
-		}
+	function __construct(){
+		$this->key = 'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
+		$this->pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
+		$this->ip = '37.59.33.165';
+		$this->port = 4085;
 	}
 	
 	/**

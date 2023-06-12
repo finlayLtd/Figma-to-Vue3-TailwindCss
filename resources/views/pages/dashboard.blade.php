@@ -23,7 +23,7 @@
 					</div>
 
 					<div class="w-100 support-table support-ticket-table mb-4">
-						@include('tables.dashboard-tickettable')
+						@include('tables.tickettable')
 					</div>
 
 					<div class="w-100 server-list-pagination">
@@ -39,92 +39,7 @@
 
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
-				<div class="row mb-3 mb-lg-5 pe-0">
-					@include('tables.services')
-				</div>
-				<div class="tab-content opt-padding" id="pills-tabContent">
-					@foreach($states as $state)
-						@if($state == 'Active') <div class="tab-pane fade show active" id="pills-{{$state}}" role="tabpanel" aria-labelledby="pills-{{$state}}-tab">
-						@else <div class="tab-pane fade" id="pills-{{$state}}" role="tabpanel" aria-labelledby="pills-{{$state}}-tab">
-						@endif
-							<div class="row mb-5">
-								@if(count($state_order))
-								@foreach($state_order[$state] as $order)
-									<div class="col-12 col-lg-4 col-md-6 col-sm-12">
-										<div class="card-item p-4 mb-4">
-											<div class="server-list-item">
-												<div class="server-list-item-wrapper">
-													<div class="image-wrapper">
-														<img src="assets/img/{{ $order['sys_log'] }}-logo.png" alt=""> 
-													</div>
-													<div class="list-item-detail">
-														<h2 class="list-name">
-															{{$order['name']}}
-														</h2>
-														<h3 class="detail">
-															{{$order['configoptions']['configoption'][1]['value']}}
-														</h3>
-														<div class="server-list-options">
-															<div class="options-toggle">
-
-															</div>
-															<div class="options-toggle-dropdown">
-																<ul>
-																	<li><a href="{{ url('/overview/1') }}">Launch Control Panel</a></li>
-																	<li><a href="#">View Invoices</a></li>
-																</ul>
-															</div>                    			
-														</div>                    			
-													</div>
-												</div>
-											</div>
-											<div class="server-list-item">
-												<div class="server-list-item-wrapper">
-													<div class="image-wrapper">
-														<img class="dark-img-filter" src="assets/img/cloud-connection.png" alt="">                    			
-													</div>
-													<div class="list-item-detail">
-														<h2 class="list-name">
-															{{$order['dedicatedip']}}
-														</h2>
-														<h3 class="detail">
-															Created at {{$order['regdate']}}
-														</h3>                    			
-													</div>
-													<div class="server-list-options">
-														@if($state == 'Active')
-															<button class="active-badge"><span class="active-dot"></span>Active</button>
-														@endif
-													</div>
-												</div>
-											</div>
-											<div class="server-list-item">
-												<div class="server-list-item-wrapper">
-													<div class="image-wrapper">
-														<img src="assets/img/{{$order['flag']}}.png" alt="">                    			
-													</div>
-													<div class="list-item-detail">
-														<h2 class="list-name">
-															{{$order['groupname']}}
-														</h2>
-														<h3 class="detail">
-															Hostname: {{$order['domain']}}
-														</h3>                    			
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								@endforeach
-								@else
-									@if($state == 'Active')
-									<h5 style="margin-top: 20px; text-align: center;">You don’t have an active product yet</h5>
-									@endif
-								@endif
-							</div>
-						</div>	
-					@endforeach
-				</div>
+				@include('tables.services')
 			</div>
 		</div>
 

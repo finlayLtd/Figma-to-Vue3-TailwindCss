@@ -6,10 +6,12 @@
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
 				<img src="{{asset('assets/img/ubuntu-overview.png')}}" alt="">
-				<h2 class="title mb-0">Papa-efyu-01.evoxt.com</h2>
+				<h2 class="title mb-0">{{$order_info['name']}}</h2>
 			</div>
 			<div class="overview-info">
-				<span>Created 8 days ago</span>
+				@if($dayDiff > 0 ) <span>Created {{$dayDiff}} days ago</span>
+				@else <span>Created today</span>
+				@endif
 			</div>
 		</div>
 
@@ -25,7 +27,7 @@
 								</div>
 								<div class="due-date-info">
 									<h2 class="due-date-title">Due Date</h2>
-									<span>2023-17-05</span>
+									<span>{{$order_info['regdate']}}</span>
 								</div>
 							</div>
 						</div>
@@ -39,7 +41,7 @@
 
 									<tr>
 										<td>Public IPv4</td>
-										<td class="clipboard-input" data-copy="147.189.161.205">147.189.161.205</td>
+										<td class="clipboard-input" data-copy="{{$order_info['dedicatedip']}}">{{$order_info['dedicatedip']}}</td>
 										<td><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
@@ -71,19 +73,19 @@
 
 									<tr>
 										<td><img src="{{asset('assets/img/cpu.png')}}" alt="">CPU</td>
-										<td>12vCore</td>
+										<td>{{ $detail_info[0] }}</td>
 										<td></td>
 									</tr>
 
 									<tr>
 										<td><img src="{{asset('assets/img/ram.png')}}" alt="">Ram</td>
-										<td>512 MB</td>
+										<td>{{ $detail_info[1] }}</td>
 										<td></td>
 									</tr>
 
 									<tr>
 										<td><img src="{{asset('assets/img/hard-disk.png')}}" alt="">Storage</td>
-										<td>5 GB</td>
+										<td>{{ $detail_info[2] }}</td>
 										<td></td>
 									</tr>
 								</tbody>
@@ -107,6 +109,7 @@
 							<li class="nav-item" role="presentation">
 								<button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">Overview</button>
 							</li>
+							@if($order_info['status'] == 'Active')
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-analytics-tab" data-bs-toggle="pill" data-bs-target="#pills-analytics" type="button" role="tab" aria-controls="pills-analytics" aria-selected="false">Analytics</button>
 							</li>
@@ -134,6 +137,7 @@
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings" aria-selected="false">Settings</button>
 							</li>
+							@endif
 						</ul>
 
 					</div>
@@ -155,22 +159,22 @@
 
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img class="not-filterable" src="{{asset('assets/img/flag-nl.png')}}" alt="">
+												<img class="not-filterable" src="{{asset('assets/img/'.$flag.'.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">Netherlands, Amsterdam</h4>
-												<p class="description2">1x Intel E5-2697v3 (14C, 28T)</p>
+												<h4 class="title2">{{$order_info['groupname']}}</h4>
+												<p class="description2">{{$order_info['domain']}}</p>
 											</div>
 										</div>
 									</div>
 									<div class="col-12 col-lg-4 col-md-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
-												<img class="not-filterable" src="{{asset('assets/img/windows-logo.png')}}" alt="">
+												<img class="not-filterable" src="{{asset('assets/img/'.$sys_logo.'-logo.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">Papa-efyu-01.evoxt.com</h4>
-												<p class="description2">Windows RDP 2019</p>
+												<h4 class="title2">{{$order_info['name']}}</h4>
+												<p class="description2">{{$system}}</p>
 											</div>
 
 											<div class="server-list-options me-3 me-lg-4">
@@ -190,16 +194,18 @@
 												<img class="dark-img-filter" src="{{asset('assets/img/cloud-connection.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">192.178.12.14</h4>
-												<p class="description2">Created at 2023-13-03</p>
+												<h4 class="title2">{{$order_info['dedicatedip']}}</h4>
+												<p class="description2">Created at {{$order_info['regdate']}}</p>
 											</div>
-
+											@if($order_info['status'] == 'Active')
 											<div class="server-list-options me-3 me-lg-4">
 												<button class="active-badge"><span class="active-dot"></span>Active</button>
 											</div>
+											@endif
 										</div>
 									</div>
 								</div>
+								@if($order_info['status'] == 'Active')
 								<div class="d-flex justify-content-end px-0 server-btn-options">
 									<button class="btn img-btn me-0 me-lg-2">
 										<img src="{{asset('assets/img/power.svg')}}" alt="">Shutdown
@@ -211,9 +217,10 @@
 										<img class="dark-img-filter" src="{{asset('assets/img/power-off.svg')}}" alt="">Power Off
 									</button>
 								</div>
+								@endif
 							</div>
 						</div>
-
+						@if($order_info['status'] == 'Active')
 						<div class="tab-inner">
 							<div class="row">
 								<h3 class="title fs-17">Resource Usage</h3>
@@ -228,7 +235,7 @@
 											</div>
 											<div class="info">
 												<h4 class="title2">CPU</h4>
-												<p class="description2"><span>5.05%</span> of 1 CPU</p>
+												<p class="description2"><span>{{$vps_info['pie_data']['server_cpu']['percent']}}%</span> of {{$vps_info['vps_data'][$vpsid]['cores']}} CPU</p>
 											</div>
 										</div>
 									</div>
@@ -239,7 +246,7 @@
 											</div>
 											<div class="info">
 												<h4 class="title2">RAM</h4>
-												<p class="description2"><span>81.85%</span> of 512 MB</p>
+												<p class="description2"><span>{{number_format(($vps_info['vps_data'][$vpsid]['used_ram']/$vps_info['vps_data'][$vpsid]['ram'])*100, 2)}}%</span> of {{$detail_info[1]}}</p>
 											</div>
 										</div>
 									</div>
@@ -250,7 +257,7 @@
 											</div>
 											<div class="info">
 												<h4 class="title2">Storage</h4>
-												<p class="description2"><span>45%</span> of 5 GB</p>
+												<p class="description2"><span>{{number_format($vps_info['vps_data'][$vpsid]['used_disk'], 2)}} %</span> of {{$vps_info['vps_data'][$vpsid]['disk']}} GB</p>
 											</div>
 										</div>
 									</div>
@@ -279,6 +286,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 					</div>
 
 					<!--analytics-->
@@ -568,8 +576,9 @@
 													</div>
 												</div>
 
-												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;
-  margin: 0 auto; color: rgba(23, 30, 38, 0.75);">An invoice will be generated 7 days before the service's due date. Click Renew Service to manually renew your service before invoice generation.</p>
+												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;margin: 0 auto; color: rgba(23, 30, 38, 0.75);">
+													An invoice will be generated 7 days before the service's due date. Click Renew Service to manually renew your service before invoice generation.
+												</p>
 
 
 											</div>
@@ -658,8 +667,9 @@
 													</div>
 												</div>
 
-												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;
-  margin: 0 auto; color: rgba(23, 30, 38, 0.75);">We will not process any refund request submitted through cancellation request. Please do not file for a cancellation if you wish to request for a refund, open a ticket to request for a refund.</p>
+												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;margin: 0 auto; color: rgba(23, 30, 38, 0.75);">
+													We will not process any refund request submitted through cancellation request. Please do not file for a cancellation if you wish to request for a refund, open a ticket to request for a refund.
+												</p>
 											</div>
 										</div>
 
@@ -682,8 +692,9 @@
 													</div>
 												</div>
 
-												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;
-  margin: 0 auto; color: rgba(23, 30, 38, 0.75);">This is subject to approval according to our Terms of Service.</p>
+												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center; margin: 0 auto; color: rgba(23, 30, 38, 0.75);">
+													This is subject to approval according to our Terms of Service.
+												</p>
 											</div>
 										</div>
 
