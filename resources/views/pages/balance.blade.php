@@ -108,20 +108,20 @@
 											</span>
 										</td>
 										@elseif($invoice['status'] == 'Unpaid')
-										<td class="in-progress-cell">
+										<td class="cancelled-cell">
 											<span>
 												{{ $invoice['status'] }}
 											</span>
 										</td>
 										@else
-										<td class="cancelled-cell">
+										<td class="in-progress-cell">
 											<span>
 												{{ $invoice['status'] }}
 											</span>
 										</td>
 										@endif
 										<td class="text-center">
-											<a onclick="windowOpen({{ $invoice['id'] }})">
+											<a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank">
 												<img src="assets/img/eye-open.svg" class="icon-password view-invoice">
 											</a>
 										</td>
@@ -183,19 +183,19 @@
 											</span>
 										</td>
 										@elseif($invoice['status'] == 'Unpaid')
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
 										<td class="cancelled-cell">
 											<span>
 												{{ $invoice['status'] }}
 											</span>
 										</td>
+										@else
+										<td class="in-progress-cell">
+											<span>
+												{{ $invoice['status'] }}
+											</span>
+										</td>
 										@endif
-										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -233,19 +233,19 @@
 											</span>
 										</td>
 										@elseif($invoice['status'] == 'Unpaid')
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
 										<td class="cancelled-cell">
 											<span>
 												{{ $invoice['status'] }}
 											</span>
 										</td>
+										@else
+										<td class="in-progress-cell">
+											<span>
+												{{ $invoice['status'] }}
+											</span>
+										</td>
 										@endif
-										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -283,19 +283,19 @@
 											</span>
 										</td>
 										@elseif($invoice['status'] == 'Unpaid')
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
 										<td class="cancelled-cell">
 											<span>
 												{{ $invoice['status'] }}
 											</span>
 										</td>
+										@else
+										<td class="in-progress-cell">
+											<span>
+												{{ $invoice['status'] }}
+											</span>
+										</td>
 										@endif
-										<td class="text-center"><a onclick="windowOpen({{ $invoice['id'] }})"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach

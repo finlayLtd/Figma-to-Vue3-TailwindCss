@@ -29,6 +29,7 @@ Route::group([
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/balance', 'BalanceController@index')->name('balance');
+    Route::get('/invoice-detail/{id}', 'BalanceController@invoiceDetail')->name('invoice-detail');
 
     Route::get('/create-dedicated-server', 'CreateDedicatedServerController@index')->name('create-dedicated-server');
 
@@ -55,6 +56,7 @@ Route::group([
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
 
     Route::get('/ticket-detail/{id}', 'TicketDetailController@index')->name('ticket-detail');
+    
     Route::post('/sendReply', 'TicketDetailController@sendReply')->name('sendReply');
 
     Route::get('/forgot_password', 'ForgotPasswordController@index')->name('forgot_password');
