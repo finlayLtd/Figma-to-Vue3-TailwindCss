@@ -32,6 +32,7 @@ class OverviewController extends Controller
     public function index(Request $request)
     {
         $order_info = [];
+        $oslists = [];
         $order_id  = $request->order_id;
         
         $order_info = $this->getOrderinfo($order_id);
@@ -56,8 +57,16 @@ class OverviewController extends Controller
             $OSlist = $this->getOSlist($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
         }
-        print_r($OSlist);exit;
-        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','OSlist','cpu'));
+
+
+        foreach($OSlist['oslist']['proxk'] as $key=>$os_group){
+            foreach($os_group as $os_id=>$os){
+                $os['group_name'] = $key;
+                if(!isset($os['osid'])) $os['osid'] = $os_id;
+                array_push($oslists,$os);
+            }
+        }
+        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu'));
     }
 
     private function getOrderinfo($order_id){

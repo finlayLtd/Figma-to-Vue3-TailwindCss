@@ -15,6 +15,9 @@
     <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-href.png') }}">
+    
+    <!--  Select2 CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/8de0481deb.js" crossorigin="anonymous"></script>
@@ -125,6 +128,9 @@
         </main>
     </div>
 
+
+    <!-- SELECT2 JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{asset('assets/js/scripts.js')}}"></script>
     <script>
         let Window;// this window is the window where all components can access

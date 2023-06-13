@@ -56,7 +56,11 @@
 										<td>
 											<input class="clipboard-input" data-copy="12345678" disabled type="password" value="12345678">
 										</td>
-										<td><img src="{{asset('assets/img/eye.svg')}}" class="icon-password eye-closed"><img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password eye-open" style="display:none"><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
+										<td>
+											<img src="{{asset('assets/img/eye.svg')}}" class="icon-password eye-closed">
+											<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password eye-open" style="display:none">
+											<img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard">
+										</td>
 									</tr>
 
 								</tbody>
@@ -360,27 +364,51 @@
 							</div>
 							<div class="divider"></div>
 							<div class="row px-0 pt-4">
-								<div class="col-md-12 d-flex flex-column align-items-start">
-
-									<p class="fs-13-5">Select an Operating System / Application to reinstall</p>
-
+								<form class="form-horizontal using-password-strength" method="POST" action="">
+									@csrf
+									<p class="fs-13-5">Select an Operating System</p>
 									<div class="overview-select">
-										<select name="oslist" id="Operating system">
-											<!-- @foreach() -->
-											<option value="">Debian 11</option>
-											<option value="">Debian 12</option>
-											<option value="">Debian 13</option>
+										<select name="oslist" id="Operating-system">
+											@foreach($oslists as $os)
+												<option value="{{$os['osid']}}" data-image="{{asset('assets/img/'.$os['group_name'].'-logo.png')}}">{{ $os['name'] }}</option>
+											@endforeach
 										</select>
 									</div>
 
+									<div id="newPassword1" class="form-group has-feedback has-success">
+										<label for="inputNewPassword1" class="col-sm-4 control-label">New Password</label>
+										<div class="col-sm-5" style="position: relative;">
+											<input type="password" class="form-control" name="newpw" id="inputNewPassword1" autocomplete="off">
+											<img src="assets/img/eye.svg" class="settings-password-img icon-password eye-closed">
+											<img src="assets/img/eye-open.svg" class="settings-password-img icon-password eye-open" style="display:none">
+											<br>
 
-									<div class="overview-button-wrapper">
-										<button class="btn-dark px-4 hover-dark-light">Reinstall</button>
+											<div class="progress" id="passwordStrengthBar">
+												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+													<span class="rating">New Password Rating: 0%</span>
+												</div>
+											</div>
+
+											<div class="alert alert-info">
+											<strong>Tips for a good password</strong><br>Use both upper and lowercase characters<br>Include at least one symbol (only ! and @)<br>Don't use dictionary words and special characters
+											</div>
+										</div>
 									</div>
-
-
-
-								</div>
+									<div id="newPassword2" class="form-group has-feedback has-success">
+										<label for="inputNewPassword2" class="col-sm-4 control-label">Confirm New Password</label>
+										<div class="col-sm-5" style="position: relative;">
+											<input type="password" class="form-control" name="confirmpw" id="inputNewPassword2" autocomplete="off">
+											<img src="assets/img/eye.svg" class="settings-password-img icon-password eye-closed">
+											<img src="assets/img/eye-open.svg" class="settings-password-img icon-password eye-open" style="display:none">
+											<div id="inputNewPassword2Msg"></div>
+										</div>
+									</div>
+									<div class="overview-button-wrapper pt-0 mt-4">
+										<div class="col-sm-5">
+											<button id="submitButton" class="btn-dark px-4 me-2 hover-dark-light" disabled="disabled">Reinstall</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -805,7 +833,70 @@
 @section('script')
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#Operating-system').select2({
+			templateResult: function(data) {
+				if (!data.id) { return data.text; }
+				var $image = $('<img src="' + $(data.element).data('image') + '" class="img-flag" />');
+				var $span = $('<span>' + data.text + '</span>');
+				return $('<span>').append($image).append($span);
+			},
+			templateSelection: function(data) {
+				if (!data.id) { return data.text; }
+				var $image = $('<img src="' + $(data.element).data('image') + '" class="img-flag" />');
+				var $span = $('<span>' + data.text + '</span>');
+				return $('<span>').append($image).append($span);
+			}
+		});
 
+		jQuery("#inputNewPassword1").keyup(function() {
+			var pwStrengthErrorThreshold = 50;
+			var pwStrengthWarningThreshold = 75;
+
+			var pw = jQuery("#inputNewPassword1").val();
+
+			// Check if the password contains any disallowed special symbols
+			if (/[^A-Za-z0-9!@]/.test(pw)) {
+				alert("Invalid character detected. Only '!' and '@' are allowed as special symbols.");
+				// Revert the password input to the previous value
+				jQuery("#inputNewPassword1").val(prevPassword);
+				return;
+			}
+
+			// Update the previous password value
+			prevPassword = pw;
+
+			var pwlength = (pw.length);
+			if (pwlength > 5) pwlength = 5;
+			var numnumeric = pw.replace(/[0-9]/g, "");
+			var numeric = (pw.length - numnumeric.length);
+			if (numeric > 3) numeric = 3;
+
+			// Update the regular expression to only match "!" and "@"
+			var symbols = pw.replace(/[!@]/g, "");
+			var numsymbols = (pw.length - symbols.length);
+			if (numsymbols > 3) numsymbols = 3;
+
+			var numupper = pw.replace(/[A-Z]/g, "");
+			var upper = (pw.length - numupper.length);
+			if (upper > 3) upper = 3;
+			var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
+			if (pwstrength < 0) pwstrength = 0;
+			if (pwstrength > 100) pwstrength = 100;
+
+			jQuery("#inputNewPassword1").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
+			jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
+			jQuery("#passwordStrengthBar .progress-bar .rating").html('Password Rating: ' + pwstrength + '%');
+			if (pwstrength < pwStrengthErrorThreshold) {
+				jQuery("#inputNewPassword1").next('.form-control-feedback').addClass('glyphicon-remove');
+				jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-danger");
+			} else if (pwstrength < pwStrengthWarningThreshold) {
+				jQuery("#inputNewPassword1").next('.form-control-feedback').addClass('glyphicon-warning-sign');
+				jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-warning");
+			} else {
+				jQuery("#inputNewPassword1").next('.form-control-feedback').addClass('glyphicon-ok');
+				jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
+			}
+		});
 	});
 
 	function TurnOnVPS(vpsid){
