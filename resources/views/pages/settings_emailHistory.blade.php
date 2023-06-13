@@ -49,6 +49,7 @@
 								<h3 class="title mb-4">Email History</h3>
 							</div>
 							<div class="divider"></div>
+    						@if(in_array('emails', Auth::user()->permissions))
 							<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
 								<div class="w-100 mb-5 support-table">
 									<table class="table">
@@ -71,6 +72,9 @@
 									</table>
 								</div>
 							</div>
+							@else
+								@include('component.no-permission-go-back')
+							@endif
 						</div>
 					</div>
 				</div>

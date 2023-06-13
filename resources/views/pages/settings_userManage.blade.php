@@ -68,6 +68,8 @@
 				<div class="tab-content settings-tab-content" id="pills-tabContent">
 					<!-- userManagement tab -->
 					<div class="tab-pane fade show active" id="pills-userManagement" role="tabpanel" aria-labelledby="pills-userManagement-tab">
+						
+						@if(Auth::user()->originUserData['email'] == Auth::user()->email)
 						<div class="tab-inner mb-3">
 							<div class="row">
 								<h3 class="title mb-4">User Management ({{ count($users_list) }} {{ count($users_list) == 1 ? 'User' : 'Users' }} found)</h3>
@@ -254,6 +256,9 @@
 
 							</div>
 						</div>
+						@else
+							@include('component.no-permission-go-back')
+						@endif
 					</div>
 				</div>
 			</div>

@@ -29,11 +29,18 @@
 										@foreach ($clients as $item)
 											<tr>
 												<td>
-													{{ $item['email'] }}
-													@if($item['email'] == $originUserData['email'])
-													<span class="badge bg-info">Owner</span>
-													@endif
-													<br>
+													<form method="POST" action="{{ route('switch') }}">
+														@csrf
+														<input type="hidden" id="switching_email" name="switching_email"  value="{{ $item['email'] }}">
+														<button stype="submit" style="background: none;  border: none;  padding: 10px;">{{ $item['email'] }}</button>
+														@if($item['email'] == $originUserData['email'])
+															<span class="badge bg-info">Owner</span>
+														@endif
+														@if($item['email'] == Auth::user()->email)
+															<span class="badge bg-info">Current logged in account</span>
+														@endif
+														<br>
+													</form>
 												</td>
 											</tr>
 										@endforeach	

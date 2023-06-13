@@ -48,6 +48,9 @@ Route::group([
 
     Route::get('/support-ticket', 'SupportTicketController@index')->name('support-ticket');
     Route::get('/switch-account', 'SwitchAccountController@index')->name('switch-account');
+    Route::post('/switch', 'SwitchAccountController@switch')->name('switch');
+
+    
 
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
 

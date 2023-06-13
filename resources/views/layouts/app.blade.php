@@ -77,7 +77,9 @@
                                     </li>
 
                                     <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">Settings</a></li>
-                                    <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">Switch Account</a></li>
+                                    @if(Auth::user()->originUserData['clients'] && count( Auth::user()->originUserData['clients']) > 1)
+                                        <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">Switch Account</a></li>
+                                    @endif
                                     <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/messages.svg')}}" alt="">Support Tickets</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();

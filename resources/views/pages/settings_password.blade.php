@@ -65,6 +65,7 @@
 								<h3 class="title mb-4">Change Password</h3>
 							</div>
 							<div class="divider"></div>
+							@if(in_array('profile', Auth::user()->permissions))
 							<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
 								<form class="form-horizontal using-password-strength" method="POST" action="{{ route('change_password') }}">
 									@csrf
@@ -113,6 +114,9 @@
 								</form>
 
 							</div>
+							@else
+								@include('component.no-permission-go-back')
+							@endif
 						</div>
 					</div>
 				</div>

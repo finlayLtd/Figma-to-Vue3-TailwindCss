@@ -66,6 +66,7 @@
 								<h3 class="title mb-4">Your Profile</h3>
 							</div>
 							<div class="divider"></div>
+							@if(in_array('profile', Auth::user()->permissions))
 							<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
 
 								<div class="col-12 col-lg-6 tab-inner py-0 p-mb-0">
@@ -94,6 +95,9 @@
 									</form>
 								</div>
 							</div>
+							@else
+								@include('component.no-permission-go-back')
+							@endif
 						</div>
 
 					</div>

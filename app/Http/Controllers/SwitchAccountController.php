@@ -43,4 +43,43 @@ class SwitchAccountController extends Controller
         return view('pages/switch-account',compact('clients','originUserData'));
     }
 
+    public function switch(Request $request)
+    {
+        $originUserData = Auth::user()->originUserData;
+
+        // default system to set the session again!(switch account)
+        $userAttributes = [];
+        $permissions = ['profile', 'contacts', 'products', 'manageproducts', 'productsso', 'domains', 'managedomains', 'invoices', 'quotes', 'tickets', 'affiliates', 'emails', 'orders'];
+
+        
+
+        $userAttributes = (array) (new \Sburina\Whmcs\Client)->post([
+            'action' => 'getClientsDetails',
+            'email' => $request->switching_email,
+        ]);
+
+        $userAttributes['originUserData'] = $originUserData;
+        
+       
+
+        $permission_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetUserPermissions',
+            'client_id' => $userAttributes['client_id'], //The ID of the client the invite is for
+            'user_id' => $userAttributes['originUserData']['id'],
+        ]);
+
+        if ($permission_response['result'] == 'success') {
+            $permissions = $permission_response['permissions'];
+        }
+
+        $userAttributes['permissions'] = $permissions;
+
+        session()->put(config('whmcs.session_key'), $userAttributes);
+
+
+        return redirect()->route('dashboard');
+    }
+
+
+
 }

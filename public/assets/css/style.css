@@ -3146,3 +3146,11 @@ section.login {
 .register-wrapper{
 	padding-top: 0px !important;
 }
+
+.error-container {
+    text-align: center;
+}
+
+.error-container .buttons {
+    margin: 25px 0;
+}

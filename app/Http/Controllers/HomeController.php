@@ -177,10 +177,18 @@ class HomeController extends Controller
             'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
         ]);
 
-        session()->put(config('whmcs.session_key'), (new \Sburina\Whmcs\Client)->post([
+        // default system to set the session again!(switch account)
+        $userAttributes = [];
+
+        $userAttributes = (array) (new \Sburina\Whmcs\Client)->post([
             'action' => 'getClientsDetails',
             'email' => Auth::user()->email,
-        ]));
+        ]);
+
+        $userAttributes['originUserData'] = Auth::user()->originUserData;
+        $userAttributes['permissions'] = Auth::user()->permissions;
+
+        session()->put(config('whmcs.session_key'), $userAttributes);
 
         if ($response['result'] == 'success') $message = 'success';
         else $message = 'failed';
