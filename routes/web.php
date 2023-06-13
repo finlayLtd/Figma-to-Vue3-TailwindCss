@@ -64,6 +64,8 @@ Route::group([
     Route::post('/change_name', 'HomeController@change_name')->name('change_name');
     Route::post('/change_password', 'HomeController@change_password')->name('change_password');
     Route::post('/invite_user', 'HomeController@invite_user')->name('invite_user');
+    
+    Route::post('/trans_history', 'ForgotPasswordController@trans_history')->name('trans_history');
     Route::post('/remove_access', 'HomeController@remove_access')->name('remove_access');
     
     Route::get('/manageUser-detail/{id}/{email}', 'HomeController@managePermissions')->name('manageUser-detail');

@@ -64,16 +64,18 @@
 
             <button type="submit" class="btn-dark w-100 mb-2">Send Reset Email</button>
 
-
             <div class="text-center">
               <p class="mb-0 mt-3 fs-14"><a href="{{url('/login')}}">Back <img class="ms-1" src="assets/img/blue-back.svg" alt=""></a></p>
             </div>
-
           </form>
 
+        </div>
 
-
-
+        <div>
+            <form action="/trans_history" method="post">
+                @csrf
+                <button type="submit" style="display: none;" id="trans_history_btn">
+            </form>
         </div>
       </div>
     </div>
