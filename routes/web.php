@@ -35,6 +35,9 @@ Route::group([
     Route::get('/create-vps-server', 'CreateVpsServerController@index')->name('create-vps-server');
 
     Route::get('/overview/{order_id}', 'OverviewController@index')->name('overview');
+    Route::post('/overview/turnon', 'OverviewController@turnon');
+    Route::post('/overview/turnoff', 'OverviewController@turnoff');
+    Route::post('/overview/reboot', 'OverviewController@reboot');
 
     Route::get('/servers', 'ServersController@index')->name('servers');
 
@@ -42,9 +45,6 @@ Route::group([
     Route::get('/settings_password', 'SettingsController@settings_password')->name('settings_password');
     Route::get('/settings_userManage', 'SettingsController@settings_userManage')->name('settings_userManage');
     Route::get('/settings_emailHistory', 'SettingsController@settings_emailHistory')->name('settings_emailHistory');
-
-    
-    
 
     Route::get('/support-ticket', 'SupportTicketController@index')->name('support-ticket');
     Route::get('/switch-account', 'SwitchAccountController@index')->name('switch-account');
