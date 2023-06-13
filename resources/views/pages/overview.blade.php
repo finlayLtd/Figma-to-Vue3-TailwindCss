@@ -207,13 +207,16 @@
 								</div>
 								@if($order_info['status'] == 'Active')
 								<div class="d-flex justify-content-end px-0 server-btn-options">
-									<button class="btn img-btn me-0 me-lg-2">
+									<button class="btn img-btn me-0 me-lg-2" onclick="TurnOnVPS({{ $vpsid }})">
+										<i class="fa fa-play" style="color:#3FBB27;"></i>&nbsp;&nbsp;Start
+									</button>
+									<button class="btn img-btn me-0 me-lg-2" onclick="TurnOffVPS({{ $vpsid }})">
 										<img src="{{asset('assets/img/power.svg')}}" alt="">Shutdown
 									</button>
-									<button class="btn img-btn me-0 me-lg-2">
+									<button class="btn img-btn me-0 me-lg-2" onclick="RebootVPS({{ $vpsid }})">
 										<img src="{{asset('assets/img/reboot.svg')}}" alt="">Reboot
 									</button>
-									<button class="btn img-btn mt-2 mt-lg-0">
+									<button class="btn img-btn mt-2 mt-lg-0" onclick="PowerOffVPS({{ $vpsid }})">
 										<img class="dark-img-filter" src="{{asset('assets/img/power-off.svg')}}" alt="">Power Off
 									</button>
 								</div>
@@ -235,7 +238,7 @@
 											</div>
 											<div class="info">
 												<h4 class="title2">CPU</h4>
-												<p class="description2"><span>{{$vps_info['pie_data']['server_cpu']['percent']}}%</span> of {{$vps_info['vps_data'][$vpsid]['cores']}} CPU</p>
+												<p class="description2"><span>{{$cpu['percent']}}%</span> of {{$vps_info['vps_data'][$vpsid]['cores']}} CPU</p>
 											</div>
 										</div>
 									</div>
@@ -362,7 +365,8 @@
 									<p class="fs-13-5">Select an Operating System / Application to reinstall</p>
 
 									<div class="overview-select">
-										<select name="" id="">
+										<select name="oslist" id="Operating system">
+											<!-- @foreach() -->
 											<option value="">Debian 11</option>
 											<option value="">Debian 12</option>
 											<option value="">Debian 13</option>
@@ -796,4 +800,81 @@
 		</div>
 	</div>
 </section>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+	$(document).ready(function() {
+
+	});
+
+	function TurnOnVPS(vpsid){
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/turnon') }}",
+            method:'post',
+            data: {
+                vpsid: vpsid
+            },
+            success:function(data){
+				$('#loading-bg').css('display', 'none');
+            },
+        });
+	}
+
+	function TurnOffVPS(vpsid){
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/turnoff') }}",
+            method:'post',
+            data: {
+                vpsid: vpsid
+            },
+            success:function(data){
+				$('#loading-bg').css('display', 'none');
+            },
+        });
+	}
+
+	function RebootVPS(vpsid){
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/reboot') }}",
+            method:'post',
+            data: {
+                vpsid: vpsid
+            },
+            success:function(data){
+				$('#loading-bg').css('display', 'none');
+            },
+        });
+	}
+
+	function PowerOffVPS(vpsid){
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/poweroff') }}",
+            method:'post',
+            data: {
+                vpsid: vpsid
+            },
+            success:function(data){
+				$('#loading-bg').css('display', 'none');
+            },
+        });
+	}
+
+</script>
 @endsection

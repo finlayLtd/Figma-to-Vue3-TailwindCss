@@ -54,9 +54,10 @@ class OverviewController extends Controller
         if($order_info['status'] == 'Active'){
             $vps_info = $this->getVpsStatistics($vpsid);
             $OSlist = $this->getOSlist($vpsid);
+            $cpu = $this->getCpuStatistics($vpsid);
         }
         print_r($OSlist);exit;
-        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info'));
+        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','OSlist','cpu'));
     }
 
     private function getOrderinfo($order_id){
@@ -147,12 +148,63 @@ class OverviewController extends Controller
     private function getVpsStatistics($vpsid){
         $post = array();
         $post['vpsid'] = $vpsid; //Set this only when you want vps_data
+        $post['show'] = date("Ym"); //Set this only when you want vps_data
         $vps_info = $this->virtualizorAdmin->vps_stats($post);
         return $vps_info;
     }
 
+    private function getCpuStatistics($vpsid){
+        $vps_info = $this->virtualizorAdmin->cpu($vpsid);
+        return $vps_info;
+    }
+
     private function getOSlist(){
-        $oslist = $this->virtualizorAdmin->os();
+        $oslist = $this->virtualizorAdmin->ostemplates();
         return $oslist;
     }
+
+    public function turnon(Request $request){
+        $vpsid = $request->vpsid;
+        $output = $this->virtualizorAdmin->start($vpsid);
+        if($output['done_msg'] == 'VPS has been started successfully'){
+            return response()->json($output['done_msg'], 200);
+        }else{
+            $error = "Please try again!";
+            return response()->json($error, 500);
+        }
+    }
+    
+    public function turnoff(Request $request){
+        $vpsid = $request->vpsid;
+        $output = $this->virtualizorAdmin->stop($vpsid);
+        if($output['done_msg'] == 'Shutdown signal has been sent to the VPS'){
+            return response()->json($output['done_msg'], 200);
+        }else{
+            $error = "Please try again!";
+            return response()->json($error, 500);
+        }
+    }
+
+    public function poweroff(Request $request){
+        $vpsid = $request->vpsid;
+        $output = $this->virtualizorAdmin->poweroff($vpsid);
+        if($output['done_msg'] == 'VPS has been powered off successfully'){
+            return response()->json($output['done_msg'], 200);
+        }else{
+            $error = "Please try again!";
+            return response()->json($error, 500);
+        }
+    }
+
+    public function reboot(Request $request){
+        $vpsid = $request->vpsid;
+        $output = $this->virtualizorAdmin->restart($vpsid);
+        if($output['done_msg'] == 'Restart signal has been sent to the VPS'){
+            return response()->json($output['done_msg'], 200);
+        }else{
+            $error = "Please try again!";
+            return response()->json($error, 500);
+        }
+    }
+
 }
