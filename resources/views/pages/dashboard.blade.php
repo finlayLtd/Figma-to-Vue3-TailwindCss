@@ -22,6 +22,8 @@
 						<h3 class="sub-title">Support Tickets</h3>
 					</div>
 
+					
+
 					<div class="w-100 support-table support-ticket-table mb-4">
 						@include('tables.tickettable')
 					</div>

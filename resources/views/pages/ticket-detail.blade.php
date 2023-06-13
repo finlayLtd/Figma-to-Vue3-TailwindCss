@@ -2,6 +2,8 @@
 
 @section('content')
 <section class="dashboard">
+	@auth
+	@if(in_array('tickets', Auth::user()->permissions))
 	<div class="container">
 		<div class="title-button-wrapper ticket-detail">
 			<a href="{{url('/support-ticket')}}"><img class="status-arrow" src="{{asset('assets/img/status-arrow.svg')}}" alt=""></a>
@@ -105,6 +107,11 @@
 			</div>
 		</div>
 	</div>
+	@else
+		@include('component.no-permission-go-back')
+	@endif
+	@endauth
+	
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script>
 		$(document).ready(function() {

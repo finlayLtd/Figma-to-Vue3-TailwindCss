@@ -12,6 +12,8 @@
         </ul>
     </div>
 </div>
+
+@if(in_array('products', Auth::user()->permissions))
 <div class="tab-content opt-padding" id="pills-tabContent">
     @foreach($states as $state)
         @if($state == 'Active') <div class="tab-pane fade show active" id="pills-{{$state}}" role="tabpanel" aria-labelledby="pills-{{$state}}-tab">
@@ -95,3 +97,6 @@
         </div>	
     @endforeach
 </div>
+@else
+    @include('component.no-permission')
+@endif

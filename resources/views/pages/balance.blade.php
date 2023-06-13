@@ -2,6 +2,7 @@
 
 @section('content')
 <section class="dashboard">
+	@if(in_array('invoices', Auth::user()->permissions))
 	<div class="container">
 		<div class="d-flex justify-content-between align-items-center title-button-wrapper">
 			<h2 class="title mb-0">Balance</h2>
@@ -45,7 +46,6 @@
 			<div class="row justify-content-between align-items-center ">
 				<div class="row mb-3 mb-lg-5 pe-0">
 					<h3 class="col-md-3 sub-title pt-2">My Invoices</h3>
-
 					<div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
 
 						<div class="sort-servers order-2 order-md-1">
@@ -77,7 +77,7 @@
 
 					</div>
 				</div>
-
+				
 				<div class="tab-content" id="pills-tabContent">
 
 					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -304,9 +304,13 @@
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
-</section>
+		@else
+			@include('component.no-permission-go-back')
+		@endif
+	</section>
 
 <div class="modal modal-balance hidden">
 	<div class="modal-inner">

@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+@if(in_array('tickets', Auth::user()->permissions))
 <section class="dashboard">
 	<div class="container">
 		<div class="d-flex justify-content-between align-items-center title-button-wrapper">
 			<h2 class="title mb-0">Support Ticket</h2>
 		</div>
-
-
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
 
@@ -95,7 +94,9 @@
 			</div>
 		</div>
 </section>
-
+@else
+	@include('component.no-permission-go-back')
+@endif
 <div class="modal modal-ticket hidden">
 	<div class="modal-inner">
 		<div class="modal-close">
@@ -161,3 +162,5 @@
 	});
 </script>
 @endsection
+
+
