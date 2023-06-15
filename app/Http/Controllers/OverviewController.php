@@ -68,7 +68,7 @@ class OverviewController extends Controller
                 array_push($oslists,$os);
             }
         }
-        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo'));
+        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed'));
     }
 
     private function getOrderinfo($order_id)

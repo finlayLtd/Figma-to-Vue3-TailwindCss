@@ -638,12 +638,7 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td>{{$invoiceInfo['id']}}</td>
-																<td class="date-cell">{{$invoiceInfo['date']}}</td>
-																<td class="date-cell">{{$invoiceInfo['duedate']}}</td>
-																<td class="date-cell">{{$invoiceInfo['datepaid']}}</td>
-																<td class="remaining-cell"><span>{{$invoiceInfo['currencyprefix'].$invoiceInfo['total']}}</span></td>
-																<td class="successful-cell"><span>Successful</span></td>
+																
 															</tr>
 														</tbody>
 													</table>
