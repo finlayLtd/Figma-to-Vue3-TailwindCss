@@ -17,13 +17,6 @@
 		</div>
 		@endif
 
-		
-
-		<!-- @if(isset($message) && $message=='failed')
-		<div class="badge reset-success" style="background: crimson;">
-			<img src="assets/img/reset-success.svg" alt=""> Cannot access to server.
-		</div>
-		@endif -->
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
 				<h2 class="title mb-0">Settings</h2>
