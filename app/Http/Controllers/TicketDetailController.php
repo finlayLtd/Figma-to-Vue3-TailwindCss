@@ -34,6 +34,33 @@ class TicketDetailController extends Controller
         return view('pages/ticket-detail', compact('ticket_id', 'ticket_detail'));
     }
 
+    public function downloadFile(Request $request)
+    {
+        $reply_id  = $request->id;
+
+        $sso_url = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'CreateSsoToken',
+            'user_id' => Auth::user()->originUserData['id'],
+            'destination' => 'sso:custom_redirect',
+            
+            'sso_redirect_path' => 'dl.php?type=ar&id='.$reply_id.'&i=0',
+        ]);
+
+        if($sso_url['result'] == 'success'){
+            return response()->json([
+                'result' => 'success',
+                'redirect_url' => $sso_url['redirect_url'],
+            ]);
+        } else{
+            return response()->json([
+                'result' => 'failed',
+                'redirect_url' => $sso_url['redirect_url'],
+            ]);
+        }
+    }
+
+    
+
     public function sendReply(Request $request)
     {
 

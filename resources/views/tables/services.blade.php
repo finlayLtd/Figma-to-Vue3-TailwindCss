@@ -37,7 +37,7 @@
                                             {{$order['configoptions']['configoption'][1]['value']}}
                                         </h3>
                                         <div class="server-list-options">
-                                            <div class="options-toggle">
+                                            <div class="options-toggle" style="padding-right: 10px; padding-left: 10px;">
 
                                             </div>
                                             <div class="options-toggle-dropdown">

@@ -165,8 +165,27 @@ class HomeController extends Controller
             $tickets = $tickets_response['tickets']['ticket'];
         }
 
-        return view('tables/dashboard-tickettable', compact('tickets', 'total_tickets'));
+        return view('tables/tickettable', compact('tickets', 'total_tickets'));
     }
+
+    public function invoicelist(Request $request)
+    {
+        $response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetInvoices',
+            'orderby' => $request->orderby,
+            'order' => $request->order,
+            // 'limitstart' => $offset,
+            // 'limitnum' => 10, // Set number of tickets to retrieve per request
+            'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
+        ]);
+        if (count($response['invoices']) != 0) {
+            $invoices = $response['invoices']['invoice'];
+        } else $invoices = [];
+
+        return view('tables/invoicetable', compact('invoices'));
+    }
+
+    
 
     public function change_name(Request $request)
     {

@@ -40,7 +40,7 @@
 										@endif
 										@if (!empty($reply['attachment']))
 										<div class="message-body message-attachment-body" style="width: fit-content;">
-											<a class="blackColor" href="https://devmach.xyz/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
+											<a class="blackColor" onclick="download_file({{$reply['replyid']}})" data-lightbox="image-r{{$reply['replyid']}}" style="cursor: pointer;">
 												<img src="{{ asset('assets/img/download_icon.png') }}" style="width: 24px;" alt="">
 												<span class="text-decoration-underline">{{ $reply['attachment'] }}</span>
 											</a>
@@ -70,7 +70,7 @@
 										@if (!empty($reply['attachment']))
 										<div class="message-body message-attachment-body" style="width: fit-content; margin-left: auto;">
 											<div>
-												<a class="blackColor" href="{{ env('WHMCS_URL') }}/dl.php?type=ar&amp;id={{$reply['replyid']}}&amp;i=0" data-lightbox="image-r{{$reply['replyid']}}">
+												<a class="blackColor" onclick="download_file({{$reply['replyid']}})" data-lightbox="image-r{{$reply['replyid']}}" style="cursor: pointer;">
 													<img src="{{ asset('assets/img/download_icon.png') }}" style="width: 24px;" alt="">
 													<span class="text-decoration-underline">{{ $reply['attachment'] }}</span>
 												</a>
@@ -127,6 +127,28 @@
 
 			output.innerText = input.files[0].name;
 			container.style.display = 'block';
+		}
+
+		function download_file(id){
+			console.log(id);
+			$('#loading-bg').css('display', 'flex');
+			$.ajax({
+				url: '/download-file/'+id,
+				type: 'GET',
+				success: function(response) {
+					if(response.result == 'success'){
+						var link = document.createElement('a');
+						link.href = response.redirect_url;
+						link.click();
+					}
+					$('#loading-bg').css('display', 'none');
+				},
+				error: function(xhr, status, error) {
+					// Handle the error here
+					console.log(error);
+					$('#loading-bg').css('display', 'none');
+				}
+			});
 		}
 	</script>
 </section>
