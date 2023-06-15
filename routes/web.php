@@ -31,6 +31,13 @@ Route::group([
     Route::get('/balance', 'BalanceController@index')->name('balance');
     Route::get('/invoice-detail/{id}', 'BalanceController@invoiceDetail')->name('invoice-detail');
 
+
+    // sso routes
+    Route::post('/invoice_detail_sso', 'SSOController@invoice_detail_sso')->name('invoice_detail_sso');
+    Route::post('/add_funds_sso', 'SSOController@add_funds_sso')->name('add_funds_sso');
+
+    
+
     Route::get('/create-dedicated-server', 'CreateDedicatedServerController@index')->name('create-dedicated-server');
 
     Route::get('/create-vps-server', 'CreateVpsServerController@index')->name('create-vps-server');

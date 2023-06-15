@@ -30,16 +30,17 @@
 </head>
 
 <body>
-    <div id="loading-bg" style="z-index: 9999 !important; display: none;">
-        <div class="loading_new" style="margin:auto;">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+    
+    <div id="app" style="position: relative;">
+        <div id="loading-bg" style="z-index: 9999 !important; display: none;">
+            <div class="loading_new" style="margin:auto;">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-    </div>
-    <div id="app">
         @auth
         <header class="border-bottom sticky-top">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -141,6 +142,49 @@
             }
         }
 
+        // Function that open the new Window
+        function openInvoiceWindow(invoice_id) {
+            windowClose();
+            var windowWidth = 1024;
+            var windowHeight = 768;
+            var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
+            var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+            // Make AJAX request to Laravel backend route
+            $('#loading-bg').css('display', 'flex');
+            $.ajax({
+                url: "{{ route('invoice_detail_sso') }}",
+                method: "POST",
+                data: { 
+                    invoice_id: invoice_id,
+                    "_token": "{{ csrf_token() }}" 
+                },
+                success: function(response) {
+                    if(response.result == "success"){
+                        Window = window.open(
+                        response.redirect_url,
+                            "_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+                        
+                            window.addEventListener("beforeunload", function(event) {
+                                console.log("UNLOAD:1");
+                                //event.preventDefault();
+                                event.returnValue = null; //"Any text"; //true; //false;
+                                //return null; //"Any text"; //true; //false;
+                                return 'test';
+                            });
+                        Window.focus();
+                    } else{
+                        console.log('access denied for sso!');
+                    }
+                    $('#loading-bg').css('display', 'none');
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error here
+                    console.log(error);
+                    $('#loading-bg').css('display', 'none');
+                }
+            });
+        }
+
         $(document).ready(function() {
             // display loading icon when fetch data from backend
             $('form').submit(function() {
@@ -219,6 +263,8 @@
                     input.attr("type", "password");
                 }
             })
+
+            
 
         });
     </script>
