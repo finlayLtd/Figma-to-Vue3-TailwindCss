@@ -15,6 +15,9 @@
     <link href="{{asset('assets/css/dark-theme.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-href.png') }}">
+
+    <!-- Add Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
     
     <!--  Select2 CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
@@ -41,6 +44,7 @@
                 <span></span>
             </div>
         </div>
+
         @auth
         <header class="border-bottom sticky-top">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -124,6 +128,11 @@
         @endauth
 
         <main class="py-4">
+            <div aria-live="polite" aria-atomic="true" style="position: fixed;bottom:0; right:0;">
+                <div class="toast-container" style="position: fixed; bottom: 30px; right: 30px;">
+                    <!-- Toasts will be added here -->
+                </div>
+            </div>
             @yield('content')
             @yield('script')
         </main>
@@ -133,6 +142,11 @@
     <!-- SELECT2 JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{asset('assets/js/scripts.js')}}"></script>
+
+    <!-- Add jQuery and Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <script>
         let Window;// this window is the window where all components can access
 
@@ -141,6 +155,25 @@
                 Window.close();
             }
         }
+
+
+        function showToast(title, message, type = 'info') {
+            let toast = $(`
+                <div class="toast toast-${type}" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                    <div class="toast-header">
+                        <strong class="mr-auto">${title}</strong>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `);
+
+            $('.toast-container').append(toast);
+            toast.toast('show');
+        }
+
+
 
         // Function that open the new Window
         function openInvoiceWindow(invoice_id) {
@@ -184,6 +217,7 @@
                 }
             });
         }
+
 
         $(document).ready(function() {
             // display loading icon when fetch data from backend

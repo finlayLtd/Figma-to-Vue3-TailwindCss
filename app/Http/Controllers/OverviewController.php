@@ -36,7 +36,6 @@ class OverviewController extends Controller
         $order_id  = $request->order_id;
         
         $order_info = $this->getOrderinfo($order_id);
-
         $today = new DateTime(date("Y-m-d"));
         $start_day = new DateTime($order_info['regdate']);
         $interval = $today->diff($start_day);
@@ -45,6 +44,8 @@ class OverviewController extends Controller
         $product_info = $this->getProductInfo($order_info);
         $detail_info = $this->getProductDetailInfo($product_info);
         $other_info = $this->getOtherinfo($order_info);
+        // $invoiceInfo = $this->getinvoiceInfo($order_id);
+        // $this->serverMonitering($other_info['vps_info']['vpsid']);
         // print_r($other_info);exit;
 
         $vpsid = $other_info['vps_info']['vpsid'];
@@ -53,6 +54,7 @@ class OverviewController extends Controller
         $system = $other_info['system'];
         
         if($order_info['status'] == 'Active'){
+            $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
             $OSlist = $this->getOSlist($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
@@ -66,10 +68,11 @@ class OverviewController extends Controller
                 array_push($oslists,$os);
             }
         }
-        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu'));
+        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo'));
     }
 
-    private function getOrderinfo($order_id){
+    private function getOrderinfo($order_id)
+    {
         $orders_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetClientsProducts',
             'clientid' => Auth::user()->client_id,
@@ -81,7 +84,8 @@ class OverviewController extends Controller
         return $order_info;
     }
 
-    private function getProductInfo($order_info){
+    private function getProductInfo($order_info)
+    {
         $product_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetProducts',
             'pid' => $order_info['pid'],
@@ -91,7 +95,8 @@ class OverviewController extends Controller
         return $product_info;
     }
 
-    private function getProductDetailInfo($product_info){
+    private function getProductDetailInfo($product_info)
+    {
         $detail_info = array();
         $doc = new DOMDocument();
         $doc->loadHTML($product_info['description']);
@@ -110,7 +115,8 @@ class OverviewController extends Controller
         return $detail_info;
     }
 
-    private function getOtherinfo($order_info){
+    private function getOtherinfo($order_info)
+    {
         if(strpos($order_info['groupname'],'Netherlands') !== false){
             $info['flag'] = 'flag-nl';
         }else{
@@ -154,7 +160,8 @@ class OverviewController extends Controller
         return $info;
     }
 
-    private function getVpsStatistics($vpsid){
+    private function getVpsStatistics($vpsid)
+    {
         $post = array();
         $post['vpsid'] = $vpsid; //Set this only when you want vps_data
         $post['show'] = date("Ym"); //Set this only when you want vps_data
@@ -162,17 +169,27 @@ class OverviewController extends Controller
         return $vps_info;
     }
 
-    private function getCpuStatistics($vpsid){
+    private function getCpuStatistics($vpsid)
+    {
         $vps_info = $this->virtualizorAdmin->cpu($vpsid);
         return $vps_info;
     }
 
-    private function getOSlist(){
+    private function getOSlist()
+    {
         $oslist = $this->virtualizorAdmin->ostemplates();
         return $oslist;
     }
 
-    public function turnon(Request $request){
+    private function getNetworkSpeed($vpsid)
+    {
+        $vps_info = $this->virtualizorAdmin->listvs(1,50,array('vpsid'=>$vpsid));
+        $network_speed = $vps_info[$vpsid]['network_speed'];
+        return $network_speed;
+    }
+
+    public function turnon(Request $request)
+    {
         $vpsid = $request->vpsid;
         $output = $this->virtualizorAdmin->start($vpsid);
         if($output['done_msg'] == 'VPS has been started successfully'){
@@ -183,7 +200,8 @@ class OverviewController extends Controller
         }
     }
     
-    public function turnoff(Request $request){
+    public function turnoff(Request $request)
+    {
         $vpsid = $request->vpsid;
         $output = $this->virtualizorAdmin->stop($vpsid);
         if($output['done_msg'] == 'Shutdown signal has been sent to the VPS'){
@@ -194,7 +212,8 @@ class OverviewController extends Controller
         }
     }
 
-    public function poweroff(Request $request){
+    public function poweroff(Request $request)
+    {
         $vpsid = $request->vpsid;
         $output = $this->virtualizorAdmin->poweroff($vpsid);
         if($output['done_msg'] == 'VPS has been powered off successfully'){
@@ -205,7 +224,8 @@ class OverviewController extends Controller
         }
     }
 
-    public function reboot(Request $request){
+    public function reboot(Request $request)
+    {
         $vpsid = $request->vpsid;
         $output = $this->virtualizorAdmin->restart($vpsid);
         if($output['done_msg'] == 'Restart signal has been sent to the VPS'){
@@ -216,4 +236,107 @@ class OverviewController extends Controller
         }
     }
 
+    public function rebuild(Request $request)
+    {
+        $post = array();
+        $post['vpsid'] = $request->vpsid;
+        $post['format_primary'] = $request->format_disk_flag;
+        $post['osid'] = $request->selected_osid;
+        $post['newpass'] = $request->root_pwd;
+        $post['conf'] = $request->root_pwd;
+        $output = $this->virtualizorAdmin->rebuild($post);
+        
+        if($output['done'] == 1){
+            return response()->json('VPS is being rebuilt, hence no actions are allowed to be performed on this VPS', 200);
+        }else{
+            return response()->json($output['error'], 500);
+        }
+    }
+
+    public function checkhostName(Request $request)
+    {
+        $exist_flag = false;
+        $page = 1;
+        $reslen = 100;
+        $vs_list = array();
+        do {
+            $result = $this->virtualizorAdmin->listvs($page, $reslen);
+            $vs_list = array_merge($vs_list, $result);
+            $page++;
+        } while (count($result) == $reslen);
+
+        foreach ($vs_list as $vs) {
+            if ($vs['hostname'] == $request->hostname) {
+                $exist_flag = true;
+            }
+        }
+
+        if($exist_flag) return response()->json('Already Exist.', 200);
+        else return response()->json('No Exist.', 200);
+    }
+
+    public function changehostNames(Request $request)
+    {
+        $post = array();
+        $post['vpsid'] = $request->vpsid;
+        $post['hostname'] = $request->hostname;
+        $result = $this->virtualizorAdmin->managevps($post);
+        if($result['done']['done']){
+            return response()->json('Your hostname will be changed when the VPS is booted again', 200);
+        }else{
+            return response()->json('Oops! We meet some error!.', 500);
+        }
+    }
+
+    public function changeRootPwd(Request $request)
+    {
+        $post = array();
+        $post['vpsid'] = $request->vpsid;
+        $post['rootpass'] = $request->root_pwd;
+        $result = $this->virtualizorAdmin->managevps($post);
+        if($result['done']['change_pass_msg']){
+            return response()->json('VPS password will be changed after you SHUTDOWN and START the VPS from the panel.', 200);
+        }else{
+            return response()->json('Oops! We meet some error!.', 500);
+        }
+
+    }
+
+    private function serverMonitering($vpsid){
+        $result = $this->virtualizorAdmin->performance($vpsid);
+        print_r($result);exit;
+    }
+
+    private function getinvoiceInfo($order_id)
+    {
+        $orders_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetOrders',
+            'userid' => Auth::user()->client_id,
+            'id' => $order_id,
+        ]);
+
+        $page = 1;
+        $start = 1;
+        $reslen = 100;
+        $invoice_list = array();
+        do {
+            $invoices_response = (new \Sburina\Whmcs\Client)->post([
+                'action' => 'GetInvoices',
+                'limitstart' => $start,
+                'limitnum' => $reslen,
+                'userid' => Auth::user()->client_id,
+            ]);
+            $invoice_list = array_push($invoice_list, $invoices_response['invoices']['invoice']);
+            $page++;
+            $start = ($page-1) * $reslen + 1;
+        } while ($invoices_response['numreturned'] == $reslen);
+
+        foreach($invoice_list as $invoice){
+            if($invoice['id'] == $orders_response['orders']['order']['invoiceid']){
+                $invoice_info = $invoice;
+            }
+        }
+
+        return $invoice_info;
+    }
 }

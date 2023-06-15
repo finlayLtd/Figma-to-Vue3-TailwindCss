@@ -275,7 +275,7 @@
 											</div>
 											<div class="info">
 												<h4 class="title2">Network Speed</h4>
-												<p class="description2"><span>0.1</span> Mbps of 1 Gbps</p>
+												<p class="description2"><span>{{$network_speed}}</span> Mbps of 1 Gbps</p>
 											</div>
 										</div>
 									</div>
@@ -346,7 +346,7 @@
 
 									<p class="fs-15">To connect to your Linux virtual machine using SSH, please use the following command.</p>
 
-									<p class="fs-16">ssh root@147.189.161.205</p>
+									<p class="fs-16">ssh root@<?php echo $order_info['dedicatedip']; ?></p>
 
 									<p class="fs-14 mb-0 sub-detail" style="max-width: 500px;">You will most likely be using cmd if you are connecting from Windows OS or Terminal if you are running macOS or Linux For more information, please visit this guide.</p>
 
@@ -364,28 +364,31 @@
 							</div>
 							<div class="divider"></div>
 							<div class="row px-0 pt-4">
-								<form class="form-horizontal using-password-strength" method="POST" action="">
-									@csrf
+
 									<p class="fs-13-5">Select an Operating System</p>
-									<div class="overview-select">
-										<select name="oslist" id="Operating-system">
+									<div class="form-group d-flex">
+										<select name="oslist" id="Operating-system" class="form-control">
 											@foreach($oslists as $os)
 												<option value="{{$os['osid']}}" data-image="{{asset('assets/img/'.$os['group_name'].'-logo.png')}}">{{ $os['name'] }}</option>
 											@endforeach
 										</select>
+
+										<input id="format-disk" type="checkbox" class="format-disk" style="width:20px;height:20px;padding:0;margin-top:10px;margin-left:20px;">
+										<label for="format-disk" style="line-height:40px;">&nbsp;Format Primary Disk Only</label>
+
 									</div>
 
-									<div id="newPassword1" class="form-group has-feedback has-success">
-										<label for="inputNewPassword1" class="col-sm-4 control-label">New Password</label>
+									<div id="newPassword1" class="form-group has-feedback has-success mt-3">
+										<label for="inputNewPassword1-os" class="col-sm-4 control-label">New Password</label>
 										<div class="col-sm-5" style="position: relative;">
 											<input type="password" class="form-control" name="newpw" id="inputNewPassword1" autocomplete="off">
-											<img src="assets/img/eye.svg" class="settings-password-img icon-password eye-closed">
-											<img src="assets/img/eye-open.svg" class="settings-password-img icon-password eye-open" style="display:none">
+											<img src="{{asset('assets/img/eye.svg')}}" class="settings-password-img icon-password eye-closed">
+											<img src="{{asset('assets/img/eye-open.svg')}}" class="settings-password-img icon-password eye-open" style="display:none">
 											<br>
 
 											<div class="progress" id="passwordStrengthBar">
 												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-													<span class="rating">New Password Rating: 0%</span>
+													<span class="rating">Password Rating: 0%</span>
 												</div>
 											</div>
 
@@ -398,17 +401,17 @@
 										<label for="inputNewPassword2" class="col-sm-4 control-label">Confirm New Password</label>
 										<div class="col-sm-5" style="position: relative;">
 											<input type="password" class="form-control" name="confirmpw" id="inputNewPassword2" autocomplete="off">
-											<img src="assets/img/eye.svg" class="settings-password-img icon-password eye-closed">
-											<img src="assets/img/eye-open.svg" class="settings-password-img icon-password eye-open" style="display:none">
+											<img src="{{asset('assets/img/eye.svg')}}" class="settings-password-img icon-password eye-closed">
+											<img src="{{asset('assets/img/eye-open.svg')}}" class="settings-password-img icon-password eye-open" style="display:none">
 											<div id="inputNewPassword2Msg"></div>
 										</div>
 									</div>
 									<div class="overview-button-wrapper pt-0 mt-4">
 										<div class="col-sm-5">
-											<button id="submitButton" class="btn-dark px-4 me-2 hover-dark-light" disabled="disabled">Reinstall</button>
+											<button id="submitButton" class="btn-dark px-4 me-2 hover-dark-light" onclick="rebuildOS({{ $vpsid }})">Reinstall</button>
 										</div>
 									</div>
-								</form>
+
 							</div>
 						</div>
 					</div>
@@ -572,7 +575,7 @@
 										</li>
 
 										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-invoices-tab" data-bs-toggle="pill" data-bs-target="#pills-invoices" type="button" role="tab" aria-controls="pills-invoices" aria-selected="false">Invoices</button>
+											<button class="nav-link" id="pills-invoices-tab" data-bs-toggle="pill" data-bs-target="#pills-invoices" type="button" role="tab" aria-controls="pills-invoices" aria-selected="false">Invoice</button>
 										</li>
 
 										<li class="nav-item mb-2" role="presentation">
@@ -635,44 +638,12 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td>58775</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03 06:00:03</td>
-																<td class="remaining-cell"><span>€50.50</span></td>
+																<td>{{$invoiceInfo['id']}}</td>
+																<td class="date-cell">{{$invoiceInfo['date']}}</td>
+																<td class="date-cell">{{$invoiceInfo['duedate']}}</td>
+																<td class="date-cell">{{$invoiceInfo['datepaid']}}</td>
+																<td class="remaining-cell"><span>{{$invoiceInfo['currencyprefix'].$invoiceInfo['total']}}</span></td>
 																<td class="successful-cell"><span>Successful</span></td>
-															</tr>
-															<tr>
-																<td>58775</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03 06:00:03</td>
-																<td class="remaining-cell"><span>€50.50</span></td>
-																<td class="cancelled-cell"><span>Cancelled</span></td>
-															</tr>
-															<tr>
-																<td>58775</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03 06:00:03</td>
-																<td class="remaining-cell"><span>€50.50</span></td>
-																<td class="cancelled-cell"><span>Cancelled</span></td>
-															</tr>
-															<tr>
-																<td>58775</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03 06:00:03</td>
-																<td class="remaining-cell"><span>€50.50</span></td>
-																<td class="cancelled-cell"><span>Cancelled</span></td>
-															</tr>
-															<tr>
-																<td>58775</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03</td>
-																<td class="date-cell">2023-13-03 06:00:03</td>
-																<td class="remaining-cell"><span>€50.50</span></td>
-																<td class="cancelled-cell"><span>Cancelled</span></td>
 															</tr>
 														</tbody>
 													</table>
@@ -769,27 +740,40 @@
 
 												<div class="tab-inner py-0 p-mb-0">
 													<h3 class="fs-15 mb-1">Change Password</h3>
-
 													<div class="divider" style="margin:20px 0"></div>
+														<div id="newPassword1-os" class="form-group has-feedback has-success mt-3">
+															<label for="inputNewPassword1-os" class="col-sm-4 control-label">New Server Password</label>
+															<div class="col-sm-5" style="position: relative;">
+																<input type="password" class="form-control" name="newpw" id="inputNewPassword1-os" autocomplete="off">
+																<img src="{{asset('assets/img/eye.svg')}}" class="settings-password-img icon-password eye-closed">
+																<img src="{{asset('assets/img/eye-open.svg')}}" class="settings-password-img icon-password eye-open" style="display:none">
+																<br>
 
-													<p class="fs-13-5">New server password</p>
+																<div class="progress" id="passwordStrengthBar-os">
+																	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+																		<span class="rating">Password Rating: 0%</span>
+																	</div>
+																</div>
 
-													<div class="overview-input mb-4">
-														<input type="text" placeholder="Write new password">
-													</div>
-
-
-													<p class="fs-13-5">Confirm new server password</p>
-
-													<div class="overview-input mb-4">
-														<input type="text" placeholder="Minimum 8 character">
-													</div>
-
-													<div class="overview-button-wrapper pt-0 ">
-														<button class="btn-dark px-4 me-2 hover-dark-light">Change Password</button>
-													</div>
-
-
+																<div class="alert alert-info">
+																<strong>Tips for a good password</strong><br>Use both upper and lowercase characters<br>Include at least one symbol (only ! and @)<br>Don't use dictionary words and special characters
+																</div>
+															</div>
+														</div>
+														<div id="newPassword2-os" class="form-group has-feedback has-success">
+															<label for="inputNewPassword2-os" class="col-sm-4 control-label">Confirm New Password</label>
+															<div class="col-sm-5" style="position: relative;">
+																<input type="password" class="form-control" name="confirmpw" id="inputNewPassword2-os" autocomplete="off">
+																<img src="{{asset('assets/img/eye.svg')}}" class="settings-password-img icon-password eye-closed">
+																<img src="{{asset('assets/img/eye-open.svg')}}" class="settings-password-img icon-password eye-open" style="display:none">
+																<div id="inputNewPassword2-os-Msg"></div>
+															</div>
+														</div>
+														<div class="overview-button-wrapper pt-0 mt-4">
+															<div class="col-sm-5">
+																<button id="submitButtonOS" class="btn-dark px-4 me-2 hover-dark-light" onclick="changePWD({{ $vpsid }})">Change Password</button>
+															</div>
+														</div>
 												</div>
 											</div>
 
@@ -804,11 +788,12 @@
 													<p class="fs-13-5">New hostname</p>
 
 													<div class="overview-input mb-4">
-														<input type="text" placeholder="Write new hostname">
+														<input type="text" placeholder="Write new hostname" id="hostname">
+														<div id="inputHostNameMsg"></div>
 													</div>
 
 													<div class="overview-button-wrapper pt-0 mb-4">
-														<button class="btn-dark px-4 me-2 hover-dark-light">Change Hostname</button>
+														<button class="btn-dark px-4 me-2 hover-dark-light" onclick="changeHostName({{$vpsid}})">Change Hostname</button>
 													</div>
 													<p class="fs-13-5 mb-0 inner-sub-title">
 														Note: A power cycle is required after changing hostname in order for the new hostname to be applied.
@@ -866,7 +851,12 @@
 			prevPassword = pw;
 
 			var pwlength = (pw.length);
-			if (pwlength > 5) pwlength = 5;
+			console.log(pwlength);
+			if (pwlength > 7) pwlength = 5;
+			else pwlength = 2;
+
+			console.log(pwlength);
+
 			var numnumeric = pw.replace(/[0-9]/g, "");
 			var numeric = (pw.length - numnumeric.length);
 			if (numeric > 3) numeric = 3;
@@ -897,6 +887,86 @@
 				jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
 			}
 		});
+
+		jQuery("#inputNewPassword2").keyup(function() {
+			validatePassword2();
+		});
+
+		jQuery("#inputNewPassword1-os").keyup(function() {
+			var pwStrengthErrorThreshold = 50;
+			var pwStrengthWarningThreshold = 75;
+
+			var pw = jQuery("#inputNewPassword1-os").val();
+
+			// Check if the password contains any disallowed special symbols
+			if (/[^A-Za-z0-9!@]/.test(pw)) {
+				alert("Invalid character detected. Only '!' and '@' are allowed as special symbols.");
+				// Revert the password input to the previous value
+				jQuery("#inputNewPassword1-os").val(prevPassword);
+				return;
+			}
+
+			// Update the previous password value
+			prevPassword = pw;
+
+			var pwlength = (pw.length);
+			console.log(pwlength);
+			if (pwlength > 7) pwlength = 5;
+			else pwlength = 2;
+
+			console.log(pwlength);
+
+			var numnumeric = pw.replace(/[0-9]/g, "");
+			var numeric = (pw.length - numnumeric.length);
+			if (numeric > 3) numeric = 3;
+
+			// Update the regular expression to only match "!" and "@"
+			var symbols = pw.replace(/[!@]/g, "");
+			var numsymbols = (pw.length - symbols.length);
+			if (numsymbols > 3) numsymbols = 3;
+
+			var numupper = pw.replace(/[A-Z]/g, "");
+			var upper = (pw.length - numupper.length);
+			if (upper > 3) upper = 3;
+			var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
+			if (pwstrength < 0) pwstrength = 0;
+			if (pwstrength > 100) pwstrength = 100;
+
+			jQuery("#inputNewPassword1-os").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
+			jQuery("#passwordStrengthBar-os .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
+			jQuery("#passwordStrengthBar-os .progress-bar .rating").html('Password Rating: ' + pwstrength + '%');
+			if (pwstrength < pwStrengthErrorThreshold) {
+				jQuery("#inputNewPassword1-os").next('.form-control-feedback').addClass('glyphicon-remove');
+				jQuery("#passwordStrengthBar-os .progress-bar").addClass("progress-bar-danger");
+			} else if (pwstrength < pwStrengthWarningThreshold) {
+				jQuery("#inputNewPassword1-os").next('.form-control-feedback').addClass('glyphicon-warning-sign');
+				jQuery("#passwordStrengthBar-os .progress-bar").addClass("progress-bar-warning");
+			} else {
+				jQuery("#inputNewPassword1-os").next('.form-control-feedback').addClass('glyphicon-ok');
+				jQuery("#passwordStrengthBar-os .progress-bar").addClass("progress-bar-success");
+			}
+		});
+
+		jQuery("#inputNewPassword2-os").keyup(function() {
+			validatePassword2OS();
+		});
+
+		// jQuery("#hostname").keyup(function() {
+		// 	var hostname = $("#hostname").val();
+		// 	$.ajax({
+		// 		headers: {
+		// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		// 		},
+		// 		url:"{{ URL::to('/overview/checkhostName') }}",
+		// 		method:'post',
+		// 		data: {
+		// 			hostname: hostname
+		// 		},
+		// 		success:function(data){
+		// 			console.log(data);
+		// 		},
+       	//  	});
+		// });
 	});
 
 	function TurnOnVPS(vpsid){
@@ -912,6 +982,7 @@
             },
             success:function(data){
 				$('#loading-bg').css('display', 'none');
+				showToast('Success', data, 'success');
             },
         });
 	}
@@ -929,6 +1000,7 @@
             },
             success:function(data){
 				$('#loading-bg').css('display', 'none');
+				showToast('Success', data, 'success');
             },
         });
 	}
@@ -946,6 +1018,7 @@
             },
             success:function(data){
 				$('#loading-bg').css('display', 'none');
+				showToast('Success', data, 'success');
             },
         });
 	}
@@ -963,8 +1036,205 @@
             },
             success:function(data){
 				$('#loading-bg').css('display', 'none');
+				showToast('Success', data, 'success');
             },
         });
+	}
+
+	function validatePassword2() {
+		var password1 = jQuery("#inputNewPassword1").val();
+		var password2 = jQuery("#inputNewPassword2").val();
+		var $newPassword2 = jQuery("#newPassword2");
+
+		if (password2 && password1 !== password2) {
+			$newPassword2.removeClass('has-success').addClass('has-error');
+			jQuery("#inputNewPassword2").next('.form-control-feedback').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+			jQuery("#inputNewPassword2Msg").html('<p class="help-block" id="nonMatchingPasswordResult">The passwords entered do not match</p>');
+			jQuery('#submitButton').attr('disabled', 'disabled');
+		} else {
+			if (password2) {
+				$newPassword2.removeClass('has-error').addClass('has-success');
+				jQuery("#inputNewPassword2").next('.form-control-feedback').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+				jQuery('#submitButton').removeAttr('disabled');
+			} else {
+				$newPassword2.removeClass('has-error has-success');
+				jQuery("#inputNewPassword2").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-ok');
+			}
+			jQuery("#inputNewPassword2Msg").html('');
+		}
+	}
+
+	function validatePassword2OS() {
+		var password1 = jQuery("#inputNewPassword1-os").val();
+		var password2 = jQuery("#inputNewPassword2-os").val();
+		var $newPassword2 = jQuery("#newPassword2-os");
+
+		if (password2 && password1 !== password2) {
+			$newPassword2.removeClass('has-success').addClass('has-error');
+			jQuery("#inputNewPassword2-os").next('.form-control-feedback').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+			jQuery("#inputNewPassword2-os-Msg").html('<p class="help-block" id="nonMatchingPasswordResult">The passwords entered do not match</p>');
+			jQuery('#submitButtonOS').attr('disabled', 'disabled');
+		} else {
+			if (password2) {
+				$newPassword2.removeClass('has-error').addClass('has-success');
+				jQuery("#inputNewPassword2-os").next('.form-control-feedback').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+				jQuery('#submitButtonOS').removeAttr('disabled');
+			} else {
+				$newPassword2.removeClass('has-error has-success');
+				jQuery("#inputNewPassword2-os").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-ok');
+			}
+			jQuery("#inputNewPassword2-os-Msg").html('');
+		}
+	}
+
+	function rebuildOS(vpsid){
+		var validate = validateRebuildCondition();
+		if(validate){
+			if($("#format-disk").is(':checked')) var format_disk_flag = 1;
+			else var format_disk_flag = 0;
+			var selected_osid = $('#Operating-system').val();
+			var root_pwd = $("#inputNewPassword2").val();
+
+			$('#loading-bg').css('display', 'flex');
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				url:"{{ URL::to('/overview/rebuild') }}",
+				method:'post',
+				data: {
+					vpsid: vpsid,
+					format_disk_flag: format_disk_flag,
+					selected_osid: selected_osid,
+					root_pwd: root_pwd
+				},
+				success:function(data){
+					$('#loading-bg').css('display', 'none');
+				},
+			});
+		}
+	}
+
+	function validateRebuildCondition(){
+		var return_flag = true;
+		if(jQuery("#inputNewPassword2").val() == ''){
+			showToast('Error', 'You did not specify the new password.', 'danger');
+			return_flag = false;
+		}
+		var pwdStrength = jQuery("#passwordStrengthBar .progress-bar .rating").html().split(" ");
+		if(parseInt(pwdStrength[2]) != 100){
+			showToast('warning', 'Password strength must be greater than 100', 'warning');
+			return_flag = false;
+		}
+		if((jQuery("#inputNewPassword2Msg").html()!='')&&(jQuery("#inputNewPassword2").val()!='')){
+			showToast('Warning', 'The confirmation password is missing.', 'warning');
+			return_flag = false;
+		}
+
+		return return_flag;
+	}
+
+	function generateRandomString() {
+		var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@';
+		var length = 8;
+		var result = '';
+		var uppercaseCount = 0;
+		var specialCharCount = 0;
+		for (var i = 0; i < length; i++) {
+			var randomIndex = Math.floor(Math.random() * chars.length);
+			var randomChar = chars.charAt(randomIndex);
+			if (/[A-Z]/.test(randomChar)) {
+			uppercaseCount++;
+			} else if (/[\!\@]/.test(randomChar)) {
+			specialCharCount++;
+			}
+			result += randomChar;
+		}
+		if (uppercaseCount < 3 || specialCharCount < 2) {
+			return generateRandomString();
+		}
+  		return result;
+	}
+
+	function validateChangePWDCondition(){
+		var return_flag = true;
+		if(jQuery("#inputNewPassword2-os").val() == ''){
+			showToast('Error', 'You did not specify the new password.', 'danger');
+			return_flag = false;
+		}
+		var pwdStrength = jQuery("#passwordStrengthBar-os .progress-bar .rating").html().split(" ");
+		if(parseInt(pwdStrength[2]) != 100){
+			showToast('warning', 'Password strength must be greater than 100', 'warning');
+			return_flag = false;
+		}
+		if((jQuery("#inputNewPassword2-os-Msg").html()!='')&&(jQuery("#inputNewPassword2").val()!='')){
+			showToast('Warning', 'The confirmation password is missing.', 'warning');
+			return_flag = false;
+		}
+
+		return return_flag;
+	}
+
+	function changePWD(vpsid){
+		var validate = validateChangePWDCondition();
+		var root_pwd = $("#inputNewPassword2-os").val();
+		if(validate){
+			$('#loading-bg').css('display', 'flex');
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				url:"{{ URL::to('/overview/changepwd') }}",
+				method:'post',
+				data: {
+					vpsid: vpsid,
+					root_pwd: root_pwd
+				},
+				success:function(data){
+					$('#loading-bg').css('display', 'none');
+					showToast('Success', data, 'success');
+				},
+			});
+		}
+	}
+
+	function changeHostName(vpsid){
+		var hostname = $("#hostname").val();
+		var flag = false;
+		$('#loading-bg').css('display', 'flex');
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url:"{{ URL::to('/overview/checkhostName') }}",
+			method:'post',
+			data: {
+				hostname: hostname
+			},
+			success:function(data){
+				if(data=='Already Exist.'){
+					$('#loading-bg').css('display', 'none');
+					showToast('Warning', 'Inputed New hostname already exist.', 'warning');
+					return;
+				}else{
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url:"{{ URL::to('/overview/changehostName') }}",
+						method:'post',
+						data: {
+							vpsid: vpsid,
+							hostname: hostname
+						},
+						success:function(data){
+							$('#loading-bg').css('display', 'none');
+							showToast('Success', data, 'success');s
+						},
+					});
+				}
+			},
+		});
 	}
 
 </script>

@@ -46,6 +46,11 @@ Route::group([
     Route::post('/overview/turnon', 'OverviewController@turnon');
     Route::post('/overview/turnoff', 'OverviewController@turnoff');
     Route::post('/overview/reboot', 'OverviewController@reboot');
+    Route::post('/overview/poweroff', 'OverviewController@poweroff');
+    Route::post('/overview/rebuild', 'OverviewController@rebuild');
+    Route::post('/overview/changepwd', 'OverviewController@changeRootPwd');
+    Route::post('/overview/checkhostName', 'OverviewController@checkhostName');
+    Route::post('/overview/changehostName', 'OverviewController@changehostNames');
 
     Route::get('/servers', 'ServersController@index')->name('servers');
 

@@ -2263,7 +2263,7 @@ section.overview .title {
 	background: #FFFFFF !important;
 	box-shadow: 0px 1px 3px rgba(47, 43, 67, 0.1);
 	border-radius: 8px;	
-	color: #171E26;	
+	color: #171E26 !important;	
 }
 
 @media only screen and (min-width:992px) {
@@ -2914,7 +2914,7 @@ section.login {
 
 .settings-password-img {
     position: absolute;
-    right: 10px;
+    right: 30px;
     top: 10px;
     height: 17px;
     width: 14px;
@@ -3169,4 +3169,37 @@ section.login {
 
 .select2-container {
 	width: 300px !important;
+}
+
+.select2-selection {
+	height:40px !important;
+}
+
+.select2-selection__rendered
+{
+	line-height: 36px !important;
+}
+
+.select2-selection__arrow{
+	top: 7px !important;
+}
+
+.toast-info .toast-header {
+	background-color: #17a2b8;
+	color: #ffffff;
+}
+
+.toast-success .toast-header {
+	background-color: #28a745;
+	color: #ffffff;
+}
+
+.toast-warning .toast-header {
+	background-color: #ffc107;
+	color: #ffffff;
+}
+
+.toast-danger .toast-header {
+	background-color: #dc3545;
+	color: #ffffff;
 }
