@@ -72,6 +72,28 @@ class SSOController extends Controller
         }
     }
 
+    public function connect_vnc_sso(Request $request)
+    {
+        $sso_url = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'CreateSsoToken',
+            'user_id' => Auth::user()->originUserData['id'],
+            'destination' => 'sso:custom_redirect',
+            'sso_redirect_path' => 'clientarea.php?action=productdetails&id='.$request->relid.'&act=vnc&novnc=1&jsnohf=1&svs='.$request->vpsid,
+        ]);
+
+        if($sso_url['result'] == 'success'){
+            return response()->json([
+                'result' => 'success',
+                'redirect_url' => $sso_url['redirect_url'],
+            ]);
+        } else{
+            return response()->json([
+                'result' => 'failed',
+                'redirect_url' => $sso_url['redirect_url'],
+            ]);
+        }
+    }
+
     
 
     

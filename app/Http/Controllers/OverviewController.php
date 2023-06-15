@@ -43,7 +43,8 @@ class OverviewController extends Controller
         
         $order_info_response = $this->getOrderinfo($order_id);
         $order_info = $order_info_response['orders']['order'];
-        
+        $relid = $order_info[0]['lineitems']['lineitem'][0]['relid'];
+
         $order_product_info = $this->getClientProductInfo($order_id);
         $today = new DateTime(date("Y-m-d"));
         $start_day = new DateTime($order_info[0]['date']);
@@ -70,6 +71,7 @@ class OverviewController extends Controller
             $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
+            // $this->getIpinfo($vpsid);
         }
 
 
@@ -101,7 +103,7 @@ class OverviewController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
-        return view('pages/overview', compact('order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments'));
+        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments'));
     }
 
     private function getClientProductInfo($order_id)
@@ -351,6 +353,7 @@ class OverviewController extends Controller
         
         return $orders_response;
     }
+
     private function getinvoiceInfo($order_id)
     {
         $invoice_info = array();
@@ -362,5 +365,18 @@ class OverviewController extends Controller
         ]);
         
         return $invoice_info;
+    }
+
+    private function getIpinfo($vpsid){
+        $page = 1;
+        $reslen = 100;
+        $ips_list = array();
+        do {
+            $result = $this->virtualizorAdmin->ips($page, $reslen);
+            $ips_list = array_merge($vs_list, $result);
+            $page++;
+        } while (count($result) == $reslen);
+
+        print_r($ips_list);exit;
     }
 }

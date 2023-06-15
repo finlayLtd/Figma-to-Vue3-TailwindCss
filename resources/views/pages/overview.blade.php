@@ -47,14 +47,14 @@
 
 									<tr>
 										<td>Username</td>
-										<td class="clipboard-input" data-copy="root">root</td>
+										<td class="clipboard-input" data-copy="{{$order_product_info['username']}}">{{$order_product_info['username']}}</td>
 										<td><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
 									<tr>
 										<td>Password</td>
 										<td>
-											<input class="clipboard-input" data-copy="12345678" disabled type="password" value="12345678">
+											<input class="clipboard-input" data-copy="{{$order_product_info['password']}}" disabled type="password" value="{{$order_product_info['password']}}">
 										</td>
 										<td>
 											<img src="{{asset('assets/img/eye.svg')}}" class="icon-password eye-closed">
@@ -217,12 +217,12 @@
 									<button class="btn img-btn me-0 me-lg-2" onclick="TurnOffVPS({{ $vpsid }})">
 										<img src="{{asset('assets/img/power.svg')}}" alt="">Shutdown
 									</button>
-									<button class="btn img-btn me-0 me-lg-2" onclick="RebootVPS({{ $vpsid }})">
+									<!-- <button class="btn img-btn me-0 me-lg-2" onclick="RebootVPS({{ $vpsid }})">
 										<img src="{{asset('assets/img/reboot.svg')}}" alt="">Reboot
 									</button>
 									<button class="btn img-btn mt-2 mt-lg-0" onclick="PowerOffVPS({{ $vpsid }})">
 										<img class="dark-img-filter" src="{{asset('assets/img/power-off.svg')}}" alt="">Power Off
-									</button>
+									</button> -->
 								</div>
 								@endif
 							</div>
@@ -235,7 +235,7 @@
 							<div class="row px-12 pt-3">
 								<div class="general-info bg-white overview-col5 d-flex w-100 mb-4">
 
-									<div class="col-md-3 col-sm-12">
+									<div class="col-md-4 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
 												<img src="{{asset('assets/img/cpu.png')}}" alt="">
@@ -246,7 +246,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-12">
+									<div class="col-md-4 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
 												<img src="{{asset('assets/img/ram.png')}}" alt="">
@@ -257,7 +257,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-12">
+									<div class="col-md-4 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
 												<img src="{{asset('assets/img/hard-disk.png')}}" alt="">
@@ -268,18 +268,18 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-12">
+									<div class="col-md-4 col-sm-12">
 										<div class="col-content-wrapper sm-border-bottom">
 											<div class="img-wrapper">
 												<img src="{{asset('assets/img/speedometer.png')}}" alt="">
 											</div>
 											<div class="info">
 												<h4 class="title2">Network Speed</h4>
-												<p class="description2"><span>{{$network_speed}}</span> Mbps of 1 Gbps</p>
+												<p class="description2"><span>{{$network_speed}}</span> Mbps</p>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-3 col-sm-12">
+									<!-- <div class="col-md-3 col-sm-12">
 										<div class="col-content-wrapper">
 											<div class="img-wrapper">
 												<img src="{{asset('assets/img/cable.png')}}" alt="">
@@ -289,7 +289,7 @@
 												<p class="description2"><span>1%</span> of 500 GB</p>
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -332,7 +332,6 @@
 
 
 					</div>
-
 					<!--connect-->
 					<div class="tab-pane fade" id="pills-connect" role="tabpanel" aria-labelledby="pills-connect-tab">
 						<div class="tab-inner mb-3">
@@ -354,7 +353,6 @@
 							</div>
 						</div>
 					</div>
-
 					<!--reinstall-->
 					<div class="tab-pane fade" id="pills-reinstall" role="tabpanel" aria-labelledby="pills-reinstall-tab">
 						<div class="tab-inner mb-3">
@@ -415,7 +413,6 @@
 							</div>
 						</div>
 					</div>
-
 					<!--management-->
 					<div class="tab-pane fade" id="pills-management" role="tabpanel" aria-labelledby="pills-management-tab">
 						<div class="tab-inner management mb-3">
@@ -427,18 +424,6 @@
 							<div class="divider"></div>
 							<div class="row px-0 pt-4">
 								<div class="col-md-12 d-flex flex-column flex-lg-row align-items-start">
-
-
-									<ul class="nav nav-pills mb-3 mb-md-0 mb-lg-0 d-flex flex-column inner-tab-pills" id="pills-tab" role="tablist">
-
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link active" id="pills-ipv4m-tab" data-bs-toggle="pill" data-bs-target="#pills-ipv4m" type="button" role="tab" aria-controls="pills-ipv4m" aria-selected="false">Assign IPv4</button>
-										</li>
-										<li class="nav-item" role="presentation">
-											<button class="nav-link" id="pills-ipv6m-tab" data-bs-toggle="pill" data-bs-target="#pills-ipv6m" type="button" role="tab" aria-controls="pills-ipv6m" aria-selected="false">Swap IPv4</button>
-										</li>
-									</ul>
-
 									<div class="tab-content w-100" id="pills-tabContent">
 										<!--ipv4m-->
 										<div class="tab-pane fade  show active" id="pills-ipv4m" role="tabpanel" aria-labelledby="pills-ipv4m-tab">
@@ -483,52 +468,11 @@
 
 											</div>
 										</div>
-										<!--ipv6m-->
-										<div class="tab-pane fade" id="pills-ipv6m" role="tabpanel" aria-labelledby="pills-ipv6m-tab">
-
-											<div class="tab-inner py-0">
-												<h3 class="fs-15 mb-1">Swap IP</h3>
-												<p class="fs-13 mb-0">Swap the IP addresses of two virtual machines with each other</p>
-												<div class="divider my-3"></div>
-
-												<p class="fs-13-5">Server 1</p>
-												<p class="fs-15">papa-efyu-01.evoxt.com</p>
-
-												<p class="fs-13-5">Server 2</p>
-
-												<div class="overview-select d-inline-block mb-3">
-													<select name="" id="">
-														<option value="">Server 2</option>
-														<option value="">Server 2</option>
-														<option value="">Server 2</option>
-													</select>
-												</div>
-
-												<div class="overview-button-wrapper pt-0 ">
-													<button class="btn-dark px-4 hover-dark-light">Swap IP</button>
-												</div>
-
-												<p class="fs-14 mt-4 mb-2">After Swapping IP address, our system will perform a reboot on your server, please make sure any temporary files are saved before performing IP assignment. This process will take around 3 minutes, please do not refresh this page.</p>
-
-
-											</div>
-										</div>
-
-
-
 									</div>
-
-
-
-
-
-
-
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<!--vnc-->
 					<div class="tab-pane fade" id="pills-vnc" role="tabpanel" aria-labelledby="pills-vnc-tab">
 						<div class="tab-inner mb-3">
@@ -539,23 +483,14 @@
 							<div class="divider"></div>
 							<div class="row px-0 pt-4">
 								<div class="col-md-12 d-flex justify-content-center">
-
-
 									<div class="overview-button-wrapper pt-0">
-										<button class="btn-dark px-4 hover-dark-light">Connect VNC</button>
+										<button class="btn-dark px-4 hover-dark-light" onclick="openConnectVNC({{$relid}},{{$vpsid}})">Connect VNC</button>
 									</div>
-
-
-
-
-
-
 								</div>
 							</div>
 						</div>
 					</div>
 					@endif
-
 					<!--billing-->
 					@if($order_product_info['status'] != 'Active') <div class="tab-pane fade  show active" id="pills-billing" role="tabpanel" aria-labelledby="pills-billing-tab">
 					@else <div class="tab-pane fade" id="pills-billing" role="tabpanel" aria-labelledby="pills-billing-tab">
@@ -581,10 +516,6 @@
 											<button class="nav-link" id="pills-invoices-tab" data-bs-toggle="pill" data-bs-target="#pills-invoices" type="button" role="tab" aria-controls="pills-invoices" aria-selected="false">Invoice</button>
 										</li>
 
-										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-cancellation-tab" data-bs-toggle="pill" data-bs-target="#pills-cancellation" type="button" role="tab" aria-controls="pills-cancellation" aria-selected="false">Cancellation</button>
-										</li>
-
 										<li class="nav-item" role="presentation">
 											<button class="nav-link" id="pills-refund-tab" data-bs-toggle="pill" data-bs-target="#pills-refund" type="button" role="tab" aria-controls="pills-refund" aria-selected="false">Refund</button>
 										</li>
@@ -605,10 +536,13 @@
 													<div class="row">
 														<div class="text-center">
 															<p class="fs-14 mb-0 ">Current Due Date</p>
-															<p class="fs-15 mb-0" style="font-weight: 500;">17/05/2023</p>
+															<p class="fs-15 mb-0" style="font-weight: 500;">{{$order_product_info['nextduedate']}}</p>
 
 															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center">
-																<button class="btn-dark px-4 hover-dark-light">Renew Service</button>
+																<a href="{{ route('balance') }}" class="btn btn-primary">Renew Service</a>
+																<!-- <button class="btn-dark px-4 hover-dark-light" onclick="">
+																	
+																</button> -->
 															</div>
 														</div>
 													</div>
@@ -636,7 +570,7 @@
 																<th scope="col">Date Paid</th>
 																<th scope="col">Amount</th>
 																<th scope="col">Status</th>
-
+																<th scope="col" class="text-center">View Invoice</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -646,36 +580,34 @@
 																<td class="date-cell">{{$invoiceInfo['duedate']}}</td>
 																<td class="date-cell">{{$invoiceInfo['datepaid']}}</td>						      
 																<td class="remaining-cell"><span>€ {{$invoiceInfo['subtotal']}}</span></td>
-																<td class="successful-cell"><span>Successful</span></td>
+																@if($invoiceInfo['status'] == 'Paid')
+																<td class="successful-cell">
+																	<span>
+																		{{ $invoiceInfo['status'] }}
+																	</span>
+																</td>
+																@elseif($invoiceInfo['status'] == 'Unpaid')
+																<td class="cancelled-cell">
+																	<span>
+																		{{ $invoiceInfo['status'] }}
+																	</span>
+																</td>
+																@else
+																<td class="in-progress-cell">
+																	<span>
+																		{{ $invoiceInfo['status'] }}
+																	</span>
+																</td>
+																@endif
+																<td class="text-center">
+																	<a onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank">
+																		<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice">
+																	</a>
+																</td>
 															</tr>
 														</tbody>
 													</table>
 												</div>
-											</div>
-										</div>
-
-										<!--cancel service-->
-										<div class="tab-pane fade" id="pills-cancellation" role="tabpanel" aria-labelledby="pills-cancellation-tab">
-
-											<div class="tab-inner py-0 p-mb-0">
-												<h3 class="fs-15 mb-1">Cancellation</h3>
-												<div class="divider divider-inner" style="margin:20px 0"></div>
-
-												<div class="tab-inner">
-													<div class="row">
-														<div class="text-center">
-															<p class="fs-14 mb-0 ">Please click the button below to request for a service cancellation.</p>
-
-															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center">
-																<button class="btn-dark px-4 hover-dark-light">Cancel Service</button>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<p class="fs-13 mt-2 inner-sub-title" style="max-width:474px;text-align: center;margin: 0 auto; color: rgba(23, 30, 38, 0.75);">
-													We will not process any refund request submitted through cancellation request. Please do not file for a cancellation if you wish to request for a refund, open a ticket to request for a refund.
-												</p>
 											</div>
 										</div>
 
@@ -1012,7 +944,7 @@
 
 		$(".modal-close").click(function() {
 			$(".modal").addClass("hidden");
-		})
+		});
 	});
 
 	function TurnOnVPS(vpsid){
@@ -1280,6 +1212,43 @@
 					});
 				}
 			},
+		});
+	}
+
+	function openConnectVNC(relid,vpsid){
+		windowClose();
+		var windowWidth = 1024;
+		var windowHeight = 768;
+		var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
+		var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+		$('#loading-bg').css('display', 'flex');
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: "{{ route('vnc_connect_sso') }}",
+			method: "POST",
+			data: { 
+				relid: relid,
+				vpsid:vpsid
+			},
+			success: function(response) {
+				if(response.result == "success"){
+					Window = window.open(
+					response.redirect_url,
+						"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+					$('.modal-balance').addClass('hidden');
+					Window.focus();
+				} else{
+					console.log('access denied for sso!');
+				}
+				$('#loading-bg').css('display', 'none');
+			},
+			error: function(xhr, status, error) {
+				// Handle the error here
+				console.log(error);
+				$('#loading-bg').css('display', 'none');
+			}
 		});
 	}
 
