@@ -31,32 +31,44 @@ class OverviewController extends Controller
      */
     public function index(Request $request)
     {
+        $order_product_info = [];
         $order_info = [];
+        $oslists = [];
+        $network_speed = [];
+        $vps_info = [];
+        $cpu = [];
+        $vpsid = 0;
         $oslists = [];
         $order_id  = $request->order_id;
         
-        $order_info = $this->getOrderinfo($order_id);
+        $order_info_response = $this->getOrderinfo($order_id);
+        $order_info = $order_info_response['orders']['order'];
+        
+        $order_product_info = $this->getClientProductInfo($order_id);
         $today = new DateTime(date("Y-m-d"));
-        $start_day = new DateTime($order_info['regdate']);
+        $start_day = new DateTime($order_info[0]['date']);
         $interval = $today->diff($start_day);
         $dayDiff = $interval->days;
         
-        $product_info = $this->getProductInfo($order_info);
+        $product_info = $this->getOrderProductInfo($order_product_info['pid']);
+
+        
         $detail_info = $this->getProductDetailInfo($product_info);
-        $other_info = $this->getOtherinfo($order_info);
-        // $invoiceInfo = $this->getinvoiceInfo($order_id);
+        $other_info = $this->getOtherinfo($order_product_info);
+        $invoiceInfo = $this->getinvoiceInfo($order_id);
         // $this->serverMonitering($other_info['vps_info']['vpsid']);
         // print_r($other_info);exit;
 
-        $vpsid = $other_info['vps_info']['vpsid'];
         $flag = $other_info['flag'];
         $sys_logo = $other_info['sys_logo'];
         $system = $other_info['system'];
         
-        if($order_info['status'] == 'Active'){
+        $OSlist = $this->getOSlist();
+        
+        if($order_info[0]['status'] == 'Active'){
+            $vpsid = $other_info['vps_info']['vpsid'];
             $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
-            $OSlist = $this->getOSlist($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
         }
 
@@ -68,10 +80,31 @@ class OverviewController extends Controller
                 array_push($oslists,$os);
             }
         }
-        return view('pages/overview', compact('order_id','order_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed'));
+
+        $orders = array();
+        $departments = array();
+
+        $orders_info =  (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetOrders',
+            'userid' => Auth::user()->client_id,
+        ]);
+
+        if ($orders_info['totalresults'] > 0) {
+            $orders = $orders_info['orders']['order'];
+        }
+
+        $departments_info =  (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetSupportDepartments'
+        ]);
+
+        if ($departments_info['totalresults'] > 0) {
+            $departments = $departments_info['departments']['department'];
+        }
+
+        return view('pages/overview', compact('order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments'));
     }
 
-    private function getOrderinfo($order_id)
+    private function getClientProductInfo($order_id)
     {
         $orders_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetClientsProducts',
@@ -84,12 +117,13 @@ class OverviewController extends Controller
         return $order_info;
     }
 
-    private function getProductInfo($order_info)
+    private function getOrderProductInfo($pid)
     {
         $product_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetProducts',
-            'pid' => $order_info['pid'],
+            'pid' => $pid,
         ]);
+        
         $product_info = $product_response['products']['product'][0];
 
         return $product_info;
@@ -307,36 +341,26 @@ class OverviewController extends Controller
         print_r($result);exit;
     }
 
-    private function getinvoiceInfo($order_id)
+    private function getOrderinfo($order_id)
     {
         $orders_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetOrders',
             'userid' => Auth::user()->client_id,
             'id' => $order_id,
         ]);
-
-        $page = 1;
-        $start = 1;
-        $reslen = 100;
-        $invoice_list = array();
-        do {
-            $invoices_response = (new \Sburina\Whmcs\Client)->post([
-                'action' => 'GetInvoices',
-                'limitstart' => $start,
-                'limitnum' => $reslen,
-                'userid' => Auth::user()->client_id,
-            ]);
-            $invoice_list = array_push($invoice_list, $invoices_response['invoices']['invoice']);
-            $page++;
-            $start = ($page-1) * $reslen + 1;
-        } while ($invoices_response['numreturned'] == $reslen);
-
-        foreach($invoice_list as $invoice){
-            if($invoice['id'] == $orders_response['orders']['order']['invoiceid']){
-                $invoice_info = $invoice;
-            }
-        }
-
+        
+        return $orders_response;
+    }
+    private function getinvoiceInfo($order_id)
+    {
+        $invoice_info = array();
+        $orders_response = $this->getOrderinfo($order_id);
+        
+        $invoice_info = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetInvoice',
+            'invoiceid' => $orders_response['orders']['order'][0]['invoiceid'],
+        ]);
+        
         return $invoice_info;
     }
 }

@@ -6,7 +6,7 @@
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
 				<img src="{{asset('assets/img/ubuntu-overview.png')}}" alt="">
-				<h2 class="title mb-0">{{$order_info['name']}}</h2>
+				<h2 class="title mb-0">{{$order_product_info['name']}}</h2>
 			</div>
 			<div class="overview-info">
 				@if($dayDiff > 0 ) <span>Created {{$dayDiff}} days ago</span>
@@ -27,7 +27,7 @@
 								</div>
 								<div class="due-date-info">
 									<h2 class="due-date-title">Due Date</h2>
-									<span>{{$order_info['regdate']}}</span>
+									<span>{{$order_product_info['regdate']}}</span>
 								</div>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 
 									<tr>
 										<td>Public IPv4</td>
-										<td class="clipboard-input" data-copy="{{$order_info['dedicatedip']}}">{{$order_info['dedicatedip']}}</td>
+										<td class="clipboard-input" data-copy="{{$order_product_info['dedicatedip']}}">{{$order_product_info['dedicatedip']}}</td>
 										<td><img src="{{asset('assets/img/copy.svg')}}" class="icon-clipboard"></td>
 									</tr>
 
@@ -113,7 +113,7 @@
 							<li class="nav-item" role="presentation">
 								<button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">Overview</button>
 							</li>
-							@if($order_info['status'] == 'Active')
+							@if($order_product_info['status'] == 'Active')
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" id="pills-analytics-tab" data-bs-toggle="pill" data-bs-target="#pills-analytics" type="button" role="tab" aria-controls="pills-analytics" aria-selected="false">Analytics</button>
 							</li>
@@ -166,8 +166,8 @@
 												<img class="not-filterable" src="{{asset('assets/img/'.$flag.'.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">{{$order_info['groupname']}}</h4>
-												<p class="description2">{{$order_info['domain']}}</p>
+												<h4 class="title2">{{$order_product_info['groupname']}}</h4>
+												<p class="description2">{{$order_product_info['domain']}}</p>
 											</div>
 										</div>
 									</div>
@@ -177,7 +177,7 @@
 												<img class="not-filterable" src="{{asset('assets/img/'.$sys_logo.'-logo.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">{{$order_info['name']}}</h4>
+												<h4 class="title2">{{$order_product_info['name']}}</h4>
 												<p class="description2">{{$system}}</p>
 											</div>
 
@@ -198,10 +198,10 @@
 												<img class="dark-img-filter" src="{{asset('assets/img/cloud-connection.png')}}" alt="">
 											</div>
 											<div class="info">
-												<h4 class="title2">{{$order_info['dedicatedip']}}</h4>
-												<p class="description2">Created at {{$order_info['regdate']}}</p>
+												<h4 class="title2">{{$order_product_info['dedicatedip']}}</h4>
+												<p class="description2">Created at {{$order_product_info['regdate']}}</p>
 											</div>
-											@if($order_info['status'] == 'Active')
+											@if($order_product_info['status'] == 'Active')
 											<div class="server-list-options me-3 me-lg-4">
 												<button class="active-badge"><span class="active-dot"></span>Active</button>
 											</div>
@@ -209,7 +209,7 @@
 										</div>
 									</div>
 								</div>
-								@if($order_info['status'] == 'Active')
+								@if($order_product_info['status'] == 'Active')
 								<div class="d-flex justify-content-end px-0 server-btn-options">
 									<button class="btn img-btn me-0 me-lg-2" onclick="TurnOnVPS({{ $vpsid }})">
 										<i class="fa fa-play" style="color:#3FBB27;"></i>&nbsp;&nbsp;Start
@@ -227,7 +227,7 @@
 								@endif
 							</div>
 						</div>
-						@if($order_info['status'] == 'Active')
+						@if($order_product_info['status'] == 'Active')
 						<div class="tab-inner">
 							<div class="row">
 								<h3 class="title fs-17">Resource Usage</h3>
@@ -295,7 +295,7 @@
 						</div>
 						@endif
 					</div>
-
+					@if($order_product_info['status'] == 'Active')
 					<!--analytics-->
 					<div class="tab-pane fade" id="pills-analytics" role="tabpanel" aria-labelledby="pills-analytics-tab">
 
@@ -346,7 +346,7 @@
 
 									<p class="fs-15">To connect to your Linux virtual machine using SSH, please use the following command.</p>
 
-									<p class="fs-16">ssh root@<?php echo $order_info['dedicatedip']; ?></p>
+									<p class="fs-16">ssh root@<?php echo $order_product_info['dedicatedip']; ?></p>
 
 									<p class="fs-14 mb-0 sub-detail" style="max-width: 500px;">You will most likely be using cmd if you are connecting from Windows OS or Terminal if you are running macOS or Linux For more information, please visit this guide.</p>
 
@@ -554,9 +554,12 @@
 							</div>
 						</div>
 					</div>
+					@endif
 
 					<!--billing-->
-					<div class="tab-pane fade" id="pills-billing" role="tabpanel" aria-labelledby="pills-billing-tab">
+					@if($order_product_info['status'] != 'Active') <div class="tab-pane fade  show active" id="pills-billing" role="tabpanel" aria-labelledby="pills-billing-tab">
+					@else <div class="tab-pane fade" id="pills-billing" role="tabpanel" aria-labelledby="pills-billing-tab">
+					@endif
 						<div class="tab-inner billing mb-3">
 							<div class="row">
 								<h3 class="title mb-4">Billing</h3>
@@ -638,7 +641,12 @@
 														</thead>
 														<tbody>
 															<tr>
-																
+																<td>{{$invoiceInfo['invoiceid']}}</td>
+																<td class="date-cell">{{$invoiceInfo['date']}}</td>
+																<td class="date-cell">{{$invoiceInfo['duedate']}}</td>
+																<td class="date-cell">{{$invoiceInfo['datepaid']}}</td>						      
+																<td class="remaining-cell"><span>€ {{$invoiceInfo['subtotal']}}</span></td>
+																<td class="successful-cell"><span>Successful</span></td>
 															</tr>
 														</tbody>
 													</table>
@@ -646,7 +654,7 @@
 											</div>
 										</div>
 
-
+										<!--cancel service-->
 										<div class="tab-pane fade" id="pills-cancellation" role="tabpanel" aria-labelledby="pills-cancellation-tab">
 
 											<div class="tab-inner py-0 p-mb-0">
@@ -671,7 +679,7 @@
 											</div>
 										</div>
 
-
+										<!--create ticket for refund-->
 										<div class="tab-pane fade" id="pills-refund" role="tabpanel" aria-labelledby="pills-refund-tab">
 
 											<div class="tab-inner py-0 p-mb-0">
@@ -684,7 +692,7 @@
 															<p class="fs-14 mb-0 ">Please open a ticket to request a refund.</p>
 
 															<div class="overview-button-wrapper d-flex flex-column align-items-center justify-content-center">
-																<button class="btn-dark px-4 hover-dark-light">Open Ticket</button>
+																<button class="btn-dark px-4 hover-dark-light" id="open-ticket">Open Ticket</button>
 															</div>
 														</div>
 													</div>
@@ -703,7 +711,7 @@
 							</div>
 						</div>
 					</div>
-
+					@if($order_product_info['status'] == 'Active')
 					<!--settings-->
 					<div class="tab-pane fade" id="pills-settings" role="tabpanel" aria-labelledby="pills-settings-tab">
 						<div class="row mb-5 pe-0">
@@ -803,11 +811,63 @@
 							</div>
 						</div>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+
+<div class="modal modal-ticket hidden">
+	<div class="modal-inner">
+		<div class="modal-close">
+			<img class="close-dark" src="{{asset('assets/img/close.svg')}}" alt="">
+			<img class="close-light" src="{{asset('assets/img/close-light.svg')}}" alt="">
+
+		</div>
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<div class="modal-title">
+					<h2>New ticket</h2>
+					<h3>Create new ticket now.</h3>
+				</div>
+			</div>
+			<div class="modal-main">
+				<div class="amounts">
+					<form id="openTicket" enctype="multipart/form-data" method="POST" action="{{route('ticket.open')}}">
+						@csrf
+						<h4>Subject</h4>
+						<input class="mb-3" name="subject" type="text" placeholder="Write subject">
+
+						<h4>Describe the problem</h4>
+						<textarea class="mb-3" name="message" id="" cols="30" rows="8"></textarea>
+
+						<h4>Department*</h4>
+						<select name="department" id="department">
+							@foreach ($departments as $department)
+							<option value="{{$department['id']}}">{{$department['name']}}</option>
+							@endforeach
+						</select>
+
+						@if(sizeof($orders) > 0)
+						<h4>Service related</h4>
+						<select name="service" id="service">
+							<option value="0">- None -</option>
+							@foreach ($orders as $order_info)
+							@foreach($order_info['lineitems']['lineitem'] as $order_value)
+							<option value="{{$order_value['relid']}}">{{$order_value['product']}} - {{ $order_value['status'] }}</option>
+							@endforeach
+							@endforeach
+						</select>
+						@endif
+						<button class="btn-dark d-block w-100 mt-5" id="open-ticket">Create Ticket</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('script')
@@ -946,22 +1006,13 @@
 			validatePassword2OS();
 		});
 
-		// jQuery("#hostname").keyup(function() {
-		// 	var hostname = $("#hostname").val();
-		// 	$.ajax({
-		// 		headers: {
-		// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		// 		},
-		// 		url:"{{ URL::to('/overview/checkhostName') }}",
-		// 		method:'post',
-		// 		data: {
-		// 			hostname: hostname
-		// 		},
-		// 		success:function(data){
-		// 			console.log(data);
-		// 		},
-       	//  	});
-		// });
+		$("#open-ticket").click(function() {
+			$(".modal").removeClass("hidden");
+		})
+
+		$(".modal-close").click(function() {
+			$(".modal").addClass("hidden");
+		})
 	});
 
 	function TurnOnVPS(vpsid){
