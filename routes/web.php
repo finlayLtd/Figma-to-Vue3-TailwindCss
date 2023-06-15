@@ -26,6 +26,9 @@ Route::group([
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
     Route::get('/dashboard/ticketlist', 'HomeController@gettickets');
 
+    //render invoice table by sorting
+    Route::get('/balance/invoicelist', 'HomeController@invoicelist');
+    
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/balance', 'BalanceController@index')->name('balance');
@@ -68,6 +71,7 @@ Route::group([
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
 
     Route::get('/ticket-detail/{id}', 'TicketDetailController@index')->name('ticket-detail');
+    Route::get('/download-file/{id}', 'TicketDetailController@downloadFile')->name('download-file');
     
     Route::post('/sendReply', 'TicketDetailController@sendReply')->name('sendReply');
 

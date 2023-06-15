@@ -50,12 +50,14 @@
 
 						<div class="sort-servers order-2 order-md-1">
 							<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
-								<span>Sort by name</span>
+								<span>Sort by &nbsp;&nbsp;</span>
 							</div>
 							<div class="sorting-items" style="display: none;">
 								<ul>
-									<li>Sort by price</li>
-									<li>Sort by ...</li>
+									<li class="touch-item" onclick="sortByInvoice('date', 'desc')">Date-latest</li>
+									<li class="touch-item" onclick="sortByInvoice('date', 'asc')">Date-oldest</li>
+									<li class="touch-item" onclick="sortByInvoice('total', 'desc')">Price-highest</li>
+									<li class="touch-item" onclick="sortByInvoice('total', 'asc')">Price-lowest</li>
 								</ul>
 							</div>
 						</div>
@@ -77,232 +79,9 @@
 
 					</div>
 				</div>
-				
-				<div class="tab-content" id="pills-tabContent">
 
-					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-						<div class="w-100 mb-5 support-table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Invoice</th>
-										<th scope="col">Amount</th>
-										<th scope="col">Invoice Date</th>
-										<th scope="col">Due Date</th>
-										<th scope="col">Status</th>
-										<th scope="col" class="text-center">View Invoice</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($invoices as $invoice)
-									<tr>
-										<td>INV-{{ $invoice['id'] }}</td>
-										<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
-										<td class="date-cell">{{ $invoice['date'] }}</td>
-										<td class="date-cell">{{ $invoice['duedate'] }}</td>
-										@if($invoice['status'] == 'Paid')
-										<td class="successful-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@elseif($invoice['status'] == 'Unpaid')
-										<td class="cancelled-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@endif
-										<td class="text-center">
-											<a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank">
-												<img src="assets/img/eye-open.svg" class="icon-password view-invoice">
-											</a>
-										</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-						<!-- <div class="w-100 server-list-pagination">
-								<nav aria-label="...">
-								  <ul class="pagination">
-								    <li class="page-item disabled first">
-								      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-								    </li>
-								    <li class="page-item"><a class="page-link" href="#">1</a></li>
-								    <li class="page-item active" aria-current="page">
-								      <a class="page-link" href="#">2</a>
-								    </li>
-								    <li class="page-item"><a class="page-link" href="#">3</a></li>
-								    <li class="page-item"><a class="page-link" href="#">4</a></li>
-								    <li class="page-item"><a class="page-link" href="#">5</a></li>
-								    <li class="page-item"><a class="page-link" href="#">...</a></li>
-								    <li class="page-item"><a class="page-link" href="#">124</a></li>
-
-								    <li class="page-item last">
-								      <a class="page-link" href="#">Next</a>
-								    </li>
-								  </ul>
-								</nav>                	
-	            </div> -->
-					</div>
-
-					<div class="tab-pane fade" id="pills-paid" role="tabpanel" aria-labelledby="pills-paid-tab">
-						<div class="w-100 mb-5 support-table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Invoice</th>
-										<th scope="col">Amount</th>
-										<th scope="col">Invoice Date</th>
-										<th scope="col">Due Date</th>
-										<th scope="col">Status</th>
-										<th scope="col" class="text-center">View Invoice</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($invoices as $invoice)
-									@if($invoice['status'] == 'Paid')
-									<tr>
-										<td>INV-{{ $invoice['id'] }}</td>
-										<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
-										<td class="date-cell">{{ $invoice['date'] }}</td>
-										<td class="date-cell">{{ $invoice['duedate'] }}</td>
-										@if($invoice['status'] == 'Paid')
-										<td class="successful-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@elseif($invoice['status'] == 'Unpaid')
-										<td class="cancelled-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@endif
-										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-									</tr>
-									@endif
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div class="tab-pane fade" id="pills-unpaid" role="tabpanel" aria-labelledby="pills-unpaid-tab">
-						<div class="w-100 mb-5 support-table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Invoice</th>
-										<th scope="col">Amount</th>
-										<th scope="col">Invoice Date</th>
-										<th scope="col">Due Date</th>
-										<th scope="col">Status</th>
-										<th scope="col" class="text-center">View Invoice</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($invoices as $invoice)
-									@if($invoice['status'] == 'Unpaid')
-									<tr>
-										<td>INV-{{ $invoice['id'] }}</td>
-										<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
-										<td class="date-cell">{{ $invoice['date'] }}</td>
-										<td class="date-cell">{{ $invoice['duedate'] }}</td>
-										@if($invoice['status'] == 'Paid')
-										<td class="successful-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@elseif($invoice['status'] == 'Unpaid')
-										<td class="cancelled-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@endif
-										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-									</tr>
-									@endif
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
-						<div class="w-100 mb-5 support-table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">Invoice</th>
-										<th scope="col">Amount</th>
-										<th scope="col">Invoice Date</th>
-										<th scope="col">Due Date</th>
-										<th scope="col">Status</th>
-										<th scope="col" class="text-center">View Invoice</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($invoices as $invoice)
-									@if($invoice['status'] == 'Cancelled')
-									<tr>
-										<td>INV-{{ $invoice['id'] }}</td>
-										<td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
-										<td class="date-cell">{{ $invoice['date'] }}</td>
-										<td class="date-cell">{{ $invoice['duedate'] }}</td>
-										@if($invoice['status'] == 'Paid')
-										<td class="successful-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@elseif($invoice['status'] == 'Unpaid')
-										<td class="cancelled-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@else
-										<td class="in-progress-cell">
-											<span>
-												{{ $invoice['status'] }}
-											</span>
-										</td>
-										@endif
-										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
-									</tr>
-									@endif
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
+				<div class="w-100 invoice-table mb-4">
+					@include('tables.invoicetable')
 				</div>
 				
 			</div>
@@ -395,6 +174,35 @@ function openAddFundsWindow(){
 		}
 	});
 }
+
+function sortByInvoice(orderby, order) {
+	// var selectedPage = $('.active').attr("page-number") * 1;
+	$('#loading-bg').css('display', 'flex');
+	$.ajax({
+		url: "{{ URL::to('/balance/invoicelist') }}",
+		method: "GET",
+		data: {
+			'orderby': orderby,
+			'order': order,
+		},
+		success: function(data) {
+			$('#loading-bg').css('display', 'none');
+			$('.invoice-table').empty();
+			$('.invoice-table').html(data);
+		},
+		error: function(xhr, status, error) {
+			// Handle the error here
+			console.log(error);
+			$('#loading-bg').css('display', 'none');
+		}
+	});
+}
+
+$(document).ready(function() {
+  $('.touch-item').click(function() {
+    $('.sorting-items').hide();
+  });
+});
 
 
 // function that Closes the open Window

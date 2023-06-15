@@ -27,10 +27,11 @@ class BalanceController extends Controller
     {
         $response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetInvoices',
+            'orderby' => 'date',
+            'order' => 'desc',
             // 'limitstart' => $offset,
             // 'limitnum' => 10, // Set number of tickets to retrieve per request
             'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
-            'orderby' => 'invoicenumber'
         ]);
         if (count($response['invoices']) != 0) {
             $invoices = $response['invoices']['invoice'];
