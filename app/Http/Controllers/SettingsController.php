@@ -51,7 +51,7 @@ class SettingsController extends Controller
         $response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetEmails',
             'limitstart' => 0,
-            'limitnum' => 10, // Set number of tickets to retrieve per request
+            'limitnum' => 30, // Set number of tickets to retrieve per request
             'clientid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
         ]);
         if (count($response['emails']) != 0) {
