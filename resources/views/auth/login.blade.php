@@ -67,26 +67,18 @@
             @csrf
             <div class="login-input-wrapper mb-3">
               <label for="#email">Email Address</label>
-              <!-- <input type="email" id="email" name="email" required placeholder="email@address.com">  -->
               <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="email@address.com">
 
             </div>
 
             <div class="login-input-wrapper mb-4">
               <label for="#password">Password</label>
-              <!-- <input type="password" id="password" name="password" required placeholder="••••••••••">          -->
               <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="••••••••••">
-
             </div>
 
             <input style='display: none;' class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
             <button class="btn-dark w-100 mb-2" type="submit">Login</button>
-
-
-            <!-- <div class="text-center">
-                    <a class="fs-14" href="#">Forgot password?</a>
-                </div> -->
 
           </form>
 

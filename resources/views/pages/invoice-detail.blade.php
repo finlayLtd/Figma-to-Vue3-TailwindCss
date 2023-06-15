@@ -195,8 +195,7 @@
             </div>
 
             <div class="pull-right btn-group btn-group-sm hidden-print">
-                <!-- <a href="javascript:window.print()" class="btn btn-default"><i class="fas fa-print"></i> Print</a> -->
-                <!-- <a href="#" class="btn btn-default"><i class="fas fa-download"></i> Download</a> -->
+
             </div>
     </div>
     <p class="text-center hidden-print">

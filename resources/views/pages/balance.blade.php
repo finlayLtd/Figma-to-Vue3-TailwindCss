@@ -123,8 +123,6 @@
 
 				</div>
 				<div class="amounts">
-					<!-- <h4>Amounts</h4> -->
-					<!-- <input type="text" value="321" placeholder=""> -->
 					<div class="amount-footer">
 						<span>Amount of one deposit</span>
 						<span>€10,00 - €1.000,00</span>
@@ -176,7 +174,6 @@ function openAddFundsWindow(){
 }
 
 function sortByInvoice(orderby, order) {
-	// var selectedPage = $('.active').attr("page-number") * 1;
 	$('#loading-bg').css('display', 'flex');
 	$.ajax({
 		url: "{{ URL::to('/balance/invoicelist') }}",
