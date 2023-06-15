@@ -115,7 +115,7 @@
               <label class="form-check-label checked" for="inStockCheckbox">I agree to the User Agreement, and I have read the Privacy Policy.</label>
             </div>
 
-            <button type="submit" class="btn-dark w-100 mb-2">Register account</button>
+            <button id="register-btn" type="submit" class="btn-dark w-100 mb-2" disabled>Register account</button>
 
             <div class="text-center">
               <p class="mb-0 mt-3 fs-14">Already have an account? <a href="{{url('/login')}}">Log in</a></p>
@@ -168,6 +168,12 @@
         } else {
           jQuery("#password").next('.form-control-feedback').addClass('glyphicon-ok');
           jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
+        }
+
+        if (pwstrength < 85) {
+          $('#register-btn').prop('disabled', true);
+        } else {
+          $('#register-btn').prop('disabled', false);
         }
       });
     });
