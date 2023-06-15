@@ -121,7 +121,7 @@
 										</td>
 										@endif
 										<td class="text-center">
-											<a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank">
+											<a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank">
 												<img src="assets/img/eye-open.svg" class="icon-password view-invoice">
 											</a>
 										</td>
@@ -195,7 +195,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -245,7 +245,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -295,7 +295,7 @@
 											</span>
 										</td>
 										@endif
-										<td class="text-center"><a href="{{ url('/invoice-detail/' . $invoice['id']) }}" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
+										<td class="text-center"><a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 									</tr>
 									@endif
 									@endforeach
@@ -349,10 +349,9 @@
 					<div class="amount-footer">
 						<span>Amount of one deposit</span>
 						<span>€10,00 - €1.000,00</span>
-
 					</div>
 				</div>
-				<button class="btn-dark d-block" onclick="windowPay()">Continue</button>
+				<button class="btn-dark d-block" onclick="openAddFundsWindow()">Continue</button>
 			</div>
 		</div>
 	</div>
@@ -361,26 +360,40 @@
 
 @section('script')
 <script>
-// Function that open the new Window
-function windowOpen(invoice_id) {
-	windowClose();
-	var leftPosition = (window.screen.width / 2) - (800 / 2);
-  	var topPosition = (window.screen.height / 2) - (600 / 2);
-	var originalUrl = "{{ env('WHMCS_URL') }}/viewinvoice.php?id="+invoice_id;
-	Window = window.open(
-		originalUrl,
-		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
-	Window.focus();
-}
 
-function windowPay(){
+
+function openAddFundsWindow(){
 	windowClose();
-	var leftPosition = (window.screen.width / 2) - (800 / 2);
-  	var topPosition = (window.screen.height / 2) - (600 / 2);
-	Window = window.open(
-		"{{ env('WHMCS_URL') }}/clientarea.php?action=addfunds",
-		"_blank", "width=800, height=600, left=" + leftPosition + ", top=" + topPosition);
-	Window.focus();
+	var windowWidth = 1024;
+	var windowHeight = 768;
+	var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
+  	var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+	// Make AJAX request to Laravel backend route
+	$('#loading-bg').css('display', 'flex');
+	$.ajax({
+		url: "{{ route('add_funds_sso') }}",
+		method: "POST",
+		data: { 
+			"_token": "{{ csrf_token() }}" 
+		},
+		success: function(response) {
+			if(response.result == "success"){
+				Window = window.open(
+				response.redirect_url,
+					"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+				$('.modal-balance').addClass('hidden');
+				Window.focus();
+			} else{
+				console.log('access denied for sso!');
+			}
+			$('#loading-bg').css('display', 'none');
+		},
+		error: function(xhr, status, error) {
+			// Handle the error here
+			console.log(error);
+			$('#loading-bg').css('display', 'none');
+		}
+	});
 }
 
 
