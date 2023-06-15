@@ -131,6 +131,7 @@
 
 		function download_file(id){
 			console.log(id);
+			$('#loading-bg').css('display', 'flex');
 			$.ajax({
 				url: '/download-file/'+id,
 				type: 'GET',
@@ -140,6 +141,12 @@
 						link.href = response.redirect_url;
 						link.click();
 					}
+					$('#loading-bg').css('display', 'none');
+				},
+				error: function(xhr, status, error) {
+					// Handle the error here
+					console.log(error);
+					$('#loading-bg').css('display', 'none');
 				}
 			});
 		}
