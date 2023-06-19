@@ -1327,7 +1327,8 @@ class Admin {
 			if(!isset($post['servers_search']) || $post['servers_search'] == ''){
 				$post['servers_search'] = -1;
 			}
-			$path = 'index.php?act=ips&ipsearch='.$post['ipsearch'].'&ippoolsearch='.$post['ippoolsearch'].'&macsearch='.$post['macsearch'].'&vps_search='.$post['vps_search'].'&servers_search='.$post['servers_search'].'&lockedsearch='.$post['lockedsearch'].'&ippid='.$post['ippid'].'&page='.$page.'&reslen='.$reslen;
+			// $path = 'index.php?act=ips&vps_search='.$post['vps_search'].'&servers_search='.$post['servers_search'].'&lockedsearch='.$post['lockedsearch'].'&ippid='.$post['ippid'].'&page='.$page.'&reslen='.$reslen;
+			$path = 'index.php?act=ips&vps_search='.$post['vps_search'].'&page='.$page.'&reslen='.$reslen;
 		}
 		$ret = $this->call($path);
 		$tmp_ippool = array();

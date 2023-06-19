@@ -57,7 +57,7 @@ class OverviewController extends Controller
         $detail_info = $this->getProductDetailInfo($product_info);
         $other_info = $this->getOtherinfo($order_product_info);
         $invoiceInfo = $this->getinvoiceInfo($order_id);
-        // $this->serverMonitering($other_info['vps_info']['vpsid']);
+        // $this->getIpinfo($other_info['vps_info']['vpsid']);
         // print_r($other_info);exit;
 
         $flag = $other_info['flag'];
@@ -71,6 +71,7 @@ class OverviewController extends Controller
             $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
+            $ip_list = $this->getIpinfo($vpsid,$vps_info['vps_data'][$vpsid]['hostname']);
             
         }
 
@@ -103,7 +104,7 @@ class OverviewController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
-        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments'));
+        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list'));
     }
 
     private function getClientProductInfo($order_id)
@@ -367,12 +368,13 @@ class OverviewController extends Controller
         return $invoice_info;
     }
 
-    private function getIpinfo($vpsid){
+    private function getIpinfo($vpsid,$hostname){
         $post = array();
-        // $post['vpsid'] = $vpsid;
+        $ip_list = array();
+        $post['vps_search'] = $hostname;
         
-        $result = $this->virtualizorAdmin->ips();
-        print_r($result);exit;
+        $result = $this->virtualizorAdmin->ips(1, 50, $post);
+        return $result;
     }
 
     private function getAnalysisData($vpsid){
@@ -382,5 +384,17 @@ class OverviewController extends Controller
         $output = $this->virtualizorAdmin->server_stats($post);
 
         print_r($output);exit;
+    }
+
+    public function changeIp(Request $request){
+        $post = array();
+        $post['vpsid'] = $request->vpsid;
+        $post['rootpass'] = $request->root_pwd;
+        $result = $this->virtualizorAdmin->managevps($post);
+        if($result['done']['change_pass_msg']){
+            return response()->json('VPS password will be changed after you SHUTDOWN and START the VPS from the panel.', 200);
+        }else{
+            return response()->json('Oops! We meet some error!.', 500);
+        }
     }
 }
