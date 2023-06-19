@@ -298,39 +298,14 @@
 					@if($order_product_info['status'] == 'Active')
 					<!--analytics-->
 					<div class="tab-pane fade" id="pills-analytics" role="tabpanel" aria-labelledby="pills-analytics-tab">
-
-
-						<div class="tab-inner mb-3">
-							<div class="row">
-								<h3 class="title">Analytics</h3>
-								<p class="description mb-4">Detailed analytic charts on virtual machine usage</p>
-							</div>
-							<div class="divider"></div>
-							<div class="row px-0 pt-4">
-								<div class="col-md-6">
-
-									<div class="col-content-wrapper">
-
-										<img class="dark-img-filter" src="{{asset('assets/img/cart1.png')}}" alt="">
-
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="col-content-wrapper">
-
-										<img class="dark-img-filter" src="{{asset('assets/img/cart2.png')}}" alt="">
-
-
-									</div>
-								</div>
-
-
-							</div>
-						</div>
-
-
-
-
+						<div id="disk-container"></div>
+						<div id="inode-container"></div>
+						<div id="cpu-container"></div>
+						<div id="actual-cpu-container"></div>
+						<div id="net-in-container"></div>
+						<div id="net-out-container"></div>
+						<div id="io-read-container"></div>
+						<div id="io-write-container"></div>
 					</div>
 					<!--connect-->
 					<div class="tab-pane fade" id="pills-connect" role="tabpanel" aria-labelledby="pills-connect-tab">
@@ -956,6 +931,9 @@
 		$(".modal-close").click(function() {
 			$(".modal").addClass("hidden");
 		});
+
+		var chat_data = @json($analysis_data);
+		
 	});
 
 	function TurnOnVPS(vpsid){
@@ -1314,6 +1292,125 @@
 					showToast('Success', data, 'success');
 				},
 			});
+	}
+
+	function renderChat(){
+		
+		// Highcharts.chart('cpu-container', {
+        //     chart: {
+        //         zoomType: 'x'
+        //     },
+        //     title: {
+        //         text: 'CPU Information',
+        //         align: 'left'
+        //     },
+        //     subtitle: {
+        //         text: document.ontouchstart === undefined ?
+        //             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in',
+        //         align: 'left'
+        //     },
+        //     xAxis: {
+        //         type: 'datetime'
+        //     },
+        //     yAxis: {
+        //         title: {
+        //             text: 'CPU Usage'
+        //         }
+        //     },
+        //     legend: {
+        //         enabled: false
+        //     },
+        //     plotOptions: {
+        //         area: {
+        //             fillColor: {
+        //                 linearGradient: {
+        //                     x1: 0,
+        //                     y1: 0,
+        //                     x2: 0,
+        //                     y2: 1
+        //                 },
+        //                 stops: [
+        //                     [0, Highcharts.getOptions().colors[0]],
+        //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+        //                 ]
+        //             },
+        //             marker: {
+        //                 radius: 2
+        //             },
+        //             lineWidth: 1,
+        //             states: {
+        //                 hover: {
+        //                     lineWidth: 1
+        //                 }
+        //             },
+        //             threshold: null
+        //         }
+        //     },
+
+        //     series: [{
+        //         type: 'area',
+        //         name: 'CPU Usage',
+        //         data: data
+        //     }]
+        // });
+
+		// Highcharts.chart('cpu-container', {
+        //     chart: {
+        //         zoomType: 'x'
+        //     },
+        //     title: {
+        //         text: 'CPU Information',
+        //         align: 'left'
+        //     },
+        //     subtitle: {
+        //         text: document.ontouchstart === undefined ?
+        //             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in',
+        //         align: 'left'
+        //     },
+        //     xAxis: {
+        //         type: 'datetime'
+        //     },
+        //     yAxis: {
+        //         title: {
+        //             text: 'CPU Usage'
+        //         }
+        //     },
+        //     legend: {
+        //         enabled: false
+        //     },
+        //     plotOptions: {
+        //         area: {
+        //             fillColor: {
+        //                 linearGradient: {
+        //                     x1: 0,
+        //                     y1: 0,
+        //                     x2: 0,
+        //                     y2: 1
+        //                 },
+        //                 stops: [
+        //                     [0, Highcharts.getOptions().colors[0]],
+        //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+        //                 ]
+        //             },
+        //             marker: {
+        //                 radius: 2
+        //             },
+        //             lineWidth: 1,
+        //             states: {
+        //                 hover: {
+        //                     lineWidth: 1
+        //                 }
+        //             },
+        //             threshold: null
+        //         }
+        //     },
+
+        //     series: [{
+        //         type: 'area',
+        //         name: 'CPU Usage',
+        //         data: data
+        //     }]
+        // });
 	}
 
 </script>

@@ -71,6 +71,7 @@ class OverviewController extends Controller
             $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
+            $analysis_data = $this->getAnalysisData($vpsid);
             $ip_list = $this->getIpinfo($vpsid,$vps_info['vps_data'][$vpsid]['hostname']);
             
         }
@@ -104,7 +105,7 @@ class OverviewController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
-        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list'));
+        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list','analysis_data'));
     }
 
     private function getClientProductInfo($order_id)
@@ -374,16 +375,27 @@ class OverviewController extends Controller
         $post['vps_search'] = $hostname;
         
         $result = $this->virtualizorAdmin->ips(1, 50, $post);
+        usort($result['ips'], function($a, $b) {
+            return $b['primary'] - $a['primary'];
+        });
         return $result;
     }
 
     private function getAnalysisData($vpsid){
         $post = array();
-        $post['show'] = 202306;           //use show only when you need statistics of a specified month and year
-                                            //specify it in this way: YYYYMM
-        $output = $this->virtualizorAdmin->server_stats($post);
+        $datas = array();
+        $date = array();
+        $return_datas = array();
+        $post['show'] = date("Ym");           
+        $post['svs'] = $vpsid;           
+        $output = $this->virtualizorAdmin->vps_stats($post);
 
-        print_r($output);exit;
+        foreach($output['vps_stats'] as $state){
+            array_push($return_datas,$state);
+        }
+
+        print_r($return_datas);exit;
+        return $return_datas;
     }
 
     public function changeIp(Request $request){
