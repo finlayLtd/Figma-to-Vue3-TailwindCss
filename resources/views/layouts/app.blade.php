@@ -61,23 +61,23 @@
 
                         <!--select show language -->
                         <div class="dropdown language-list dropbtn">
-                            <span class="dropbtn" onclick="showDropdown()" style="margin-right:10px;cursor: pointer;">
-                                <i class="fa fa-globe dropbtn"> EN</i>
+                            <span class="dropbtn" onclick="showDropdown()" style="cursor: pointer;">
+                                <i class="fa fa-globe dropbtn">&nbsp;<small class="dropbtn" id="language-code" onclick="showDropdown()">EN</small></i>
                             </span>
-                            <div id="language-list" class="dropdown-content">
-                                <div class="option-content d-flex">
-                                    <span class="ip2location-flag-32 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
-                                    <label style="line-height:50px;margin-left:5px;">English</label>
+                            <div id="language-list" class="dropdown-content" style="padding: 5px;">
+                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('en')">
+                                    <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
+                                    <b style="line-height:36px; margin-left:5px;">English</b>
                                 </div>
 
-                                <div class="option-content d-flex">
-                                    <span class="ip2location-flag-32 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
-                                    <label style="line-height:50px;margin-left:5px;">русский</label>
+                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('ru')">
+                                    <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
+                                    <b style="line-height:36px; margin-left:5px;">русский</b>
                                 </div>
 
-                                <div class="option-content d-flex">
-                                    <span class="ip2location-flag-32 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
-                                    <label style="line-height:50px;margin-left:5px;">中文</label>
+                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('zh')">
+                                    <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
+                                    <b style="line-height:36px; margin-left:5px;">中文</b>
                                 </div>
                             </div>
                         </div>
@@ -109,11 +109,11 @@
                                         {{ Auth::user()->originUserData['firstname'] }}
                                     </li>
 
-                                    <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">Settings</a></li>
+                                    <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">{{ __('messages.Settings') }}</a></li>
                                     @if(Auth::user()->originUserData['clients'] && count( Auth::user()->originUserData['clients']) > 1)
-                                        <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">Switch Account</a></li>
+                                        <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">{{ __('messages.Switch_Account') }}</a></li>
                                     @endif
-                                    <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/messages.svg')}}" alt="">Support Tickets</a></li>
+                                    <li><a href="{{ url('/support-ticket') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/messages.svg')}}" alt="">{{ __('messages.Support_Tickets') }}</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"><img src="{{asset('assets/img/signout.svg')}}" style="margin-right: 15px !important;margin-left: 3px;" alt="">
@@ -139,10 +139,10 @@
 
                     <div class="collapse navbar-collapse col-12 col-md-6 col-sm-5 justify-content-center order-lg-2" id="navbarNav">
                         <ul class="navbar-nav justify-content-center mb-md-0">
-                            <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a></li>
-                            <li class="nav-item"><a href="{{ url('/support-ticket') }}" class="nav-link">Tickets</a></li>
-                            <li class="nav-item"><a href="{{ url('/servers') }}" class="nav-link">Servers</a></li>
-                            <li class="nav-item"><a href="{{ url('/balance') }}" class="nav-link">Invoices</a></li>
+                            <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link">{{ __('messages.Dashboard') }}</a></li>
+                            <li class="nav-item"><a href="{{ url('/support-ticket') }}" class="nav-link">{{ __('messages.Tickets') }}</a></li>
+                            <li class="nav-item"><a href="{{ url('/servers') }}" class="nav-link">{{ __('messages.Servers') }}</a></li>
+                            <li class="nav-item"><a href="{{ url('/balance') }}" class="nav-link">{{ __('messages.Invoices') }}</a></li>
                         </ul>
                     </div>
             </nav>
@@ -257,6 +257,29 @@
             });
         }
 
+        function setLanguage(lang) {
+            document.cookie = "lang=" + lang + "; path=/";
+            location.reload();
+        }
+
+
+        function updateLanguage() {
+            var lang = getCookie('lang');
+            if (lang == 'en') {
+                document.getElementById('language-code').innerHTML = 'EN';
+            } else if (lang == 'ru') {
+                document.getElementById('language-code').innerHTML = 'RU';
+            } else if (lang == 'zh') {
+                document.getElementById('language-code').innerHTML = 'CN';
+            }
+        }
+
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
         // fetch data from the backend to get the credit
         function fetchCredit(){
             $.ajax({
@@ -279,8 +302,9 @@
 
 
         $(document).ready(function() {
+            updateLanguage();
             // fetch data from the backend to get the credit
-            setInterval(fetchCredit, 10000);
+            fetchCredit();
 
             // display loading icon when fetch data from backend
             $('form').submit(function() {
