@@ -41,6 +41,7 @@ Route::group([
     Route::post('/get_funds', 'HomeController@get_funds')->name('get_funds');
     
     Route::post('/vnc_connect_sso', 'SSOController@connect_vnc_sso')->name('vnc_connect_sso');
+    Route::post('/vps_analysis_sso', 'SSOController@get_analysis_data_sso')->name('vps_analysis_sso');
 
     
 

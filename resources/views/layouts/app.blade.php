@@ -28,7 +28,8 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-
+    <!-- Image Sprite CSS -->
+    <link href="{{asset('assets/image_sprite/ip2location-image-sprite.css')}}" rel="stylesheet">
     <title>CrazyRDP</title>
 </head>
 
@@ -58,7 +59,28 @@
 
                     <div class="col-md-4 d-flex align-items-center justify-content-end order-lg-3">
 
+                        <!--select show language -->
+                        <div class="dropdown language-list dropbtn">
+                            <span class="dropbtn" onclick="showDropdown()" style="margin-right:10px;cursor: pointer;">
+                                <i class="fa fa-globe dropbtn"> EN</i>
+                            </span>
+                            <div id="language-list" class="dropdown-content">
+                                <div class="option-content d-flex">
+                                    <span class="ip2location-flag-32 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
+                                    <label style="line-height:50px;margin-left:5px;">English</label>
+                                </div>
 
+                                <div class="option-content d-flex">
+                                    <span class="ip2location-flag-32 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
+                                    <label style="line-height:50px;margin-left:5px;">русский</label>
+                                </div>
+
+                                <div class="option-content d-flex">
+                                    <span class="ip2location-flag-32 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
+                                    <label style="line-height:50px;margin-left:5px;">中文</label>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Dark Mode/Light Mode Switcher-->
                         <div class="form-check form-switch d-inline">
@@ -174,7 +196,26 @@
             toast.toast('show');
         }
 
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function showDropdown() {
+            $("#language-list").addClass("show");
+            // document.getElementById("").classList.toggle("show");
+        }
 
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
 
         // Function that open the new Window
         function openInvoiceWindow(invoice_id) {
