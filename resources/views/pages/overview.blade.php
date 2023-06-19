@@ -436,11 +436,21 @@
 												<div class="inner-table p-3">
 													<table class="w-100 table-flex-col">
 														<tbody>
-															<tr>
-																<td>{{$order_product_info['dedicatedip']}}</td>
-																<td>Primary</td>
-																<td>Main Server IP (Sticky) - Cannot be removed</td>
-															</tr>
+															@foreach($ip_list['ips'] as $ip)
+																@if($ip['primary'] == 1)
+																	<tr>
+																		<td>{{$ip['ip']}}</td>
+																		<td>Primary</td>
+																		<td>Main Server IP (Sticky) - Cannot be removed</td>
+																	</tr>
+																@else
+																	<tr>
+																		<td>{{$ip['ip']}}</td>
+																		<td></td>
+																		<td></td>
+																	</tr>
+																@endif
+															@endforeach
 														</tbody>
 													</table>
 												</div>
@@ -448,19 +458,20 @@
 												<div class="divider my-3"></div>
 
 
-												<p class="fs-13-5">Assign IP to server</p>
+												<p class="fs-13-5">Choose Primary IP</p>
 
 												<div class="overview-select d-inline-block mb-3">
-													<select name="" id="">
-														<option value="">papa-efyu-01.evoxt.com</option>
-														<option value="">papa-efyu-01.evoxt.com</option>
-														<option value="">papa-efyu-01.evoxt.com</option>
+													<select name="iplist" id="primary-ip">
+														@foreach($ip_list['ips'] as $ip)
+															@if($ip['primary'] != 1)
+																<option value="{{$ip['ipid']}}">{{$ip['ip']}}</option>
+															@endif
+														@endforeach
 													</select>
 												</div>
 
 												<div class="overview-button-wrapper pt-0 d-flex ">
-													<button class="btn-dark px-4 me-2 hover-dark-light">Assign</button>
-													<button class="btn-light bg-gray hover-light-dark">Assign as Primary IP</button>
+													<button class="btn-dark px-4 me-2 hover-dark-light" onclick="assignPrimaryIp({{$vpsid}})">Assign as Primary IP</button>
 												</div>
 
 												<p class="fs-14 mt-4 mb-2 inner-sub-title2">After assigning IP address, our system will perform a reboot on your server, please make sure any temporary files are saved before performing IP assignment. Note: Extra IP address will still remain to your account even after server termination unless you cancel the extra IP address subscription.</p>
@@ -1284,6 +1295,25 @@
 		});
 		
 		
+	}
+
+	function assignPrimaryIp(vpsid){
+		var ipid = $('#primary-ip').val();
+		$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				url:"{{ URL::to('/overview/changepwd') }}",
+				method:'post',
+				data: {
+					vpsid: vpsid,
+					ipid: ipid
+				},
+				success:function(data){
+					$('#loading-bg').css('display', 'none');
+					showToast('Success', data, 'success');
+				},
+			});
 	}
 
 </script>

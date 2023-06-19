@@ -58,6 +58,7 @@ Route::group([
     Route::post('/overview/changepwd', 'OverviewController@changeRootPwd');
     Route::post('/overview/checkhostName', 'OverviewController@checkhostName');
     Route::post('/overview/changehostName', 'OverviewController@changehostNames');
+    Route::post('/overview/changeip', 'OverviewController@changeip');
 
     Route::get('/servers', 'ServersController@index')->name('servers');
 
