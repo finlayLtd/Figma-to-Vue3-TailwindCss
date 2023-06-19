@@ -25,11 +25,11 @@
 								</div>
 								<div class="balance">
 									@if(Auth::user()->currency_code == 'USD')
-									${{ Auth::user()->credit }}
+									$<span class="creditTag">{{ $latest_user_data['credit'] }}</span>
 									@elseif(Auth::user()->currency_code == 'EUR')
-									€{{ Auth::user()->credit }}
+									€<span class="creditTag">{{ $latest_user_data['credit'] }}</span>
 									@else
-									{{ Auth::user()->credit }} {{ Auth::user()->currency_code }}
+									<span class="creditTag">{{ $latest_user_data['credit'] }}</span> {{ $latest_user_data['currency_code'] }}
 									@endif
 								</div>
 							</div>

@@ -185,6 +185,42 @@ class HomeController extends Controller
         return view('tables/invoicetable', compact('invoices'));
     }
 
+    public function get_funds(Request $request)
+    {
+        $response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetClientsDetails',
+            'clientid' => Auth::user()->client_id,
+        ]);
+
+
+        if($response['result'] == 'success'){
+            //if credit is different
+            if($response['credit'] != Auth::user()->credit){
+                // default system to set the session again!(switch account)
+                $userAttributes = [];
+
+                $userAttributes = (array) (new \Sburina\Whmcs\Client)->post([
+                    'action' => 'getClientsDetails',
+                    'clientid' => Auth::user()->client_id,
+                ]);
+
+                $userAttributes['originUserData'] = Auth::user()->originUserData;
+                $userAttributes['permissions'] = Auth::user()->permissions;
+
+                session()->put(config('whmcs.session_key'), $userAttributes);
+            }
+
+            return response()->json([
+                'result' => 'success',
+                'latest_user_data' => $response,
+            ]);
+        } else{
+            return response()->json([
+                'result' => 'failed',
+            ]);
+        }
+    }
+
     
 
     public function change_name(Request $request)
