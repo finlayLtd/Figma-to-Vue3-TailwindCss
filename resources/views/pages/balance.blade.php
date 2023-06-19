@@ -5,7 +5,7 @@
 	@if(in_array('invoices', Auth::user()->permissions))
 	<div class="container">
 		<div class="d-flex justify-content-between align-items-center title-button-wrapper">
-			<h2 class="title mb-0">Balance</h2>
+			<h2 class="title mb-0">{{ __('messages.Balance') }}</h2>
 		</div>
 
 		<div class="sub-section server-list-tab">
@@ -20,7 +20,7 @@
 										<img src="assets/img/wallet.svg" alt="">
 									</div>
 									<div class="balance-title">
-										<h3>Main balance</h3>
+										<h3>{{ __('messages.Main_balance') }}</h3>
 									</div>
 								</div>
 								<div class="balance">
@@ -34,7 +34,7 @@
 								</div>
 							</div>
 							<div class="balance-card-footer d-flex justify-content-end">
-								<button class="btn-dark add-funds hover-dark-light">Add Funds</button>
+								<button class="btn-dark add-funds hover-dark-light">{{ __('messages.Add_Funds') }}</button>
 							</div>
 						</div>
 					</div>
@@ -45,35 +45,35 @@
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
 				<div class="row mb-3 mb-lg-5 pe-0">
-					<h3 class="col-md-3 sub-title pt-2">My Invoices</h3>
+					<h3 class="col-md-3 sub-title pt-2">{{ __('messages.My_Invoices') }}</h3>
 					<div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
 
 						<div class="sort-servers order-2 order-md-1">
 							<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
-								<span>Sort by &nbsp;&nbsp;</span>
+								<span>{{ __('messages.Sort_by') }} &nbsp;&nbsp;</span>
 							</div>
 							<div class="sorting-items" style="display: none;">
 								<ul>
-									<li class="touch-item" onclick="sortByInvoice('date', 'desc')">Date-latest</li>
-									<li class="touch-item" onclick="sortByInvoice('date', 'asc')">Date-oldest</li>
-									<li class="touch-item" onclick="sortByInvoice('total', 'desc')">Price-highest</li>
-									<li class="touch-item" onclick="sortByInvoice('total', 'asc')">Price-lowest</li>
+									<li class="touch-item" onclick="sortByInvoice('date', 'desc')">{{ __('messages.Date-latest') }}</li>
+									<li class="touch-item" onclick="sortByInvoice('date', 'asc')">{{ __('messages.Date-oldest') }}</li>
+									<li class="touch-item" onclick="sortByInvoice('total', 'desc')">{{ __('messages.Price-highest') }}</li>
+									<li class="touch-item" onclick="sortByInvoice('total', 'asc')">{{ __('messages.Price-lowest') }}</li>
 								</ul>
 							</div>
 						</div>
 
 						<ul class="nav nav-pills three-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
-								<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
+								<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">{{ __('messages.All') }}</button>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-paid-tab" data-bs-toggle="pill" data-bs-target="#pills-paid" type="button" role="tab" aria-controls="pills-paid" aria-selected="false">Paid</button>
+								<button class="nav-link" id="pills-paid-tab" data-bs-toggle="pill" data-bs-target="#pills-paid" type="button" role="tab" aria-controls="pills-paid" aria-selected="false">{{ __('messages.Paid') }}</button>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-unpaid-tab" data-bs-toggle="pill" data-bs-target="#pills-unpaid" type="button" role="tab" aria-controls="pills-unpaid" aria-selected="false">Unpaid</button>
+								<button class="nav-link" id="pills-unpaid-tab" data-bs-toggle="pill" data-bs-target="#pills-unpaid" type="button" role="tab" aria-controls="pills-unpaid" aria-selected="false">{{ __('messages.Unpaid') }}</button>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-cancelled-tab" data-bs-toggle="pill" data-bs-target="#pills-cancelled" type="button" role="tab" aria-controls="pills-cancelled" aria-selected="false">Cancelled</button>
+								<button class="nav-link" id="pills-cancelled-tab" data-bs-toggle="pill" data-bs-target="#pills-cancelled" type="button" role="tab" aria-controls="pills-cancelled" aria-selected="false">{{ __('messages.Cancelled') }}</button>
 							</li>
 						</ul>
 
@@ -102,13 +102,13 @@
 
 			<div class="modal-header">
 				<div class="modal-title">
-					<h2>Deposit</h2>
-					<h3>Deposit cryptocurrency</h3>
+					<h2>{{ __('messages.Deposit') }}</h2>
+					<h3>{{ __('messages.Deposit_cryptocurrency') }}</h3>
 				</div>
 			</div>
 			<div class="modal-main">
 				<div class="main-title">
-					<p>Available Payment method</p>
+					<p>{{ __('messages.Available_Payment_method') }}</p>
 				</div>
 				<div class="modal-buttons">
 					<button class="modal-payment"><img src="assets/img/bitcoin.png" alt=""> Bitcoin</button>
@@ -124,11 +124,11 @@
 				</div>
 				<div class="amounts">
 					<div class="amount-footer">
-						<span>Amount of one deposit</span>
+						<span>{{ __('messages.Amount_of_one_deposit') }}</span>
 						<span>€10,00 - €1.000,00</span>
 					</div>
 				</div>
-				<button class="btn-dark d-block" onclick="openAddFundsWindow()">Continue</button>
+				<button class="btn-dark d-block" onclick="openAddFundsWindow()">{{ __('messages.Continue') }}</button>
 			</div>
 		</div>
 	</div>

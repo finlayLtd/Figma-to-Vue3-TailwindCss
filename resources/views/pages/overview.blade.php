@@ -673,7 +673,7 @@
 										<ul class="nav nav-pills mb-3 mb-md-0 mb-lg-0 d-flex flex-column inner-tab-pills" id="pills-tab" role="tablist">
 
 											<li class="nav-item mb-2" role="presentation">
-												<button class="nav-link active" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" type="button" role="tab" aria-controls="pills-password" aria-selected="false">Change Password</button>
+												<button class="nav-link active" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" type="button" role="tab" aria-controls="pills-password" aria-selected="false">{{ __('messages.Change_Password') }}</button>
 											</li>
 											<li class="nav-item" role="presentation">
 												<button class="nav-link" id="pills-host-tab" data-bs-toggle="pill" data-bs-target="#pills-host" type="button" role="tab" aria-controls="pills-host" aria-selected="false">Change Hostname</button>
@@ -685,7 +685,7 @@
 											<div class="tab-pane fade  show active" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
 
 												<div class="tab-inner py-0 p-mb-0">
-													<h3 class="fs-15 mb-1">Change Password</h3>
+													<h3 class="fs-15 mb-1">{{ __('messages.Change_Password') }}</h3>
 													<div class="divider" style="margin:20px 0"></div>
 														<div id="newPassword1-os" class="form-group has-feedback has-success mt-3">
 															<label for="inputNewPassword1-os" class="col-sm-4 control-label">New Server Password</label>
@@ -717,7 +717,7 @@
 														</div>
 														<div class="overview-button-wrapper pt-0 mt-4">
 															<div class="col-sm-5">
-																<button id="submitButtonOS" class="btn-dark px-4 me-2 hover-dark-light" onclick="changePWD({{ $vpsid }})">Change Password</button>
+																<button id="submitButtonOS" class="btn-dark px-4 me-2 hover-dark-light" onclick="changePWD({{ $vpsid }})">{{ __('messages.Change_Password') }}</button>
 															</div>
 														</div>
 												</div>

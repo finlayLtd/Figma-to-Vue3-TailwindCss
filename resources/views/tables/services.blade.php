@@ -1,5 +1,5 @@
 <div class="row mb-3 mb-lg-5 pe-0">
-    <h3 class="col-md-3 sub-title pt-2">My Products & Services</h3>
+    <h3 class="col-md-3 sub-title pt-2">{{ __('messages.Service_title') }}</h3>
     <div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
         <ul class="nav nav-pills four-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
             @foreach($states as $state)
@@ -42,8 +42,8 @@
                                             </div>
                                             <div class="options-toggle-dropdown">
                                                 <ul>
-                                                    <li><a href="{{ url('/overview/' . $order['orderid']) }}">Launch Control Panel</a></li>
-                                                    <li><a href="#">View Invoices</a></li>
+                                                    <li><a href="{{ url('/overview/' . $order['orderid']) }}">{{ __('messages.Launch_Control_Panel') }}</a></li>
+                                                    <li><a href="#">{{ __('messages.View_Invoices') }}</a></li>
                                                 </ul>
                                             </div>                    			
                                         </div>                    			
@@ -60,7 +60,7 @@
                                             {{$order['dedicatedip']}}
                                         </h2>
                                         <h3 class="detail">
-                                            Created at {{$order['regdate']}}
+                                            {{ __('messages.Created_at') }} {{$order['regdate']}}
                                         </h3>                    			
                                     </div>
                                     <div class="server-list-options">
@@ -80,7 +80,7 @@
                                             {{$order['groupname']}}
                                         </h2>
                                         <h3 class="detail">
-                                            Hostname: {{$order['domain']}}
+                                            {{ __('messages.Hostname') }}: {{$order['domain']}}
                                         </h3>                    			
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                 @endforeach
                 @else
                     @if($state == 'Active')
-                    <h5 style="margin-top: 20px; text-align: center;">You don’t have an active product yet</h5>
+                    <h5 style="margin-top: 20px; text-align: center;">{{ __('messages.No_Active_Product') }}</h5>
                     @endif
                 @endif
             </div>
