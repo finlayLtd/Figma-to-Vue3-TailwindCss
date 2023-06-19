@@ -7,19 +7,19 @@
 	<div class="container">
 		@if(isset($message) && $message=='success')
 		<div class="badge reset-success">
-			<img src="assets/img/reset-success.svg" alt=""> Successfully sent invite!
+			<img src="assets/img/reset-success.svg" alt=""> {{ __('messages.success_invite') }}
 		</div>
 		@endif
 
 		@if(isset($message) && $message=='success_update_permission')
 		<div class="badge reset-success">
-			<img src="assets/img/reset-success.svg" alt=""> Permissions updated successfully!
+			<img src="assets/img/reset-success.svg" alt=""> {{ __('messages.success_permission_update') }} 
 		</div>
 		@endif
 
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
-				<h2 class="title mb-0">Settings</h2>
+				<h2 class="title mb-0">{{ __('messages.Settings') }}</h2>
 			</div>
 		</div>
 
@@ -35,22 +35,22 @@
 						<ul style="overflow-x:unset ;" class="nav nav-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
 								<a href="{{ url('/settings') }}">
-									<button class="nav-link " id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">Your Profile</button>
+									<button class="nav-link " id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">{{ __('messages.Your_Profile') }}</button>
 								</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a href="{{ url('/settings_password') }}">
-									<button class="nav-link" id="pills-analytics-tab" data-bs-toggle="pill" data-bs-target="#pills-analytics" type="button" role="tab" aria-controls="pills-analytics" aria-selected="false">Change Password</button>
+									<button class="nav-link" id="pills-analytics-tab" data-bs-toggle="pill" data-bs-target="#pills-analytics" type="button" role="tab" aria-controls="pills-analytics" aria-selected="false">{{ __('messages.Change_Password') }}</button>
 								</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a href="{{ url('/settings_userManage') }}">
-									<button class="nav-link active" id="pills-userManagement-tab" data-bs-toggle="pill" data-bs-target="#pills-userManagement" type="button" role="tab" aria-controls="pills-userManagement" aria-selected="false">User Management</button>
+									<button class="nav-link active" id="pills-userManagement-tab" data-bs-toggle="pill" data-bs-target="#pills-userManagement" type="button" role="tab" aria-controls="pills-userManagement" aria-selected="false">{{ __('messages.User_Management') }}</button>
 								</a>
 							</li>
 							<li class="nav-item" role="presentation">
 								<a href="{{ url('/settings_emailHistory') }}">
-									<button class="nav-link" id="pills-emails-tab" data-bs-toggle="pill" data-bs-target="#pills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false">Email History</button>
+									<button class="nav-link" id="pills-emails-tab" data-bs-toggle="pill" data-bs-target="#pills-emails" type="button" role="tab" aria-controls="pills-emails" aria-selected="false">{{ __('messages.Email_History') }}</button>
 								</a>
 							</li>
 						</ul>
@@ -65,7 +65,7 @@
 						@if(Auth::user()->originUserData['email'] == Auth::user()->email)
 						<div class="tab-inner mb-3">
 							<div class="row">
-								<h3 class="title mb-4">User Management ({{ count($users_list) }} {{ count($users_list) == 1 ? 'User' : 'Users' }} found)</h3>
+								<h3 class="title mb-4">{{ __('messages.User_Management') }} ({{ count($users_list) }} {{ count($users_list) == 1 ? __('messages.User') : __('messages.Users') }} {{ __('messages.found') }})</h3>
 							</div>
 							<div class="divider"></div>
 							<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
@@ -73,8 +73,8 @@
 									<table class="table">
 										<thead>
 											<tr>
-												<th scope="col">Email Address / Last Login</th>
-												<th scope="col">Actions</th>
+												<th scope="col">{{ __('messages.email_lastlogin') }}</th>
+												<th scope="col">{{ __('messages.Actions') }}</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -83,16 +83,16 @@
 											<tr>
 												<td>
 													{{ $item['email'] }}
-													<span class="badge bg-info">Owner</span>
+													<span class="badge bg-info">{{ __('messages.Owner') }}</span>
 													<br>
 												</td>
 												<td>
 													<button class="btn btn-dark btn-sm btn-manage-permissions managePermissionBtn" disabled="disabled">
-														Manage Permissions
+														{{ __('messages.Manage_Permissions') }}
 													</button>
 
 													<button href="#" class="btn btn-danger btn-sm btn-remove-user" data-id="{{ $item['id'] }}" disabled="disabled">
-														Remove Access
+														{{ __('messages.Remove_Access') }}
 													</button>
 												</td>
 											</tr>
@@ -105,10 +105,10 @@
 												</td>
 												<td>
 													<a href="{{ url('/manageUser-detail/' . $item['id'].'/'.$item['email']) }}" class="btn btn-dark btn-sm btn-manage-permissions managePermissionBtn" disabled="disabled">
-														Manage Permissions
+														{{ __('messages.Manage_Permissions') }}
 													</a>
 													<button href="#" class="btn btn-danger btn-sm btn-remove-user" data-id="{{ $item['id'] }}">
-														Remove Access
+														{{ __('messages.Remove_Access') }}
 													</button>
 												</td>
 											</tr>
@@ -121,25 +121,27 @@
 								</div>
 							</div>
 							<div class="row">
-								<h3 class="title mb-4">Invite New User</h3>
+								<h3 class="title mb-4">{{ __('messages.Invite_New_User') }}</h3>
 							</div>
 							<div class="divider"></div>
 							<div class="row px-2 pt-4 px-lg-4 pt-lg-4">
-								<p>Inviting a new user allows you to invite a new user to your account. If the invitee already has an existing user account, they will be able to access your account using their existing login credentials. If the user does not yet have a user account, they will be able to create one.</p>
+								<p>
+									{{ __('messages.invite_caption1') }}
+								</p>
 								<div class="mb-4">
 									<form method="POST" action="{{ route('invite_user') }}">
 										@csrf
 										<div>
-											<input type="email" id="invite_email" name="invite_email" placeholder="Email address to send invite" required class="form-control">
+											<input type="email" id="invite_email" name="invite_email" placeholder="{{ __('messages.invite_placeholder') }}" required class="form-control">
 										</div>
 										<div class="form-group selectBoxes mt-4">
 											<label class="radio-inline" style="padding-right: 20px;">
 												<input type="radio" name="permissions" value="all" checked="checked">
-												All Permissions
+												{{ __('messages.All_Permissions') }}
 											</label>
 											<label class="radio-inline">
 												<input type="radio" name="permissions" value="choose">
-												Choose Permissions
+												{{ __('messages.Choose_Permissions') }}
 											</label>
 											<div class="well" id="invitePermissions" style="display: none;">
 												<label class="checkbox-inline">

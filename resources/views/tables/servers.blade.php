@@ -1,4 +1,4 @@
-<h3 class="sub-title">Choose a Datacenter region</h3>
+<h3 class="sub-title">{{ __('messages.Servers_title') }}</h3>
 @if(count($products))
     @foreach($product_group as $key=>$group)
         <div class="row">
@@ -18,7 +18,7 @@
                             </div>
 
                             <div class="server-price mb-4">
-                                <span class="price">€{{$prodcut['pricing']['EUR']['monthly']}}<span class="month">/ month</span></span>
+                                <span class="price">€{{$prodcut['pricing']['EUR']['monthly']}}<span class="month">/ {{ __('messages.month') }}</span></span>
                             </div>
 
                             <div class="">
@@ -34,7 +34,7 @@
                                 <div class="more-details-content">
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam repellendus aspernatur placeat rem, molestiae veritatis porro, facilis quo, repudiandae odio quia debitis iste nemo assumenda omnis? Quo, dignissimos, ducimus!</p>
                                 </div>
-                                <a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>	
+                                <a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">{{ __('messages.More_Details') }}</a>	
                             </div>                   
                         </div>
                     </div>

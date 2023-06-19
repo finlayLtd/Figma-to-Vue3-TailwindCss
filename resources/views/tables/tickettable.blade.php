@@ -3,18 +3,18 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Ticket No</th>
-            <th scope="col">Title</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Date</th>
-            <th scope="col">Status</th>
+            <th scope="col">{{ __('messages.Ticket_No') }}</th>
+            <th scope="col">{{ __('messages.Title') }}</th>
+            <th scope="col">{{ __('messages.Priority') }}</th>
+            <th scope="col">{{ __('messages.Date') }}</th>
+            <th scope="col">{{ __('messages.Status') }}</th>
         </tr>
         </thead>
         <tbody>
             @if(empty($tickets))
                 <tr>
                     <td colspan="5" style="text-align: center;">
-                    <h5 style="margin-top: 20px;">No tickets to display</h5>
+                    <h5 style="margin-top: 20px;">{{ __('messages.no_ticket') }}</h5>
                     </td>
                 </tr>
             @else

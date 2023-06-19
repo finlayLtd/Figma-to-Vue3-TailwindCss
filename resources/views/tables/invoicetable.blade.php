@@ -6,12 +6,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Invoice</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Invoice Date</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">View Invoice</th>
+                            <th scope="col">{{ __('messages.Invoice') }}</th>
+                            <th scope="col">{{ __('messages.Amount') }}</th>
+                            <th scope="col">{{ __('messages.Invoice_Date') }}</th>
+                            <th scope="col">{{ __('messages.Due_Date') }}</th>
+                            <th scope="col">{{ __('messages.Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('messages.View_Invoice') }}</th>
 
                         </tr>
                     </thead>
@@ -58,12 +58,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Invoice</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Invoice Date</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">View Invoice</th>
+                            <th scope="col">{{ __('messages.Invoice') }}</th>
+                            <th scope="col">{{ __('messages.Amount') }}</th>
+                            <th scope="col">{{ __('messages.Invoice_Date') }}</th>
+                            <th scope="col">{{ __('messages.Due_Date') }}</th>
+                            <th scope="col">{{ __('messages.Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('messages.View_Invoice') }}</th>
 
                         </tr>
                     </thead>
@@ -108,12 +108,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Invoice</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Invoice Date</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">View Invoice</th>
+                            <th scope="col">{{ __('messages.Invoice') }}</th>
+                            <th scope="col">{{ __('messages.Amount') }}</th>
+                            <th scope="col">{{ __('messages.Invoice_Date') }}</th>
+                            <th scope="col">{{ __('messages.Due_Date') }}</th>
+                            <th scope="col">{{ __('messages.Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('messages.View_Invoice') }}</th>
 
                         </tr>
                     </thead>
@@ -158,12 +158,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Invoice</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Invoice Date</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">View Invoice</th>
+                            <th scope="col">{{ __('messages.Invoice') }}</th>
+                            <th scope="col">{{ __('messages.Amount') }}</th>
+                            <th scope="col">{{ __('messages.Invoice_Date') }}</th>
+                            <th scope="col">{{ __('messages.Due_Date') }}</th>
+                            <th scope="col">{{ __('messages.Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('messages.View_Invoice') }}</th>
 
                         </tr>
                     </thead>

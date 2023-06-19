@@ -8,7 +8,7 @@
 		<div class="title-button-wrapper ticket-detail">
 			<a href="{{url('/support-ticket')}}"><img class="status-arrow" src="{{asset('assets/img/status-arrow.svg')}}" alt=""></a>
 			<h3 class="ticket-status-title color-in-work">{{$ticket_detail['status']}}</h3>
-			<h2 class="title mb-0 mt-2">Ticket #{{$ticket_detail['tid']}}</h2>
+			<h2 class="title mb-0 mt-2">{{ __('messages.Ticket') }}#{{$ticket_detail['tid']}}</h2>
 		</div>
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
@@ -91,14 +91,14 @@
 										<input name="ticket_id" type="hidden" id="ticket_id" value="{{ $ticket_detail['id'] }}">
 									</div>
 									<div class="message-box">
-										<textarea id="message" name="message" class="p-3" name="" id="" cols="30" rows="5" placeholder="Type a message.."></textarea>
+										<textarea id="message" name="message" class="p-3" name="" id="" cols="30" rows="5" placeholder="{{ __('messages.Type_a_messages') }}.."></textarea>
 										<div id="file-name-container">
-											File Selected: <span id="file-name" style="overflow-wrap: anywhere;"></span>
+											{{ __('messages.File_Selected') }}: <span id="file-name" style="overflow-wrap: anywhere;"></span>
 										</div>
 									</div>
 								</div>
 								<div class="mt-1" style="text-align: right;">
-									<button class="btn-dark change-profile-btn fs-15" style="margin-right: 0px;" type="submit">Send</button>
+									<button class="btn-dark change-profile-btn fs-15" style="margin-right: 0px;" type="submit">{{ __('messages.Send') }}</button>
 								</div>
 							</form>
 						</div>

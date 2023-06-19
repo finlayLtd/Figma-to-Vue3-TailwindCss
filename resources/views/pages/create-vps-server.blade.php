@@ -5,10 +5,10 @@
 
 <section class="dashboard">
 	<div class="container">
-		<h2 class="title">Create VPS Server</h2>
+		<h2 class="title">{{ __('messages.Create_Server') }}</h2>
 
 		<div class="sub-section">
-			<h3 class="sub-title">Choose a OS</h3>
+			<h3 class="sub-title">{{ __('messages.Choose_a_OS') }}</h3>
 			<div class="row server-item-wrapper">
 
 				<div data-dist="windows" class="server-item display-distributions">
@@ -52,7 +52,7 @@
 
 		</style>
 		<div class="sub-section">
-			<h3 class="sub-title">Choose a OS Version</h3>
+			<h3 class="sub-title">{{ __('messages.os_version') }}</h3>
 
 
 			<div data-dist="windows" class="dist-tab windows-tab">
@@ -193,7 +193,7 @@
 		</div>
 
 		<div class="sub-section">
-			<h3 class="sub-title">Choose a Datacenter region</h3>
+			<h3 class="sub-title">{{ __('messages.Servers_title') }}</h3>
 			<div class="row server-item-wrapper">
 				<div class="datacenter-item">
 					<img src="assets/img/datacenter-flag-nl.png">
@@ -207,12 +207,12 @@
 		</div>
 
 		<div class="sub-section">
-			<h3 class="sub-title">Choose a Datacenter region</h3>
+			<h3 class="sub-title">{{ __('messages.Servers_title') }}</h3>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="card-item data-region-card p-4 ">
 						<div class="server-price mb-4">
-							<span class="price">€50<span class="month">/ month</span></span>
+							<span class="price">€50<span class="month">/ {{ __('messages.month') }}</span></span>
 						</div>
 						<div class="">
 							<ul class="server-features">
@@ -227,7 +227,7 @@
 							<div class="more-details-content">
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam repellendus aspernatur placeat rem, molestiae veritatis porro, facilis quo, repudiandae odio quia debitis iste nemo assumenda omnis? Quo, dignissimos, ducimus!</p>
 							</div>
-							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>
+							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">{{ __('messages.More_Details') }}</a>
 						</div>
 					</div>
 				</div>
@@ -235,7 +235,7 @@
 				<div class="col-md-3">
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
-							<span class="price">€100<span class="month">/ month</span></span>
+							<span class="price">€100<span class="month">/ {{ __('messages.month') }}</span></span>
 						</div>
 						<div class="">
 							<ul class="server-features">
@@ -250,14 +250,14 @@
 							<div class="more-details-content">
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam repellendus aspernatur placeat rem, molestiae veritatis porro, facilis quo, repudiandae odio quia debitis iste nemo assumenda omnis? Quo, dignissimos, ducimus!</p>
 							</div>
-							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>
+							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">{{ __('messages.More_Details') }}</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
-							<span class="price">€120<span class="month">/ month</span></span>
+							<span class="price">€120<span class="month">/ {{ __('messages.month') }}</span></span>
 						</div>
 						<div class="">
 							<ul class="server-features">
@@ -272,14 +272,14 @@
 							<div class="more-details-content">
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam repellendus aspernatur placeat rem, molestiae veritatis porro, facilis quo, repudiandae odio quia debitis iste nemo assumenda omnis? Quo, dignissimos, ducimus!</p>
 							</div>
-							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>
+							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">{{ __('messages.More_Details') }}</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="card-item data-region-card p-4">
 						<div class="server-price mb-4">
-							<span class="price">€150<span class="month">/ month</span></span>
+							<span class="price">€150<span class="month">/ {{ __('messages.month') }}</span></span>
 						</div>
 						<div class="">
 							<ul class="server-features">
@@ -294,7 +294,7 @@
 							<div class="more-details-content">
 								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores ullam repellendus aspernatur placeat rem, molestiae veritatis porro, facilis quo, repudiandae odio quia debitis iste nemo assumenda omnis? Quo, dignissimos, ducimus!</p>
 							</div>
-							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">More Details</a>
+							<a class="btn btn-light btn-chevron d-lg-block hover-light-dark toggle-more-detail">{{ __('messages.More_Details') }}</a>
 						</div>
 					</div>
 				</div>
@@ -302,28 +302,28 @@
 		</div>
 
 		<div class="sub-section">
-			<h3 class="sub-title">Configure Server</h3>
+			<h3 class="sub-title">{{ __('messages.Configure_Server') }}</h3>
 			<div class="row">
 				<div class="configure-server-form">
 					<form>
 						<div class="mb-3">
-							<label for="email" class="form-label">VPS Hostname</label>
-							<input type="email" class="form-control" placeholder="Enter your VPS Hostname" id="email" name="email" aria-describedby="emailHelp" value="realTest.com">
+							<label for="email" class="form-label">{{ __('messages.VPS_Hostname') }}</label>
+							<input type="email" class="form-control" placeholder="{{ __('messages.hostname_placeholder') }}" id="email" name="email" aria-describedby="emailHelp" value="realTest.com">
 						</div>
 						<div class="mb-4">
-							<label for="password" class="form-label">VPS Password</label>
+							<label for="password" class="form-label">{{ __('messages.VPS_Password') }}</label>
 							<input type="password" class="form-control mb-4" placeholder="••••••••••" id="password" name="password" required>
 							<div class="progress" id="passwordStrengthBar">
 							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-								<span class="sr-only">Password Rating: 0%</span>
+								<span class="sr-only">{{ __('messages.Password_Rating') }}: 0%</span>
 							</div>
 							</div>
 							<div class="alert alert-info" style="text-align: left;">
-								<strong>Tips for a good password</strong><br>Use both upper and lowercase characters<br>Include at least one symbol (only ! and @)<br>Don't use dictionary words and special characters
+								<strong>{{ __('messages.tips') }}</strong><br>{{ __('messages.tips_content1') }}<br>{{ __('messages.tips_content2') }}<br>{{ __('messages.tips_content3') }}
 							</div>
 						</div>
 						<div class="mb-3 text-end">
-							<button type="submit" class="btn btn-dark hover-dark-light">Create Server</button>
+							<button type="submit" class="btn btn-dark hover-dark-light">{{ __('messages.Create_Server') }}</button>
 						</div>
 					</form>
 				</div>
