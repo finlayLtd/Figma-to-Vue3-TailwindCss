@@ -36,7 +36,14 @@ class BalanceController extends Controller
         if (count($response['invoices']) != 0) {
             $invoices = $response['invoices']['invoice'];
         } else $invoices = [];
-        return view('pages/balance', compact('invoices'));
+
+        // get credit
+        $latest_user_data = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetClientsDetails',
+            'clientid' => Auth::user()->client_id,
+        ]);
+
+        return view('pages/balance', compact('invoices','latest_user_data'));
     }
 
     public function invoiceDetail(Request $request)

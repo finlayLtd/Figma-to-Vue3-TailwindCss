@@ -72,6 +72,10 @@ class SSOController extends Controller
         }
     }
 
+    
+
+    
+
     public function connect_vnc_sso(Request $request)
     {
         $sso_url = (new \Sburina\Whmcs\Client)->post([

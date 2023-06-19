@@ -69,11 +69,11 @@
                         <!--Nav Action Buttons-->
                         <a class="btn-balance btn-login d-lg-block hover-light-dark" href="{{ url('/balance') }}">
                             @if(Auth::user()->currency_code == 'USD')
-                            ${{ Auth::user()->credit }}
+                            $<span class="creditTag">{{ Auth::user()->credit }}</span>
                             @elseif(Auth::user()->currency_code == 'EUR')
-                            €{{ Auth::user()->credit }}
+                            €<span class="creditTag">{{ Auth::user()->credit }}</span>
                             @else
-                            {{ Auth::user()->credit }} {{ Auth::user()->currency_code }}
+                            <span class="creditTag">{{ Auth::user()->credit }}</span> {{ Auth::user()->currency_code }}
                             @endif
                             <div class="add-balance"><img src="{{asset('assets/img/plus-d.svg')}}" alt=""></div>
                         </a>
@@ -153,6 +153,7 @@
         function windowClose() {
             if (Window && !Window.closed) {
                 Window.close();
+                fetchCredit();
             }
         }
 
@@ -193,17 +194,14 @@
                 },
                 success: function(response) {
                     if(response.result == "success"){
+                        // window.onbeforeunload = function(event) {   
+                        //     console.log("Window closed manually");
+                        // };
                         Window = window.open(
                         response.redirect_url,
                             "_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
-                        
-                            window.addEventListener("beforeunload", function(event) {
-                                console.log("UNLOAD:1");
-                                //event.preventDefault();
-                                event.returnValue = null; //"Any text"; //true; //false;
-                                //return null; //"Any text"; //true; //false;
-                                return 'test';
-                            });
+                            // console.log('2')
+                            
                         Window.focus();
                     } else{
                         console.log('access denied for sso!');
@@ -218,8 +216,31 @@
             });
         }
 
+        // fetch data from the backend to get the credit
+        function fetchCredit(){
+            $.ajax({
+                url: "{{ route('get_funds') }}",
+                method: "POST",
+                data: { 
+                    "_token": "{{ csrf_token() }}" 
+                },
+                success: function(response) {
+                    if(response.result == 'success'){
+                        $('.creditTag').html(response.latest_user_data.credit);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error here
+                    console.log(error);
+                }
+            });
+        }
+
 
         $(document).ready(function() {
+            // fetch data from the backend to get the credit
+            setInterval(fetchCredit, 10000);
+
             // display loading icon when fetch data from backend
             $('form').submit(function() {
                 $('#loading-bg').css('display', 'flex');
