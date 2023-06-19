@@ -39,6 +39,7 @@ Route::group([
     Route::post('/invoice_detail_sso', 'SSOController@invoice_detail_sso')->name('invoice_detail_sso');
     Route::post('/add_funds_sso', 'SSOController@add_funds_sso')->name('add_funds_sso');
     Route::post('/vnc_connect_sso', 'SSOController@connect_vnc_sso')->name('vnc_connect_sso');
+    Route::post('/vps_analysis_sso', 'SSOController@get_analysis_data_sso')->name('vps_analysis_sso');
 
     
 

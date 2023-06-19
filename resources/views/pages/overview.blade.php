@@ -437,7 +437,7 @@
 													<table class="w-100 table-flex-col">
 														<tbody>
 															<tr>
-																<td>147.189.161.205</td>
+																<td>{{$order_product_info['dedicatedip']}}</td>
 																<td>Primary</td>
 																<td>Main Server IP (Sticky) - Cannot be removed</td>
 															</tr>
@@ -1250,6 +1250,40 @@
 				$('#loading-bg').css('display', 'none');
 			}
 		});
+	}
+
+	function getAnalysisData(relid,vpsid){
+		let original_url;
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: "{{ route('vps_analysis_sso') }}",
+			method: "POST",
+			data: { 
+				relid: relid,
+				vpsid:vpsid
+			},
+			success: function(response) {
+				$.ajax({
+					url: response.redirect_url,
+					method: "GET",
+					success: function(result) {
+						console.log(result);
+					},
+					error: function(xhr, status, error) {
+						console.log(xhr);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			},
+			error: function(xhr, status, error) {
+
+			}
+		});
+		
+		
 	}
 
 </script>

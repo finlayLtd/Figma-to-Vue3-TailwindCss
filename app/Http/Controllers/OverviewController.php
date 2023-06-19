@@ -71,7 +71,7 @@ class OverviewController extends Controller
             $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
-            // $this->getIpinfo($vpsid);
+            
         }
 
 
@@ -368,15 +368,19 @@ class OverviewController extends Controller
     }
 
     private function getIpinfo($vpsid){
-        $page = 1;
-        $reslen = 100;
-        $ips_list = array();
-        do {
-            $result = $this->virtualizorAdmin->ips($page, $reslen);
-            $ips_list = array_merge($vs_list, $result);
-            $page++;
-        } while (count($result) == $reslen);
+        $post = array();
+        // $post['vpsid'] = $vpsid;
+        
+        $result = $this->virtualizorAdmin->ips();
+        print_r($result);exit;
+    }
 
-        print_r($ips_list);exit;
+    private function getAnalysisData($vpsid){
+        $post = array();
+        $post['show'] = 202306;           //use show only when you need statistics of a specified month and year
+                                            //specify it in this way: YYYYMM
+        $output = $this->virtualizorAdmin->server_stats($post);
+
+        print_r($output);exit;
     }
 }

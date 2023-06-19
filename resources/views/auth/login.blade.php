@@ -13,6 +13,10 @@
   <link href="assets/css/responsive.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
   <title>Login</title>
 </head>
 
@@ -53,14 +57,13 @@
       <div class="bg-dots bg-dots-right"></div>
 
       <div class="mt-5 text-center login-card-wrapper">
-
         <div class="card-item login-card">
-          <div style="margin-top: -20px;" class="d-flex justify-content-center mb-3">
+          
+          
+          <div class="d-flex justify-content-center mb-3 mt-1">
             <img class="logo-dark" src="assets/img/crazy-rdp-logo.svg" alt="">
             <img class="logo-light" src="assets/img/logo-light.svg" alt="">
           </div>
-
-
           <h2 class="login-title">Login Account</h2>
 
           <form method="POST" action="{{ route('login') }}">
@@ -95,7 +98,11 @@
             </a>
           </div>
           @endif
-
+          <!-- <select name="lang-list mt-2" id="lang-list" style="margin-top:15px;">
+            <option value="us" data-image="https://flagcdn.com/32x24/us.png"> English </option>
+            <option value="ru" data-image="https://flagcdn.com/32x24/ru.png"> русский </option>
+            <option value="cn" data-image="https://flagcdn.com/32x24/cn.png"> 中文 </option>
+          </select> -->
         </div>
       </div>
     </div>
