@@ -20,5 +20,33 @@ return [
     'Settings' => 'Настройки',
     'Switch_Account' => 'Переключить аккаунт',
     'Support_Tickets' => 'Техническая поддержка',
+    'Logout' => 'Выйти',
+
+    // Tickets
+    'Support_Ticket' => 'Техническая поддержка',
+    'Ticket_No' => 'Номер билета',
+    'Title' => 'Заголовок',
+    'Priority' => 'Приоритет',
+    'Date' => 'Дата',
+    'Status' => 'Статус',
+    'no_ticket' => 'Нет билетов для отображения',
+    'Create_Ticket' => 'Создать билет',
+    'Ticket' => 'Билет',
+    'New_ticket' => 'Новый билет',
+    "create_ticket_now" => 'Создать новый билет сейчас',
+    'Subject' => 'Тема',
+    'Write_subject' => 'Написать тему',
+    'Describe_the_problem' => 'Опишите проблему',
+    'Department' => 'Отдел',
+    'Service_related' => 'Связанный сервис',
+    'None' => 'Нет',
+    'Ticket' => 'Билет',
+    'Send' => 'Отправить',
+    'Type_a_messages' => 'Введите сообщение',
+    'File_Selected' => 'Выбранный файл',
+
+    // pagination and sorts
+    'Previous' => 'Предыдущий',
+    'Next' => 'Следующий',
 
 ];

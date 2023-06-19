@@ -4,13 +4,13 @@
 <section class="dashboard">
 	<div class="container">
 		<div class="d-flex justify-content-between align-items-center title-button-wrapper position-relative">
-			<h2 class="title mb-0">Dashboard</h2>
-			<button type="submit" class="btn btn-dark btn-chevron chevron-dark hover-dark-light options-toggle">Create Server</button>
+			<h2 class="title mb-0">{{ __('messages.Dashboard') }}</h2>
+			<button type="submit" class="btn btn-dark btn-chevron chevron-dark hover-dark-light options-toggle">{{ __('messages.Create_Server') }}</button>
 
 			<div class="options-toggle-dropdown create-server">
 				<ul>
-					<li><a href="{{ url('/create-dedicated-server') }}">Create Dedicated Server</a></li>
-					<li><a href="{{ url('/create-vps-server') }}">Create VPS</a></li>
+					<li><a href="{{ url('/create-dedicated-server') }}">{{ __('messages.Create_dedicated') }}</a></li>
+					<li><a href="{{ url('/create-vps-server') }}">{{ __('messages.Create_VPS') }}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -19,7 +19,7 @@
 			<div class="row justify-content-between align-items-center ">
 				<div class="col-md-12">
 					<div class="w-100 mb-2 mb-lg-5">
-						<h3 class="sub-title">Support Tickets</h3>
+						<h3 class="sub-title">{{ __('messages.Support_Ticket') }}</h3>
 					</div>
 
 					
@@ -65,7 +65,7 @@
 		if (selectPage <= 0) return;
 		if (selectPage > btn_number) return;
 		$("#ticket-pagination-container").empty();
-		btn_str = "<li class='ticket-page page-item first' page-number='0'><span class='page-link' style='cursor:pointer;'>Previous</span></li>";
+		btn_str = "<li class='ticket-page page-item first' page-number='0'><span class='page-link' style='cursor:pointer;'>{{ __('messages.Previous') }}</span></li>";
 		$("#ticket-pagination-container").append(btn_str);
 		if (btn_number > 6) {
 			switch (selectPage) {
@@ -135,7 +135,7 @@
 				$("#ticket-pagination-container").append(btn_str);
 			}
 		}
-		var btn_str = "<li class='ticket-page page-item last' page-number='-2'><span class='page-link' style='cursor:pointer;'>Next</span></li>";
+		var btn_str = "<li class='ticket-page page-item last' page-number='-2'><span class='page-link' style='cursor:pointer;'>{{ __('messages.Next') }}</span></li>";
 		$("#ticket-pagination-container").append(btn_str);
 
 		$('.ticket-page').on('click', function(event) {

@@ -139,7 +139,7 @@
 							</li>
 
 							<li class="nav-item" role="presentation">
-								<button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings" aria-selected="false">Settings</button>
+								<button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings" aria-selected="false">{{ __('messages.Settings') }}</button>
 							</li>
 							@endif
 						</ul>
@@ -661,7 +661,7 @@
 
 							<div class="tab-inner settings mb-3">
 								<div class="row">
-									<h3 class="title mb-4">Settings</h3>
+									<h3 class="title mb-4">{{ __('messages.Settings') }}</h3>
 									<p class="description mb-4">All other settings that do not belongs to other tabs.</p>
 
 								</div>

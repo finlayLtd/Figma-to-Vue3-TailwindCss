@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
-				<h2 class="title mb-0">Switch Account</h2>
+				<h2 class="title mb-0">{{ __('messages.Switch_Account') }}</h2>
 			</div>
 		</div>
 

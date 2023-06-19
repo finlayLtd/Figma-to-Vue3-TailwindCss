@@ -62,7 +62,7 @@
                         <!--select show language -->
                         <div class="dropdown language-list dropbtn">
                             <span class="dropbtn" onclick="showDropdown()" style="cursor: pointer;">
-                                <i class="fa fa-globe dropbtn">&nbsp;<small class="dropbtn" id="language-code" onclick="showDropdown()">EN</small></i>
+                                <i class="fa fa-globe dropbtn">&nbsp;<small class="dropbtn" id="language-code" onclick="showDropdown()"></small></i>
                             </span>
                             <div id="language-list" class="dropdown-content" style="padding: 5px;">
                                 <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('en')">
@@ -117,7 +117,7 @@
                                     <li>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"><img src="{{asset('assets/img/signout.svg')}}" style="margin-right: 15px !important;margin-left: 3px;" alt="">
-                                            {{ __('Logout') }}
+                                            {{ __('messages.Logout') }}
                                         </a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf

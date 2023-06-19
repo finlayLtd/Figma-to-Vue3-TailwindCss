@@ -19,7 +19,7 @@
 
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
-				<h2 class="title mb-0">Settings</h2>
+				<h2 class="title mb-0">{{ __('messages.Settings') }}</h2>
 			</div>
 		</div>
 

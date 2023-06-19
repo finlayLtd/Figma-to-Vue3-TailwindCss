@@ -323,7 +323,7 @@
 							</div>
 						</div>
 						<div class="mb-3 text-end">
-							<button type="submit" class="btn btn-dark hover-dark-light">Create Server</button>
+							<button type="submit" class="btn btn-dark hover-dark-light">{{ __('messages.Create_Server') }}</button>
 						</div>
 					</form>
 				</div>
