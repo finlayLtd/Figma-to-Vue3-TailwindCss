@@ -391,22 +391,24 @@ class OverviewController extends Controller
         $output = $this->virtualizorAdmin->vps_stats($post);
 
         foreach($output['vps_stats'] as $state){
+            $state[1] = date('Y-m-d H:i:s', $state[1]);
             array_push($return_datas,$state);
         }
 
-        print_r($return_datas);exit;
         return $return_datas;
     }
 
     public function changeIp(Request $request){
         $post = array();
         $post['vpsid'] = $request->vpsid;
-        $post['rootpass'] = $request->root_pwd;
+        $post['ips'] = $request->reorder_ips;
+        
         $result = $this->virtualizorAdmin->managevps($post);
-        if($result['done']['change_pass_msg']){
-            return response()->json('VPS password will be changed after you SHUTDOWN and START the VPS from the panel.', 200);
+        
+        if($result['done']['done']){
+            return response()->json('Success', 200);
         }else{
-            return response()->json('Oops! We meet some error!.', 500);
+            return response()->json('Error', 500);
         }
     }
 }
