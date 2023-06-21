@@ -42,11 +42,27 @@
     }
   }
 
+  /*toggle sort box*/
+  function toggleSortingItems_2() {
+    var sortingItems = document.getElementsByClassName('sorting-items_2');
+    
+    for (var i = 0; i < sortingItems.length; i++) {
+      var item = sortingItems[i];
+      
+      if (item.style.display === 'none') {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    }
+  }
+
 
 var toggleButton = document.getElementById('toggleButton');
 toggleButton.addEventListener('click', toggleSortingItems);
 
-
+var toggleButton_2 = document.getElementById('toggleButton_2');
+toggleButton_2.addEventListener('click', toggleSortingItems);
 
 /*modal*/
 

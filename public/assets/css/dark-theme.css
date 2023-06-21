@@ -473,6 +473,16 @@ html[data-theme=dark] .sorting-items ul li:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+html[data-theme=dark] .sorting-items_2 {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none !important;
+}
+
+
+html[data-theme=dark] .sorting-items_2 ul li:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 html[data-theme=dark] .server-list-tab .list-name {
     color: #FFFFFF;
 }
