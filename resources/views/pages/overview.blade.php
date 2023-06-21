@@ -5,7 +5,7 @@
 	<div class="container">
 		<div class="d-flex flex-column justify-content-start align-items-start title-button-wrapper">
 			<div class="overview-header">
-				<img src="{{asset('assets/img/ubuntu-overview.png')}}" alt="">
+				<img class="not-filterable" src="{{asset('assets/img/'.$sys_logo.'-logo.png')}}" alt="">
 				<h2 class="title mb-0">{{$order_product_info['name']}}</h2>
 			</div>
 			<div class="overview-info">
@@ -328,12 +328,15 @@
 							<div class="divider"></div>
 							<div class="row px-0 px-lg-4 pt-4">
 								<div class="col-md-12 d-flex flex-column align-items-center text-center">
-
+									@if(strpos($system, "windows") !== true)
 									<p class="fs-15">To connect to your Linux virtual machine using SSH, please use the following command.</p>
 
 									<p class="fs-16">ssh root@<?php echo $order_product_info['dedicatedip']; ?></p>
-
-									<p class="fs-14 mb-0 sub-detail" style="max-width: 500px;">You will most likely be using cmd if you are connecting from Windows OS or Terminal if you are running macOS or Linux For more information, please visit this guide.</p>
+									@else
+									<p class="fs-15">To open Remote Desktop Connection app in Windows, please use the following command in cmd. And you can then enter the IP address or hostname of the remote computer in the Remote Desktop Connection client to establish a connection.</p>
+									<p class="fs-15">mstsc</p>
+									@endif
+									<p class="fs-14 mb-0 sub-detail" style="max-width: 500px;">You will most likely be using cmd if you are connecting from Windows OS or Terminal if you are running macOS or Linux.</p>
 
 								</div>
 							</div>
