@@ -284,7 +284,7 @@ class OverviewController extends Controller
         $output = $this->virtualizorAdmin->rebuild($post);
         
         if($output['done'] == 1){
-            return response()->json('VPS is being rebuilt, hence no actions are allowed to be performed on this VPS', 200);
+            return response()->json('Success', 200);
         }else{
             return response()->json($output['error'], 500);
         }
