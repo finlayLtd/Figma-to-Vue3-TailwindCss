@@ -464,7 +464,7 @@ html[data-theme=dark]  .sort-item-active.chevron-dark::after {
 }
 
 html[data-theme=dark] .sorting-items {
-    background: rgba(255, 255, 255, 0.05);
+    background: black;
     box-shadow: none !important;
 }
 
