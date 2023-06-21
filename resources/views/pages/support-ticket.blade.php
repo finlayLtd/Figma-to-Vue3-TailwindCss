@@ -46,6 +46,12 @@
 											<div class="support-item-title">
 												<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">{{ __('messages.Ticket') }}#{{$ticket['tid']}}</span>
 											</div>
+											<small style="color: black; display: block;">
+												{{ __('messages.Opened_at') }} : {{ date('l, F jS, Y', strtotime($ticket['date'])) }}
+											</small>
+											<small style="color: black; display: block;">
+												{{ __('messages.Last_reply_at') }} : {{ date('l, F jS, Y', strtotime($ticket['lastreply'])) }}
+											</small>
 										</a>
 										<div class="support-item-status">
 											<span class="fs-15 color-in-work">{{$ticket['status']}}</span>

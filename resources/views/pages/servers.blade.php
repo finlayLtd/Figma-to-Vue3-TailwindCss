@@ -9,7 +9,7 @@
 
 			<div class="options-toggle-dropdown create-server">
 				<ul>
-					<li><a href="{{ url('/create-dedicated-server') }}">{{ __('messages.Create_dedicated') }}</a></li>
+					<!-- <li><a href="{{ url('/create-dedicated-server') }}">{{ __('messages.Create_dedicated') }}</a></li> -->
 					<li><a href="{{ url('/create-vps-server') }}">{{ __('messages.Create_VPS') }}</a></li>
 				</ul>
 			</div>
