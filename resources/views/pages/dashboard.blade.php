@@ -22,15 +22,15 @@
 					</div>
 
 					<div class="sort-servers order-2 order-md-1 mb-2" style="display: inline-block;">
-						<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
+						<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
 							<span>{{ __('messages.Sort_by') }}...</span>
 						</div>
 						<div class="sorting-items" style="display: none;">
 							<ul>
-								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Date-latest') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'asc')">{{ __('messages.Date-oldest') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('status', 'asc')">{{ __('messages.Status-ASC') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('status', 'desc')">{{ __('messages.Status-DESC') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Opened-latest') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'asc')">{{ __('messages.Opened-oldest') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'desc')">{{ __('messages.Last-Reply-latest') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'asc')">{{ __('messages.Last-Reply-oldest') }}</li>
 							</ul>
 						</div>
 					</div>
@@ -68,8 +68,6 @@
 	});
 
 	function initPageNation_ticket(selectPage, flag, orderby, order) {
-		console.log('flag');
-		console.log(flag);
 
 		cnt = $("#ticket-pagination-container").attr("total-ticket-num");
 		btn_number = Math.ceil(cnt / 10);
@@ -177,8 +175,6 @@
 	function UserCards(flag, orderby, order) {
 		var selectedPage = $('.active').attr("page-number") * 1;
 
-		console.log(selectedPage);
-		console.log('here!');
 		$('#loading-bg').css('display', 'flex');
 		if(flag == true){
 			$.ajax({

@@ -15,15 +15,15 @@
 					<div class="col-md-9 d-flex pe-0 flex-wrap">
 
 						<div class="sort-servers order-2 order-md-1" >
-							<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
+							<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
 								<span>{{ __('messages.Sort_by') }}...</span>
 							</div>
 							<div class="sorting-items" style="display: none;">
 								<ul>
-									<li class="touch-item" onclick="sortByTicket('date', 'desc')">{{ __('messages.Date-latest') }}</li>
-									<li class="touch-item" onclick="sortByTicket('date', 'asc')">{{ __('messages.Date-oldest') }}</li>
-									<li class="touch-item" onclick="sortByTicket('status', 'asc')">{{ __('messages.Status-ASC') }}</li>
-									<li class="touch-item" onclick="sortByTicket('status', 'desc')">{{ __('messages.Status-DESC') }}</li>
+									<li class="touch-item" onclick="sortByTicket('date', 'desc')">{{ __('messages.Opened-latest') }}</li>
+									<li class="touch-item" onclick="sortByTicket('date', 'asc')">{{ __('messages.Opened-oldest') }}</li>
+									<li class="touch-item" onclick="sortByTicket('lastreply', 'desc')">{{ __('messages.Last-Reply-latest') }}</li>
+									<li class="touch-item" onclick="sortByTicket('lastreply', 'asc')">{{ __('messages.Last-Reply-oldest') }}</li>
 								</ul>
 							</div>
 						</div>

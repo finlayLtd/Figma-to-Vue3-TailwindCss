@@ -1464,7 +1464,8 @@
 	function renderRamGraph(data){
 		Highcharts.chart('ram-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				// backgroundColor: '#1C1C1E',
             },
 			title: {
 				text: 'RAM Usage',

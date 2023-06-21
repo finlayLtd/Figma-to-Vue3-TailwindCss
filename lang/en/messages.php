@@ -140,6 +140,8 @@ return [
     //newly added
     'Opened_at' => 'Opened at',
     'Last_reply_at' => 'Last reply at',
+    'Opened-latest' => 'Opened-latest',
+    'Opened-oldest' => 'Opened-oldest',
     'Last-Reply-latest' => 'Last Reply-latest',
     'Last-Reply-oldest' => 'Last Reply-oldest',
     'Status-DESC' => 'Status-DESC',
