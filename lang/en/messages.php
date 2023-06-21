@@ -93,7 +93,7 @@ return [
     'Unpaid' => 'Unpaid',
     'Cancelled' => 'Cancelled',
 
-    // Depositt
+    // Deposit
     'Deposit' => 'Deposit',
     'Deposit_cryptocurrency' => 'Deposit cryptocurrency',
     'Available_Payment_method' => 'Available Payment method',
@@ -135,7 +135,11 @@ return [
     'invite_caption1' => 'Inviting a new user allows you to invite a new user to your account. If the invitee already has an existing user account, they will be able to access your account using their existing login credentials. If the user does not yet have a user account, they will be able to create one.',
     'invite_placeholder' => 'Email address to send invite',
     
+    //
 
+    //newly added
+    'Opened_at' => 'Opened at',
+    'Last_reply_at' => 'Last reply at',
     
 
     // pagination and sorts

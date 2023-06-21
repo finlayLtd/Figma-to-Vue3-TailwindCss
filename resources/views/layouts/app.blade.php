@@ -62,26 +62,24 @@
 
                     <div class="col-md-4 d-flex align-items-center justify-content-end order-lg-3">
 
-                        <!--select show language -->
-                        <div class="dropdown language-list dropbtn">
-                            <span class="dropbtn" onclick="showDropdown()" style="cursor: pointer;">
-                                <i class="fa fa-globe dropbtn">&nbsp;<small class="dropbtn" id="language-code" onclick="showDropdown()"></small></i>
-                            </span>
-                            <div id="language-list" class="dropdown-content" style="padding: 5px;">
-                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('en')">
-                                    <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
-                                    <b style="line-height:36px; margin-left:5px;">English</b>
-                                </div>
-
-                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('ru')">
-                                    <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
-                                    <b style="line-height:36px; margin-left:5px;">русский</b>
-                                </div>
-
-                                <div class="option-content d-flex" style="cursor: pointer;" onclick="setLanguage('zh')">
-                                    <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
-                                    <b style="line-height:36px; margin-left:5px;">中文</b>
-                                </div>
+                        <div class="profile-area position-relative">
+                            <!-- <img class="profile-img  options-toggle" src="{{asset('assets/img/profile.png')}}" alt=""> -->
+                            <i class="fa fa-globe options-toggle" style="margin-right: 24px; cursor: pointer;">&nbsp;<small id="language-code" style="user-select: none;"></small></i>
+                            <div class="options-toggle-dropdown">
+                                <ul>
+                                    <li style="border-bottom:unset !important; cursor: pointer;" onclick="setLanguage('en')">
+                                        <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px;">English</b>
+                                    </li>
+                                    <li onclick="setLanguage('ru')" style="cursor: pointer;">
+                                        <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px;">русский</b>
+                                    </li>
+                                    <li onclick="setLanguage('zh')" style="cursor: pointer;">
+                                        <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px;">中文</b>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
@@ -111,7 +109,6 @@
                                     <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="{{asset('assets/img/profile.png')}}" alt="">
                                         {{ Auth::user()->originUserData['firstname'] }}
                                     </li>
-
                                     <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">{{ __('messages.Settings') }}</a></li>
                                     @if(Auth::user()->originUserData['clients'] && count( Auth::user()->originUserData['clients']) > 1)
                                         <li><a href="{{ url('/switch-account') }}"><img style="filter: brightness(2.5); width: 18px; " src="{{asset('assets/img/switch_account.png')}}" alt="">{{ __('messages.Switch_Account') }}</a></li>
@@ -128,11 +125,7 @@
                                     </li>
                                 </ul>
                             </div>
-
-
-
                         </div>
-
                     </div>
 
 
@@ -197,13 +190,6 @@
 
             $('.toast-container').append(toast);
             toast.toast('show');
-        }
-
-        /* When the user clicks on the button, 
-        toggle between hiding and showing the dropdown content */
-        function showDropdown() {
-            $("#language-list").addClass("show");
-            // document.getElementById("").classList.toggle("show");
         }
 
         // Close the dropdown if the user clicks outside of it
@@ -274,6 +260,8 @@
                 document.getElementById('language-code').innerHTML = 'RU';
             } else if (lang == 'zh') {
                 document.getElementById('language-code').innerHTML = 'CN';
+            } else{
+                document.getElementById('language-code').innerHTML = 'EN';
             }
         }
 
