@@ -298,14 +298,25 @@
 					@if($order_product_info['status'] == 'Active')
 					<!--analytics-->
 					<div class="tab-pane fade" id="pills-analytics" role="tabpanel" aria-labelledby="pills-analytics-tab">
-						<div id="disk-container"></div>
-						<div id="inode-container"></div>
-						<div id="cpu-container"></div>
-						<div id="actual-cpu-container"></div>
-						<div id="net-in-container"></div>
-						<div id="net-out-container"></div>
-						<div id="io-read-container"></div>
-						<div id="io-write-container"></div>
+						<div class="row">
+							<div id="cpu-container" class="col-md-6 col-sm-12"></div>
+							<div id="ram-container" class="col-md-6 col-sm-12"></div>
+						</div>
+						<div class="row mt-2">
+							<div id="disk-container" class="col-md-6 col-sm-12"></div>
+							<div id="inode-container" class="col-md-6 col-sm-12"></div>
+						</div>
+						<div class="row mt-2">
+							<div id="io-read-container" class="col-md-6 col-sm-12"></div>
+							<div id="io-write-container" class="col-md-6 col-sm-12"></div>
+						</div>
+						<div class="row mt-2">
+							<div id="net-in-container" class="col-md-6 col-sm-12"></div>
+							<div id="net-out-container"class="col-md-6 col-sm-12" ></div>
+						</div>
+						<div class="row mt-2">
+							<div id="net-total-container" class="col-md-6 col-sm-12"></div>
+						</div>
 					</div>
 					<!--connect-->
 					<div class="tab-pane fade" id="pills-connect" role="tabpanel" aria-labelledby="pills-connect-tab">
@@ -470,8 +481,8 @@
 							<div class="row px-0 pt-4">
 								<div class="col-md-12 d-flex justify-content-center">
 									<div class="overview-button-wrapper pt-0">
-										<button class="btn-dark px-4 hover-dark-light" onclick="openConnectVNC({{$relid}},{{$vpsid}})">Connect VNC</button>
-									</div>
+										<button class="btn-dark px-4 hover-dark-light" onclick="openVNCconnect({{$vpsid}})">Connect VNC</button>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -933,7 +944,7 @@
 		});
 
 		var chat_data = @json($analysis_data);
-		
+		renderChat(chat_data);
 	});
 
 	function TurnOnVPS(vpsid){
@@ -1241,6 +1252,17 @@
 		});
 	}
 
+	function openVNCconnect(vpsid){
+		var windowWidth = 1024;
+		var windowHeight = 768;
+		var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
+		var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+		Window = window.open(
+			'wss://vnc.fildelcastro.cc:4083/novnc/?virttoken='+vpsid,
+			"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+		$('.modal-balance').addClass('hidden');
+		Window.focus();
+	}
 	function getAnalysisData(relid,vpsid){
 		let original_url;
 		$.ajax({
@@ -1276,141 +1298,652 @@
 	}
 
 	function assignPrimaryIp(vpsid){
+		var reorder_ips = [];
+		var iplist = @json($ip_list['ips']);
 		var ipid = $('#primary-ip').val();
+		const index = iplist.findIndex(obj => obj.ipid === ipid);
+		if (index > -1) {
+			const obj = iplist.splice(index, 1)[0];
+			iplist.unshift(obj);
+		}
+		
+		iplist.forEach(function(element) {
+			reorder_ips.push(element.ip);
+		});
+		$('#loading-bg').css('display', 'flex');
 		$.ajax({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				url:"{{ URL::to('/overview/changepwd') }}",
-				method:'post',
-				data: {
-					vpsid: vpsid,
-					ipid: ipid
-				},
-				success:function(data){
-					$('#loading-bg').css('display', 'none');
-					showToast('Success', data, 'success');
-				},
-			});
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url:"{{ URL::to('/overview/changeip') }}",
+			method:'post',
+			data: {
+				vpsid: vpsid,
+				reorder_ips: reorder_ips
+			},
+			success:function(data){
+				$('#loading-bg').css('display', 'none');
+				showToast('Success', 'Your IP settings have been saved.Your IP settings will be changed when the VPS is booted again' ,'success');
+			},
+		});
 	}
 
-	function renderChat(){
-		
-		// Highcharts.chart('cpu-container', {
-        //     chart: {
-        //         zoomType: 'x'
-        //     },
-        //     title: {
-        //         text: 'CPU Information',
-        //         align: 'left'
-        //     },
-        //     subtitle: {
-        //         text: document.ontouchstart === undefined ?
-        //             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in',
-        //         align: 'left'
-        //     },
-        //     xAxis: {
-        //         type: 'datetime'
-        //     },
-        //     yAxis: {
-        //         title: {
-        //             text: 'CPU Usage'
-        //         }
-        //     },
-        //     legend: {
-        //         enabled: false
-        //     },
-        //     plotOptions: {
-        //         area: {
-        //             fillColor: {
-        //                 linearGradient: {
-        //                     x1: 0,
-        //                     y1: 0,
-        //                     x2: 0,
-        //                     y2: 1
-        //                 },
-        //                 stops: [
-        //                     [0, Highcharts.getOptions().colors[0]],
-        //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        //                 ]
-        //             },
-        //             marker: {
-        //                 radius: 2
-        //             },
-        //             lineWidth: 1,
-        //             states: {
-        //                 hover: {
-        //                     lineWidth: 1
-        //                 }
-        //             },
-        //             threshold: null
-        //         }
-        //     },
+	function renderChat(data){
+		//For showing up the average download and upload speed
+		var avg_download = 0;
+		var avg_upload = 0;
+		var avg_io_read = 0;
+		var avg_io_write = 0;
+		var count = 0;
+		var cpu_data = new Array();
+		var inode_data = new Array();
+		var ram_data = new Array();
+		var disk_data = new Array();
+		var ntw_in_data = new Array();
+		var ntw_out_data = new Array();
+		var ntw_total_data = new Array();
+		var io_read_data = new Array();
+		var io_write_data = new Array();
 
-        //     series: [{
-        //         type: 'area',
-        //         name: 'CPU Usage',
-        //         data: data
-        //     }]
-        // });
+		if(data){
+			$.each(data, function(key, val){
+				//Array is in format [vpsid, time, status, disk, inode, ram, cpu, net_in, net_out]
+				cpu_data.push([val[1], val[6]*1]);
 
-		// Highcharts.chart('cpu-container', {
-        //     chart: {
-        //         zoomType: 'x'
-        //     },
-        //     title: {
-        //         text: 'CPU Information',
-        //         align: 'left'
-        //     },
-        //     subtitle: {
-        //         text: document.ontouchstart === undefined ?
-        //             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in',
-        //         align: 'left'
-        //     },
-        //     xAxis: {
-        //         type: 'datetime'
-        //     },
-        //     yAxis: {
-        //         title: {
-        //             text: 'CPU Usage'
-        //         }
-        //     },
-        //     legend: {
-        //         enabled: false
-        //     },
-        //     plotOptions: {
-        //         area: {
-        //             fillColor: {
-        //                 linearGradient: {
-        //                     x1: 0,
-        //                     y1: 0,
-        //                     x2: 0,
-        //                     y2: 1
-        //                 },
-        //                 stops: [
-        //                     [0, Highcharts.getOptions().colors[0]],
-        //                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        //                 ]
-        //             },
-        //             marker: {
-        //                 radius: 2
-        //             },
-        //             lineWidth: 1,
-        //             states: {
-        //                 hover: {
-        //                     lineWidth: 1
-        //                 }
-        //             },
-        //             threshold: null
-        //         }
-        //     },
+				inode_data.push([val[1], val[4]*1]);
 
-        //     series: [{
-        //         type: 'area',
-        //         name: 'CPU Usage',
-        //         data: data
-        //     }]
-        // });
+				ram_data.push([val[1], val[5]*1]);
+
+				disk_data.push([val[1], val[3]*1]);
+
+				ntw_in_data.push([val[1], val[7]*1]);
+
+				ntw_out_data.push([val[1], val[8]*1]);
+
+				ntw_total_data.push([val[1], (parseInt(val[7])+parseInt(val[8]))]);
+
+				io_read_data.push([val[1], val[9]*1]);
+
+				io_write_data.push([val[1], val[10]*1]);
+				// Display the average speed of available data
+				avg_download += parseInt(val[7]);
+				avg_upload += parseInt(val[8]);
+				avg_io_read += parseInt(val[9]);
+				avg_io_write += parseInt(val[10])
+				count++;
+			});
+			// Calculating the average Downloading Speed per month
+			avg_download = (avg_download/count/1024/1024).toFixed(5);
+
+			// Calculating the average Uploading Speed per month
+			avg_upload = (avg_upload/count/1024/1024).toFixed(5);
+
+			// Calculating the average I/O read per month
+			avg_io_read = (avg_io_read/count/1024/1024).toFixed(5);
+
+			// Calculating the average I/O write per month
+			avg_io_write = (avg_io_write/count/1024/1024).toFixed(5);
+
+			renderCpuGraph(cpu_data);
+			renderRamGraph(ram_data);
+			renderDiskGraph(disk_data);
+			renderInodeGraph(inode_data);
+			renderDiskGraph(disk_data);
+			// renderDiskreadGraph(io_read_data);
+			// renderDiskwriteGraph(io_write_data);
+			renderNetInGraph(ntw_in_data);
+			renderNetOutGraph(ntw_out_data);
+			renderNetTotalGraph(ntw_total_data);
+		}
+	}
+
+	function renderCpuGraph(data){
+		Highcharts.chart('cpu-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'CPU Usage',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'CPU Usage rate: '+this.y+'%';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'CPU Usage rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'CPU',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderRamGraph(data){
+		Highcharts.chart('ram-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'RAM Usage',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'RAM Usage rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'RAM Usage rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'RAM',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderDiskGraph(data){
+		Highcharts.chart('disk-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Disk Usage',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Usage rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Disk Usage rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Disk',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderInodeGraph(data){
+		Highcharts.chart('inode-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Inode Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Innode Usage rate: '+this.y+'Blocks';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Inode Usage rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Inode',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderDiskreadGraph(data){
+		Highcharts.chart('io-read-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Disk Read Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Read rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Disk Read rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Disk Read',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderDiskwriteGraph(data){
+		Highcharts.chart('io-write-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Disk Write Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Write rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Disk Write rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Disk Write',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderNetInGraph(data){
+		Highcharts.chart('net-in-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Network Download Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Download rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Network Download rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Network Download',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderNetOutGraph(data){
+		Highcharts.chart('net-out-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Network Upload Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Upload rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Network Upload rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Network Upload',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
+	}
+
+	function renderNetTotalGraph(data){
+		Highcharts.chart('net-total-container', {
+			chart: {
+				type: 'area'
+            },
+			title: {
+				text: 'Network Information',
+				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Network Usage rate: '+this.y+'MB';
+				}
+			},
+			xAxis: {
+				type: 'datetime'
+			},
+			yAxis: {
+				title: {
+					text: 'Network rate'
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				area: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, Highcharts.getOptions().colors[0]],
+							[1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+						]
+					},
+					marker: {
+						radius: 2
+					},
+					lineWidth: 1,
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+
+			series: [{
+				name: 'Network',
+				data: data.map(([date, value]) => [new Date(date).getTime(), value]),
+			}]
+		});
 	}
 
 </script>

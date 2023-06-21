@@ -23,9 +23,7 @@
 			</div>
 		</div>
 
-		<div class="sub-section server-list-tab">
-			@include('tables.servers')
-		</div>
+	
 
 	</div>
 

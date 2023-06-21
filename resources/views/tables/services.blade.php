@@ -4,8 +4,10 @@
         <ul class="nav nav-pills four-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
             @foreach($states as $state)
             <li class="nav-item" role="presentation">
-                @if($state != 'Active') <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-{{$state}}" type="button" role="tab" aria-controls="pills-{{$state}}" aria-selected="true">{{$state}}</button>
-                @else <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-{{$state}}" type="button" role="tab" aria-controls="pills-{{$state}}" aria-selected="true">{{$state}}</button>
+                @if($state != 'Fraud')
+                    @if($state != 'Active') <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-{{$state}}" type="button" role="tab" aria-controls="pills-{{$state}}" aria-selected="true">{{$state}}</button>
+                    @else <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-{{$state}}" type="button" role="tab" aria-controls="pills-{{$state}}" aria-selected="true">{{$state}}</button>
+                    @endif
                 @endif
             </li>
             @endforeach
@@ -61,6 +63,9 @@
                                         </h2>
                                         <h3 class="detail">
                                             {{ __('messages.Created_at') }} {{$order['regdate']}}
+                                        </h3> 
+                                        <h3 class="detail" style="margin-top:5px;">
+                                            {{ __('messages.Duedate_at') }} &nbsp;{{$order['nextduedate']}}
                                         </h3>                    			
                                     </div>
                                     <div class="server-list-options">
