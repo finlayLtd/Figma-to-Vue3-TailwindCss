@@ -21,7 +21,19 @@
 						<h3 class="sub-title">{{ __('messages.Support_Ticket') }}</h3>
 					</div>
 
-					
+					<div class="sort-servers order-2 order-md-1 mb-2" style="display: inline-block;">
+						<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
+							<span>{{ __('messages.Sort_by') }}...</span>
+						</div>
+						<div class="sorting-items" style="display: none;">
+							<ul>
+								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Date-latest') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'asc')">{{ __('messages.Date-oldest') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('status', 'asc')">{{ __('messages.Status-ASC') }}</li>
+								<li class="touch-item" onclick="sortByTicket_dashboard('status', 'desc')">{{ __('messages.Status-DESC') }}</li>
+							</ul>
+						</div>
+					</div>
 
 					<div class="w-100 support-table support-ticket-table mb-4">
 						@include('tables.tickettable')
@@ -52,10 +64,13 @@
 @section('script')
 <script type="text/javascript">
 	$(document).ready(function() {
-		initPageNation_ticket(1);
+		initPageNation_ticket(1, false);
 	});
 
-	function initPageNation_ticket(selectPage) {
+	function initPageNation_ticket(selectPage, flag, orderby, order) {
+		console.log('flag');
+		console.log(flag);
+
 		cnt = $("#ticket-pagination-container").attr("total-ticket-num");
 		btn_number = Math.ceil(cnt / 10);
 		if (selectPage <= 0) return;
@@ -138,43 +153,83 @@
 			var selectedButtonValue = $(this).attr("page-number") * 1;
 			var CurrentSelectedPage = $(".active").attr("page-number") * 1;
 			if (selectedButtonValue > 0) {
-				initPageNation_ticket(selectedButtonValue);
+				initPageNation_ticket(selectedButtonValue, flag);
 			} else {
 				switch (selectedButtonValue) {
 					case -1:
-						initPageNation_ticket(1);
+						initPageNation_ticket(1, flag);
 						break;
 					case 0:
-						initPageNation_ticket(CurrentSelectedPage - 1);
+						initPageNation_ticket(CurrentSelectedPage - 1, flag);
 						break;
 					case -2:
-						initPageNation_ticket(CurrentSelectedPage + 1);
+						initPageNation_ticket(CurrentSelectedPage + 1, flag);
 						break;
 					case -3:
-						initPageNation_ticket(btn_number);
+						initPageNation_ticket(btn_number, flag);
 						break;
 				}
 			}
-			UserCards();
+			UserCards(flag, orderby, order);
 		});
 	}
 
-	function UserCards() {
+	function UserCards(flag, orderby, order) {
 		var selectedPage = $('.active').attr("page-number") * 1;
 
 		console.log(selectedPage);
+		console.log('here!');
+		$('#loading-bg').css('display', 'flex');
+		if(flag == true){
+			$.ajax({
+				url: "{{ URL::to('/dashboard/ticketlist') }}",
+				method: "GET",
+				data: {
+					'offset': selectedPage,
+					'orderby': orderby,
+					'order': order,
+				},
+				success: function(data) {
+					$('#loading-bg').css('display', 'none');
+					$('.support-ticket-table').empty();
+					$('.support-ticket-table').html(data);
+					toggleSortingItems();
+				},
+				error: function(xhr, status, error) {
+					// Handle the error here
+					console.log(error);
+					$('#loading-bg').css('display', 'none');
+					toggleSortingItems();
+				},
+			});
+		} else{
+			$.ajax({
+				url: "{{ URL::to('/dashboard/ticketlist') }}",
+				method: "GET",
+				data: {
+					'offset': selectedPage
+				},
+				success: function(data) {
+					$('#loading-bg').css('display', 'none');
+					$('.support-ticket-table').empty();
+					$('.support-ticket-table').html(data);
+					toggleSortingItems();
+				},
+				error: function(xhr, status, error) {
+					// Handle the error here
+					console.log(error);
+					$('#loading-bg').css('display', 'none');
+					toggleSortingItems();
+				},
+			});
+		}
 
-		$.ajax({
-			url: "{{ URL::to('/dashboard/ticketlist') }}",
-			method: "GET",
-			data: {
-				'offset': selectedPage
-			},
-			success: function(data) {
-				$('.support-ticket-table').empty();
-				$('.support-ticket-table').html(data);
-			},
-		});
+		
+	}
+
+	function sortByTicket_dashboard(orderby, order) {
+		initPageNation_ticket(1, true, orderby, order);
+		UserCards(true, orderby, order);
 	}
 </script>
 @endsection

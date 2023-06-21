@@ -163,6 +163,11 @@ class HomeController extends Controller
         if ($tickets_response['totalresults'] > 0) {
             $total_tickets = $tickets_response['totalresults'];
             $tickets = $tickets_response['tickets']['ticket'];
+            if($request->order && $request->orderby){//if not exist pass
+                if($request->order == 'desc') $tickets = collect($tickets)->sortByDesc($request->orderby)->values()->all();
+                else  $tickets = collect($tickets)->sortBy($request->orderby)->values()->all();
+            }
+            
         }
 
         return view('tables/tickettable', compact('tickets', 'total_tickets'));

@@ -28,6 +28,9 @@ Route::group([
 
     //render invoice table by sorting
     Route::get('/balance/invoicelist', 'HomeController@invoicelist');
+    Route::get('/support-ticket/supportlist', 'SupportTicketController@supportlist');
+
+    
     
     Route::get('/home', 'HomeController@index')->name('home');
 

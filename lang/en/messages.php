@@ -140,6 +140,12 @@ return [
     //newly added
     'Opened_at' => 'Opened at',
     'Last_reply_at' => 'Last reply at',
+    'Last-Reply-latest' => 'Last Reply-latest',
+    'Last-Reply-oldest' => 'Last Reply-oldest',
+    'Status-DESC' => 'Status-DESC',
+    'Status-ASC' => 'Status-ASC',
+    'no_invoice' => 'No invoices to display', 
+
     
 
     // pagination and sorts
