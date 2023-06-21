@@ -216,7 +216,6 @@ class OverviewController extends Controller
     private function getOSlist()
     {
         $oslist = $this->virtualizorAdmin->ostemplates();
-        // print_r($oslist);exit;
         return $oslist;
     }
 
