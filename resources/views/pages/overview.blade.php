@@ -809,6 +809,8 @@
 @section('script')
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+
 		$('#Operating-system').select2({
 			templateResult: function(data) {
 				if (!data.id) { return data.text; }
@@ -951,7 +953,24 @@
 		});
 
 		var chat_data = @json($analysis_data);
-		renderChat(chat_data);
+		if ($('#modeSwitch').prop('checked')) {
+			// Checkbox is checked
+			renderChat(chat_data, '#1C1C1E');
+		} else {
+			// Checkbox is not checked
+			renderChat(chat_data, '#ffffff');
+		}
+		
+		// change the theme
+		toggleSwitch.addEventListener('change', switchColor_Graph, false);
+
+		function switchColor_Graph(event) {
+			if (event.target.checked) {
+				renderChat(chat_data, '#1C1C1E');
+			} else {
+				renderChat(chat_data, '#ffffff');
+			}
+		}
 	});
 
 	function TurnOnVPS(vpsid){
@@ -1337,7 +1356,7 @@
 		});
 	}
 
-	function renderChat(data){
+	function renderChat(data, color){
 		//For showing up the average download and upload speed
 		var avg_download = 0;
 		var avg_upload = 0;
@@ -1393,27 +1412,48 @@
 			// Calculating the average I/O write per month
 			avg_io_write = (avg_io_write/count/1024/1024).toFixed(5);
 
-			renderCpuGraph(cpu_data);
-			renderRamGraph(ram_data);
-			renderDiskGraph(disk_data);
-			renderInodeGraph(inode_data);
-			renderDiskGraph(disk_data);
+			renderCpuGraph(cpu_data, color);
+			renderRamGraph(ram_data, color);
+			renderDiskGraph(disk_data, color);
+			renderInodeGraph(inode_data, color);
+			renderDiskGraph(disk_data, color);
 			// renderDiskreadGraph(io_read_data);
 			// renderDiskwriteGraph(io_write_data);
-			renderNetInGraph(ntw_in_data);
-			renderNetOutGraph(ntw_out_data);
-			renderNetTotalGraph(ntw_total_data);
+			renderNetInGraph(ntw_in_data, color);
+			renderNetOutGraph(ntw_out_data, color);
+			renderNetTotalGraph(ntw_total_data, color);
 		}
 	}
 
-	function renderCpuGraph(data){
+	function revertColor(color) {
+		// Convert the color to RGB format
+		var r = parseInt(color.substring(1, 3), 16);
+		var g = parseInt(color.substring(3, 5), 16);
+		var b = parseInt(color.substring(5, 7), 16);
+
+		// Calculate the inverted color
+		var invertedR = 255 - r;
+		var invertedG = 255 - g;
+		var invertedB = 255 - b;
+
+		// Convert the inverted color back to hex format
+		var invertedColor = "#" + invertedR.toString(16).padStart(2, '0') + invertedG.toString(16).padStart(2, '0') + invertedB.toString(16).padStart(2, '0');
+
+		return invertedColor;
+	}
+
+	function renderCpuGraph(data, color){
 		Highcharts.chart('cpu-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'CPU Usage',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1423,11 +1463,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'CPU Usage rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1467,15 +1517,18 @@
 		});
 	}
 
-	function renderRamGraph(data){
+	function renderRamGraph(data, color){
 		Highcharts.chart('ram-container', {
 			chart: {
 				type: 'area',
-				// backgroundColor: '#1C1C1E',
+				backgroundColor: color,
             },
 			title: {
 				text: 'RAM Usage',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1485,11 +1538,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'RAM Usage rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1529,14 +1592,18 @@
 		});
 	}
 
-	function renderDiskGraph(data){
+	function renderDiskGraph(data, color){
 		Highcharts.chart('disk-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Disk Usage',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1546,11 +1613,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Disk Usage rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1590,14 +1667,18 @@
 		});
 	}
 
-	function renderInodeGraph(data){
+	function renderInodeGraph(data, color){
 		Highcharts.chart('inode-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Inode Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1607,11 +1688,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Inode Usage rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1651,14 +1742,18 @@
 		});
 	}
 
-	function renderDiskreadGraph(data){
+	function renderDiskreadGraph(data, color){
 		Highcharts.chart('io-read-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Disk Read Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1668,11 +1763,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Disk Read rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1712,14 +1817,18 @@
 		});
 	}
 
-	function renderDiskwriteGraph(data){
+	function renderDiskwriteGraph(data, color){
 		Highcharts.chart('io-write-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Disk Write Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1729,11 +1838,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Disk Write rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1773,14 +1892,18 @@
 		});
 	}
 
-	function renderNetInGraph(data){
+	function renderNetInGraph(data, color){
 		Highcharts.chart('net-in-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Network Download Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1790,11 +1913,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
-					text: 'Network Download rate'
+					text: 'Network Download rate',
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1834,14 +1967,18 @@
 		});
 	}
 
-	function renderNetOutGraph(data){
+	function renderNetOutGraph(data, color){
 		Highcharts.chart('net-out-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Network Upload Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1851,11 +1988,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Network Upload rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
@@ -1895,14 +2042,18 @@
 		});
 	}
 
-	function renderNetTotalGraph(data){
+	function renderNetTotalGraph(data, color){
 		Highcharts.chart('net-total-container', {
 			chart: {
-				type: 'area'
+				type: 'area',
+				backgroundColor: color,
             },
 			title: {
 				text: 'Network Information',
-				align: 'left'
+				align: 'left',
+				style: {
+					color: revertColor(color)
+				},
 			},
 			// chart options
 			tooltip: {
@@ -1912,11 +2063,21 @@
 				}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
+				}
 			},
 			yAxis: {
 				title: {
 					text: 'Network rate'
+				},
+				labels: {
+					style: {
+						color: revertColor(color)
+					}
 				}
 			},
 			legend: {
