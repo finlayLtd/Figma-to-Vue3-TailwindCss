@@ -12,7 +12,21 @@
 
 				<div class="row mb-5 pe-0">
 
-					<div class="col-md-9 d-flex justify-content-between pe-0 flex-wrap">
+					<div class="col-md-9 d-flex pe-0 flex-wrap">
+
+						<div class="sort-servers order-2 order-md-1" >
+							<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark">
+								<span>{{ __('messages.Sort_by') }}...</span>
+							</div>
+							<div class="sorting-items" style="display: none;">
+								<ul>
+									<li class="touch-item" onclick="sortByTicket('date', 'desc')">{{ __('messages.Date-latest') }}</li>
+									<li class="touch-item" onclick="sortByTicket('date', 'asc')">{{ __('messages.Date-oldest') }}</li>
+									<li class="touch-item" onclick="sortByTicket('status', 'asc')">{{ __('messages.Status-ASC') }}</li>
+									<li class="touch-item" onclick="sortByTicket('status', 'desc')">{{ __('messages.Status-DESC') }}</li>
+								</ul>
+							</div>
+						</div>
 
 						<ul class="nav nav-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
@@ -31,72 +45,10 @@
 
 				</div>
 
-
-				<div class="tab-content" id="pills-tabContent">
-
-					<div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
-
-						<div class="row mb-5">
-							@foreach ($tickets as $ticket)
-							<div class="col-12 col-lg-6 col-md-6 col-sm-12">
-								<div class="card-item p-4 mb-4 support-item flex-column ">
-
-									<div class="d-flex justify-content-between support-item-header">
-										<a href="{{ url('/ticket-detail/' . $ticket['id']) }}">
-											<div class="support-item-title">
-												<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">{{ __('messages.Ticket') }}#{{$ticket['tid']}}</span>
-											</div>
-											<small style="color: black; display: block;">
-												{{ __('messages.Opened_at') }} : {{ date('l, F jS, Y', strtotime($ticket['date'])) }}
-											</small>
-											<small style="color: black; display: block;">
-												{{ __('messages.Last_reply_at') }} : {{ date('l, F jS, Y', strtotime($ticket['lastreply'])) }}
-											</small>
-										</a>
-										<div class="support-item-status">
-											<span class="fs-15 color-in-work">{{$ticket['status']}}</span>
-										</div>
-									</div>
-
-									<div class="support-item-detail">
-										<p class="fs-15 mb-0">{{$ticket['subject']}}</p>
-									</div>
-
-								</div>
-							</div>
-							@endforeach
-						</div>
-
-					</div>
-					@foreach ($status as $statu)
-					<div class="tab-pane fade" id="pills-{{implode('-',explode(' ',$statu['title']))}}" role="tabpanel" aria-labelledby="pills-{{implode('-',explode(' ',$statu['title']))}}-tab">
-						@foreach ($tickets as $ticket)
-						@if($ticket['status']==$statu['title'])
-						<div class="col-12 col-lg-6 col-md-6 col-sm-12">
-							<div class="card-item p-4 mb-4 support-item flex-column ">
-
-								<div class="d-flex justify-content-between support-item-header">
-									<a href="{{ url('/ticket-detail/' . $ticket['id']) }}">
-										<div class="support-item-title">
-											<img class="me-2" src="assets/img/support.svg" alt=""><span style="color:rgba(23, 30, 38, 0.5);">{{ __('messages.Ticket') }}#{{$ticket['tid']}}</span>
-										</div>
-									</a>
-									<div class="support-item-status">
-										<span class="fs-15 color-in-work">{{$ticket['status']}}</span>
-									</div>
-								</div>
-
-								<div class="support-item-detail">
-									<p class="fs-15 mb-0">{{$ticket['subject']}}</p>
-								</div>
-
-							</div>
-						</div>
-						@endif
-						@endforeach
-					</div>
-					@endforeach
+				<div class="w-100 support-table mb-4">
+					@include('tables.supporttable')
 				</div>
+				
 			</div>
 		</div>
 </section>
@@ -157,6 +109,30 @@
 
 @section('script')
 <script type="text/javascript">
+	function sortByTicket(orderby, order) {
+		$('#loading-bg').css('display', 'flex');
+		$.ajax({
+			url: "{{ URL::to('/support-ticket/supportlist') }}",
+			method: "GET",
+			data: {
+				'orderby': orderby,
+				'order': order,
+			},
+			success: function(data) {
+				$('#loading-bg').css('display', 'none');
+				$('.support-table').empty();
+				$('.support-table').html(data);
+				toggleSortingItems();
+			},
+			error: function(xhr, status, error) {
+				// Handle the error here
+				console.log(error);
+				$('#loading-bg').css('display', 'none');
+				toggleSortingItems();
+			}
+		});
+	}
+
 	$(document).ready(function() {
 		$("#create-ticket").click(function() {
 			$(".modal").removeClass("hidden");

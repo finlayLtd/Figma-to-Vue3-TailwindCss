@@ -16,38 +16,46 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($invoices as $invoice)
-                        <tr>
-                            <td>INV-{{ $invoice['id'] }}</td>
-                            <td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
-                            <td class="date-cell">{{ $invoice['date'] }}</td>
-                            <td class="date-cell">{{ $invoice['duedate'] }}</td>
-                            @if($invoice['status'] == 'Paid')
-                            <td class="successful-cell">
-                                <span>
-                                    {{ $invoice['status'] }}
-                                </span>
-                            </td>
-                            @elseif($invoice['status'] == 'Unpaid')
-                            <td class="cancelled-cell">
-                                <span>
-                                    {{ $invoice['status'] }}
-                                </span>
-                            </td>
-                            @else
-                            <td class="in-progress-cell">
-                                <span>
-                                    {{ $invoice['status'] }}
-                                </span>
-                            </td>
-                            @endif
-                            <td class="text-center">
-                                <a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank">
-                                    <img src="assets/img/eye-open.svg" class="icon-password view-invoice">
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @if(empty($invoices))
+                            <tr>
+                                <td colspan="6" style="text-align: center;">
+                                    <h5 style="margin-top: 20px;">{{ __('messages.no_invoice') }}</h5>
+                                </td>
+                            </tr>
+                        @else
+                            @foreach($invoices as $invoice)
+                            <tr>
+                                <td>INV-{{ $invoice['id'] }}</td>
+                                <td>{{ $invoice['currencyprefix'] }}{{ $invoice['total'] }}</td>
+                                <td class="date-cell">{{ $invoice['date'] }}</td>
+                                <td class="date-cell">{{ $invoice['duedate'] }}</td>
+                                @if($invoice['status'] == 'Paid')
+                                <td class="successful-cell">
+                                    <span>
+                                        {{ $invoice['status'] }}
+                                    </span>
+                                </td>
+                                @elseif($invoice['status'] == 'Unpaid')
+                                <td class="cancelled-cell">
+                                    <span>
+                                        {{ $invoice['status'] }}
+                                    </span>
+                                </td>
+                                @else
+                                <td class="in-progress-cell">
+                                    <span>
+                                        {{ $invoice['status'] }}
+                                    </span>
+                                </td>
+                                @endif
+                                <td class="text-center">
+                                    <a onclick="openInvoiceWindow({{ $invoice['id'] }})" target="_blank">
+                                        <img src="assets/img/eye-open.svg" class="icon-password view-invoice">
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

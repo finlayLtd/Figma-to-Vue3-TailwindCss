@@ -68,16 +68,16 @@
                             <div class="options-toggle-dropdown">
                                 <ul>
                                     <li style="border-bottom:unset !important; cursor: pointer;" onclick="setLanguage('en')">
-                                        <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px 0px 5px;"></span>
-                                        <b style="line-height:36px; margin-left:5px;">English</b>
+                                        <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px -4px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px; color: black;">English</b>
                                     </li>
                                     <li onclick="setLanguage('ru')" style="cursor: pointer;">
-                                        <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px 0px 5px;"></span>
-                                        <b style="line-height:36px; margin-left:5px;">русский</b>
+                                        <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px -4px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px; color: black;">русский</b>
                                     </li>
                                     <li onclick="setLanguage('zh')" style="cursor: pointer;">
-                                        <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px 0px 5px;"></span>
-                                        <b style="line-height:36px; margin-left:5px;">中文</b>
+                                        <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px -4px 5px;"></span>
+                                        <b style="line-height:36px; margin-left:5px; color: black;">中文</b>
                                     </li>
                                 </ul>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="options-toggle-dropdown">
                                 <ul>
                                     <li class="dropdown-profile-item"><img style="width:28px;height:28px" src="{{asset('assets/img/profile.png')}}" alt="">
-                                        {{ Auth::user()->originUserData['firstname'] }}
+                                        <span style="color: black;">{{ Auth::user()->originUserData['firstname'] }}</span>
                                     </li>
                                     <li style="border-bottom:unset !important"><a href="{{ url('/settings') }}"><img style="filter: brightness(2.5);" src="{{asset('assets/img/settings.svg')}}" alt="">{{ __('messages.Settings') }}</a></li>
                                     @if(Auth::user()->originUserData['clients'] && count( Auth::user()->originUserData['clients']) > 1)
