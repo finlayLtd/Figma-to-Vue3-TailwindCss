@@ -38,7 +38,8 @@ class OverviewController extends Controller
         $vps_info = [];
         $cpu = [];
         $vpsid = 0;
-        $oslists = [];
+        $ip_list['ips'] = [];
+        $analysis_data = [];
         $order_id  = $request->order_id;
         
         $order_info_response = $this->getOrderinfo($order_id);
@@ -57,8 +58,6 @@ class OverviewController extends Controller
         $detail_info = $this->getProductDetailInfo($product_info);
         $other_info = $this->getOtherinfo($order_product_info);
         $invoiceInfo = $this->getinvoiceInfo($order_id);
-        // $this->getIpinfo($other_info['vps_info']['vpsid']);
-        // print_r($other_info);exit;
 
         $flag = $other_info['flag'];
         $sys_logo = $other_info['sys_logo'];
