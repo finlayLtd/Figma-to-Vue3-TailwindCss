@@ -216,6 +216,7 @@ class OverviewController extends Controller
     private function getOSlist()
     {
         $oslist = $this->virtualizorAdmin->ostemplates();
+        // print_r($oslist);exit;
         return $oslist;
     }
 
@@ -369,7 +370,8 @@ class OverviewController extends Controller
         return $invoice_info;
     }
 
-    private function getIpinfo($vpsid,$hostname){
+    private function getIpinfo($vpsid,$hostname)
+    {
         $post = array();
         $ip_list = array();
         $post['vps_search'] = $hostname;
@@ -381,7 +383,8 @@ class OverviewController extends Controller
         return $result;
     }
 
-    private function getAnalysisData($vpsid){
+    private function getAnalysisData($vpsid)
+    {
         $post = array();
         $datas = array();
         $date = array();
@@ -398,7 +401,8 @@ class OverviewController extends Controller
         return $return_datas;
     }
 
-    public function changeIp(Request $request){
+    public function changeIp(Request $request)
+    {
         $post = array();
         $post['vpsid'] = $request->vpsid;
         $post['ips'] = $request->reorder_ips;
@@ -410,5 +414,14 @@ class OverviewController extends Controller
         }else{
             return response()->json('Error', 500);
         }
+    }
+
+    public function connectvnc(Request $request)
+    {
+        $post = array();
+        $post['novnc'] = $request->vpsid;
+        $result = $this->virtualizorAdmin->vnc($post);
+
+        print_r($result);exit;
     }
 }

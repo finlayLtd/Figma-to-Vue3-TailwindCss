@@ -481,8 +481,8 @@
 							<div class="row px-0 pt-4">
 								<div class="col-md-12 d-flex justify-content-center">
 									<div class="overview-button-wrapper pt-0">
-										<button class="btn-dark px-4 hover-dark-light" onclick="openConnectVNC({{$relid}},{{$vpsid}})">Connect VNC</button>
-									</div>
+										<button class="btn-dark px-4 hover-dark-light" onclick="openVNCconnect({{$vpsid}})">Connect VNC</button>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -1252,6 +1252,17 @@
 		});
 	}
 
+	function openVNCconnect(vpsid){
+		var windowWidth = 1024;
+		var windowHeight = 768;
+		var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
+		var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+		Window = window.open(
+			'wss://vnc.fildelcastro.cc:4083/novnc/?virttoken='+vpsid,
+			"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+		$('.modal-balance').addClass('hidden');
+		Window.focus();
+	}
 	function getAnalysisData(relid,vpsid){
 		let original_url;
 		$.ajax({
@@ -1395,6 +1406,13 @@
 				text: 'CPU Usage',
 				align: 'left'
 			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'CPU Usage rate: '+this.y+'%';
+				}
+			},
 			xAxis: {
 				type: 'datetime'
 			},
@@ -1448,6 +1466,13 @@
 			title: {
 				text: 'RAM Usage',
 				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'RAM Usage rate: '+this.y+'MB';
+				}
 			},
 			xAxis: {
 				type: 'datetime'
@@ -1503,6 +1528,13 @@
 				text: 'Disk Usage',
 				align: 'left'
 			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Usage rate: '+this.y+'MB';
+				}
+			},
 			xAxis: {
 				type: 'datetime'
 			},
@@ -1556,6 +1588,13 @@
 			title: {
 				text: 'Inode Information',
 				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Innode Usage rate: '+this.y+'Blocks';
+				}
 			},
 			xAxis: {
 				type: 'datetime'
@@ -1611,6 +1650,13 @@
 				text: 'Disk Read Information',
 				align: 'left'
 			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Read rate: '+this.y+'MB';
+				}
+			},
 			xAxis: {
 				type: 'datetime'
 			},
@@ -1664,6 +1710,13 @@
 			title: {
 				text: 'Disk Write Information',
 				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Disk Write rate: '+this.y+'MB';
+				}
 			},
 			xAxis: {
 				type: 'datetime'
@@ -1719,6 +1772,13 @@
 				text: 'Network Download Information',
 				align: 'left'
 			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Download rate: '+this.y+'MB';
+				}
+			},
 			xAxis: {
 				type: 'datetime'
 			},
@@ -1773,6 +1833,13 @@
 				text: 'Network Upload Information',
 				align: 'left'
 			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Upload rate: '+this.y+'MB';
+				}
+			},
 			xAxis: {
 				type: 'datetime'
 			},
@@ -1826,6 +1893,13 @@
 			title: {
 				text: 'Network Information',
 				align: 'left'
+			},
+			// chart options
+			tooltip: {
+				formatter: function() {
+					return 'Time: ' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						'Network Usage rate: '+this.y+'MB';
+				}
 			},
 			xAxis: {
 				type: 'datetime'

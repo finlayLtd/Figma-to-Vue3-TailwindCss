@@ -53,6 +53,7 @@ return [
     'Launch_Control_Panel' => 'Launch Control Panel',
     'View_Invoices' => 'View Invoices',
     'Created_at' => 'Created at',
+    'Duedate_at' => 'Expires at',
     'Hostname' => 'Hostname',
     'No_Active_Product' => 'You don’t have an active product yet',
     'Servers_title' => 'Choose a Datacenter region',
