@@ -1678,7 +1678,7 @@ section.dashboard .data-region-card:hover .server-price {
 }
 
 .sorting-items {
-		position: absolute;
+	position: absolute;
     top: 45px;
     background-color: #fff;
     box-shadow: inset 0px 0px 0px 1px #E0E0E0;
