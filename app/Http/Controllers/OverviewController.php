@@ -420,6 +420,41 @@ class OverviewController extends Controller
         $post['novnc'] = $request->vpsid;
         $result = $this->virtualizorAdmin->vnc($post);
 
-        print_r($result);exit;
+        $info = $result['info'];
+        $base_url = public_path().'/novnc/';
+        $noVNC_file_path = public_path('novnc/vnc_auto_virt.html');
+        $noVNC_file_content = file_get_contents($noVNC_file_path);
+        
+        $host_url = url('/');
+        $ip = $this->virtualizorAdmin->ip;
+        
+        $proto = 'http';
+        $port = 4081;
+        $websockify = 'websockify';
+        if(!empty($_SERVER['HTTPS'])){
+            $proto = 'https';
+            if($_SERVER['SERVER_PORT'] == '443'){
+                $port = 443;
+            }else{
+                $port = 4083;
+            }
+            $websockify = 'novnc/';
+        }
+
+        $vnc_token = $request->vpsid;
+
+        $array = array('HOST' => $ip,
+                    'PORT' => $port,
+                    'PROTO' => $proto,
+                    'WEBSOCKET' => $websockify,
+                    'TOKEN' => $vnc_token,
+                    'PASSWORD' => $info['password'],
+                    'base_url' => $host_url.'/novnc/');
+        
+        foreach($array as $k => $v){
+            $noVNC_file_content = str_replace('{{'.$k.'}}', $v, $noVNC_file_content);
+        }
+
+        return response($noVNC_file_content);
     }
 }

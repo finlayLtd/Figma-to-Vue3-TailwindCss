@@ -22,12 +22,12 @@ namespace App\Virtualizor;
 
 class Admin {
 	
-	var $key = 'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
-	var $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
-	var $ip = '37.59.33.165';
-	var $port = 4085;
-	var $protocol = 'https';
-	var $error = array();
+	public $key = 'N8q5PHMfwvMQHMHYkytYtTydVWoLsWNC';
+	public $pass = 'CcuJEN365CusfakK2NA8uVGSg0e8e36J';
+	public $ip = '37.59.33.165';
+	public $port = 4085;
+	public $protocol = 'https';
+	public $error = array();
 	
 	/**
 	 * Contructor
