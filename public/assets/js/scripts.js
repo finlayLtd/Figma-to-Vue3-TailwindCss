@@ -29,6 +29,7 @@
 
   /*toggle sort box*/
   function toggleSortingItems() {
+    console.log('toggleSortingItems_1');
     var sortingItems = document.getElementsByClassName('sorting-items');
     
     for (var i = 0; i < sortingItems.length; i++) {
@@ -44,7 +45,9 @@
 
   /*toggle sort box*/
   function toggleSortingItems_2() {
-    var sortingItems = document.getElementsByClassName('my-services');
+
+    console.log('toggleSortingItems_2');
+    var sortingItems = document.getElementsByClassName('sorting-items_2');
     
     for (var i = 0; i < sortingItems.length; i++) {
       var item = sortingItems[i];

@@ -5,7 +5,7 @@
             <div id="toggleButton-2" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
                 <span>{{ __('messages.Sort_by') }}...</span>
             </div>
-            <div class="sorting-items my-services" style="display: none;">
+            <div class="sorting-items_2 my-services" style="display: none;">
                 <ul>
                     <li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Created_date') }}</li>
                     <li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'asc')">{{ __('messages.Expiration_date') }}</li>
