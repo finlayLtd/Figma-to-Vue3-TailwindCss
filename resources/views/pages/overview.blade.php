@@ -1285,11 +1285,27 @@
 		var windowHeight = 768;
 		var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
 		var topPosition = (window.screen.height / 2) - (windowHeight / 2);
-		Window = window.open(
-			'wss://vnc.fildelcastro.cc:4083/novnc/?virttoken='+vpsid,
-			"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: "{{ URL::to('/overview/connectvnc') }}",
+			method: "POST",
+			data: { 
+				vpsid:vpsid
+			},
+			success: function(response) {
+				var newWindow = window.open('',"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+				newWindow.document.write(response);
+			},
+			error: function(xhr, status, error) {
+				// Handle the error here
+				console.log(error);
+				$('#loading-bg').css('display', 'none');
+			}
+		});
 		$('.modal-balance').addClass('hidden');
-		Window.focus();
+		newWindow.focus();
 	}
 	function getAnalysisData(relid,vpsid){
 		let original_url;
