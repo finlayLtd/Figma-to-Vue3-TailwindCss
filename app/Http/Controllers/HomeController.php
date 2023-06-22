@@ -226,8 +226,6 @@ class HomeController extends Controller
         }
     }
 
-    
-
     public function change_name(Request $request)
     {
         $response = (new \Sburina\Whmcs\Client)->post([
@@ -304,10 +302,6 @@ class HomeController extends Controller
         return view('pages/settings_userManage', compact('users_list', 'message'));
     }
 
-
-
-
-
     public function remove_access(Request $request)
     {
         $response = (new \Sburina\Whmcs\Client)->post([
@@ -376,5 +370,80 @@ class HomeController extends Controller
             $users_list = $check_user_response['client']['users']['user'];
         }
         return view('pages/settings_userManage', compact('users_list', 'message'));
+    }
+
+    public function getServices(Request $request)
+    {
+        $state_order = [];
+        $states = [];
+
+        $order_state_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetOrderStatuses',
+        ]);
+
+        foreach ($order_state_response['statuses']['status'] as $state_info)
+            array_push($states, $state_info['title']);
+        asort($states);
+
+        $orders_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetClientsProducts',
+            'clientid' => Auth::user()->client_id,
+        ]);
+
+        if ($orders_response['totalresults'] > 0) {
+            $total_tickets = $orders_response['totalresults'];
+            $orders = $orders_response['products']['product'];
+            $orders = collect($orders)->sortByDesc($request->orderby)->values()->all();
+            foreach ($states as $state)
+                foreach ($orders as $order)
+                    $state_order[$state] = [];
+
+            foreach ($states as $state)
+                foreach ($orders as $order){
+                    if ($order['status'] == $state) {
+                        array_push($state_order[$state], $order);
+                        
+                        $last_index = count($state_order[$state]) - 1;
+                        if(strpos($order['groupname'],'Netherlands') !== false){
+                            $state_order[$state][$last_index]['flag'] = 'flag-nl';
+                        }else{
+                            $state_order[$state][$last_index]['flag'] = 'flag-en';
+                        }
+                        
+                        if($state == 'Active'){
+                            $page = 0;
+                            $reslen = 0;
+                            //For Searching
+                            $post = array();
+                            $post['vpsid'] = $order['customfields']['customfield'][1]['value'];
+                            $vps_info = $this->virtualizorAdmin->listvs($page ,$reslen ,$post);
+                            $vps_info = $vps_info[$post['vpsid']];
+                            $system = explode('-',$vps_info['os_name'])[0];
+
+                        }else{
+                            $system = explode('-',$order['configoptions']['configoption'][1]['value'])[0];
+                        }
+
+                        switch($system){
+                            case 'windows':
+                                $state_order[$state][$last_index]['sys_log'] = 'windows'; break;
+                            case 'ubuntu':
+                                $state_order[$state][$last_index]['sys_log'] = 'ubuntu'; break;
+                            case 'centos':
+                                $state_order[$state][$last_index]['sys_log'] = 'centos'; break;
+                            case 'debian':
+                                $state_order[$state][$last_index]['sys_log'] = 'debian'; break;
+                            case 'almalinux':
+                                $state_order[$state][$last_index]['sys_log'] = 'almalinux'; break;
+                            case 'fedora':
+                                $state_order[$state][$last_index]['sys_log'] = 'fedora'; break;
+                            case 'rocky':
+                                $state_order[$state][$last_index]['sys_log'] = 'rocky'; break;
+                        }
+                    }
+                }
+        }
+
+        return view('tables/services', compact('states', 'state_order'));
     }
 }

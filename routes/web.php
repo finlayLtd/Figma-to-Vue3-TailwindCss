@@ -25,6 +25,7 @@ Route::group([
     // Here are pages logged in users can visit
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
     Route::get('/dashboard/ticketlist', 'HomeController@gettickets');
+    Route::get('/dashboard/orderservice', 'HomeController@getServices');
 
     //render invoice table by sorting
     Route::get('/balance/invoicelist', 'HomeController@invoicelist');

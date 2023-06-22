@@ -53,8 +53,10 @@
       var item = sortingItems[i];
       
       if (item.style.display === 'none') {
+        console.log(item.style.display);
         item.style.display = 'block';
       } else {
+        console.log(item.style.display);
         item.style.display = 'none';
       }
     }
