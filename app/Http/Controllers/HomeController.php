@@ -88,7 +88,7 @@ class HomeController extends Controller
         if ($orders_response['totalresults'] > 0) {
             $total_tickets = $orders_response['totalresults'];
             $orders = $orders_response['products']['product'];
-
+            
             foreach ($states as $state)
                 foreach ($orders as $order)
                     $state_order[$state] = [];
@@ -118,7 +118,7 @@ class HomeController extends Controller
                         }else{
                             $system = explode('-',$order['configoptions']['configoption'][1]['value'])[0];
                         }
-
+                        
                         switch($system){
                             case 'windows':
                                 $state_order[$state][$last_index]['sys_log'] = 'windows'; break;
@@ -134,6 +134,8 @@ class HomeController extends Controller
                                 $state_order[$state][$last_index]['sys_log'] = 'fedora'; break;
                             case 'rocky':
                                 $state_order[$state][$last_index]['sys_log'] = 'rocky'; break;
+                            default:
+                                $state_order[$state][$last_index]['sys_log'] = 'others'; break;
                         }
                     }
                 }
