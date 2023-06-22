@@ -75,6 +75,22 @@ return [
     'VPS_Password' => 'VPS Password',
     'Choose_a_server' => 'Choose a server',
 
+    //OS List
+    'ubuntu-18.04-x86_64'  => ' Ubuntu Server 18.04(x86-64)',
+    'ubuntu-20.04-x86_64'  => ' Ubuntu Server 20.04(x86-64)',
+    'ubuntu-22.04-x86_64'  => ' Ubuntu Server 22.04(x86-64)',
+    'debian-9.4-x86_64'    => ' Debian Server 9.4(x86-64)',
+    'debian-10-x86_64'     => ' Debian Server 10(x86-64)',
+    'debian-11-x86_64'     => ' Debian Server 11(x86-64)',
+    'centos-6.10-x86_64'   => ' Centos Server 6.10-x86_64',
+    'centos-7.8-x86_64'    => ' Centos Server 7.8-x86_64',
+    'centos-8-x86_64'      => ' Centos Server 8-x86_64',
+    'fedora-34-x86_64'     => ' Fedora Server 34-x86_64',
+    'rocky-8.4-x86_64'     => ' Rocky Server 8.4-x86_64',
+    'almalinux-9.0-x86_64' => ' Almalinux Server 34-x86_64',
+    'windows2012r2'        => ' Windows Server 2012 R2',
+    'windows-Server-2019'  => ' Windows Server 2019',
+
     // Invoices & Balance
     'Balance' => 'Balance',
     'Main_balance' => 'Main balance',

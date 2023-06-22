@@ -237,8 +237,12 @@
 				'orderby': orderby
 			},
 			success: function(data) {
+				$('.my-services').html('');
 				$('#loading-bg').css('display', 'none');
 				$('.my-services').html(data);
+				$(".options-toggle").click(function() {
+					$(this).siblings(".options-toggle-dropdown").toggle();
+				})
 			},
 			error: function(xhr, status, error) {
 				// Handle the error here
