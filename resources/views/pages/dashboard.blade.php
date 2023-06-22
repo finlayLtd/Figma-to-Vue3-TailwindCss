@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="sub-section server-list-tab">
-			<div class="row justify-content-between align-items-center ">
+			<div class="row justify-content-between align-items-center my-services">
 				@include('tables.services')
 			</div>
 		</div>
@@ -226,6 +226,26 @@
 	function sortByTicket_dashboard(orderby, order) {
 		initPageNation_ticket(1, true, orderby, order);
 		UserCards(true, orderby, order);
+	}
+
+	function updateServices(orderby){
+		$('#loading-bg').css('display', 'flex');
+		$.ajax({
+			url: "{{ URL::to('/dashboard/orderservice') }}",
+			method: "GET",
+			data: {
+				'orderby': orderby
+			},
+			success: function(data) {
+				$('#loading-bg').css('display', 'none');
+				$('.my-services').html(data);
+			},
+			error: function(xhr, status, error) {
+				// Handle the error here
+				console.log(error);
+				$('#loading-bg').css('display', 'none');
+			},
+		});
 	}
 </script>
 @endsection
