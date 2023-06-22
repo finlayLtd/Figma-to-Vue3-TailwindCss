@@ -1,6 +1,17 @@
 <div class="row mb-3 mb-lg-5 pe-0">
     <h3 class="col-md-3 sub-title pt-2">{{ __('messages.Service_title') }}</h3>
     <div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
+        <div class="sort-servers order-2 order-md-1 mb-2" style="display: inline-block;">
+            <div id="toggleButton-2" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
+                <span>{{ __('messages.Sort_by') }}...</span>
+            </div>
+            <div class="sorting-items my-services" style="display: none;">
+                <ul>
+                    <li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Created_date') }}</li>
+                    <li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'asc')">{{ __('messages.Expiration_date') }}</li>
+                </ul>
+            </div>
+        </div>
         <ul class="nav nav-pills four-pills mb-3 mb-md-0 order-1 order-md-2 mb-lg-0 flex-nowrap" id="pills-tab" role="tablist">
             @foreach($states as $state)
             <li class="nav-item" role="presentation">
