@@ -37,10 +37,7 @@ class HomeController extends Controller
         $products = [];
         $states = [];
         $state_order = [];
-        $product_group = [
-            '2' => 'VPS-Netherlands',
-            '3' => 'VPS-USA'
-        ];
+        $product_group = $this->getProductGroups();
         
         $tickets_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetTickets',
@@ -445,5 +442,27 @@ class HomeController extends Controller
         }
 
         return view('tables/services', compact('states', 'state_order'));
+    }
+
+    private function getProductGroups()
+    {
+       
+        $products = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetProducts',
+        ]);
+       
+       $productGroups = [];
+        foreach ($products['products']['product'] as $product) {
+            $parts = explode('?', $product['product_url']);
+            $group_names = explode('/', $parts[1]);
+
+            $groupId = $product['gid'];
+            if (!isset($productGroups[$groupId])) {
+                $productGroups[$groupId] = $group_names[2];
+            }
+        }
+
+        return $productGroups;
+        
     }
 }

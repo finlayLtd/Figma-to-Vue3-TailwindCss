@@ -12,7 +12,7 @@
             @foreach($products as $prodcut)
                 @if($prodcut['gid'] == $key)
                     <div class="col-md-3 m-1 mb-4">
-                        <div class="card-item data-region-card ">
+                        <div class="card-item data-region-card p-4">
                             <div class="server-name mb-4">
                                 <span class="name">{{$prodcut['name']}}</span>
                             </div>
@@ -40,6 +40,6 @@
                     </div>
                 @endif
             @endforeach
-        @endforeach
-    </div>	
+        </div>	
+    @endforeach
 @endif

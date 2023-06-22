@@ -1285,6 +1285,7 @@
 		var windowHeight = 768;
 		var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
 		var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+		$('#loading-bg').css('display', 'flex');
 		$.ajax({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1295,6 +1296,7 @@
 				vpsid:vpsid
 			},
 			success: function(response) {
+				$('#loading-bg').css('display', 'none');
 				var newWindow = window.open('',"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
 				newWindow.document.write(response);
 			},
