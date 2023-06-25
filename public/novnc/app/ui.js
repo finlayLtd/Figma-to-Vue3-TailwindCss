@@ -62,7 +62,7 @@ const UI = {
         // Translate the DOM
         l10n.translateDOM();
 
-        WebUtil.fetchJSON('./novnc/package.json')
+        WebUtil.fetchJSON('/novnc/package.json')
             .then((packageInfo) => {
                 Array.from(document.getElementsByClassName('noVNC_version')).forEach(el => el.innerText = packageInfo.version);
             })
@@ -1032,10 +1032,15 @@ const UI = {
         url = UI.getSetting('encrypt') ? 'wss' : 'ws';
 
         url += '://' + host;
+        
         if (port) {
             url += ':' + port;
-        }
+            console.log(port+ ' port added');
+        } 
         url += '/' + path;
+
+        console.log(url);
+        console.log(path);
 
         if(UI.rfb == undefined){
             UI.rfb = new RFB(document.getElementById('noVNC_container'), url,

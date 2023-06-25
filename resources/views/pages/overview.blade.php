@@ -485,8 +485,9 @@
 								<div class="row px-0 pt-4">
 									<div class="col-md-12 d-flex justify-content-center">
 										<div class="overview-button-wrapper pt-0">
-											<button class="btn-dark px-4 hover-dark-light" onclick="openVNCconnect({{$vpsid}})">Connect VNC</button>
-											</div>
+												<!-- <button class="btn-dark px-4 hover-dark-light" onclick="openVNCconnect({{$vpsid}})">Connect VNC</button> -->
+												<a class="btn-dark px-4 hover-dark-light" href="{{ url('/noVNC-connect/' . $vpsid) }}" target="_blank">Connect VNC</a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1297,8 +1298,9 @@
 			},
 			success: function(response) {
 				$('#loading-bg').css('display', 'none');
-				var newWindow = window.open('',"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+				var newWindow = window.open();
 				newWindow.document.write(response);
+				newWindow.document.close();
 			},
 			error: function(xhr, status, error) {
 				// Handle the error here
@@ -1307,7 +1309,7 @@
 			}
 		});
 		$('.modal-balance').addClass('hidden');
-		newWindow.focus();
+		
 	}
 
 	function getAnalysisData(relid,vpsid){

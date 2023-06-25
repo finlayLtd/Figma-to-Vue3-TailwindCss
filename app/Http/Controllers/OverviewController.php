@@ -418,33 +418,35 @@ class OverviewController extends Controller
     public function connectvnc(Request $request)
     {
         $post = array();
-        $post['novnc'] = $request->vpsid;
+        $post['novnc'] = $request->id;
         $result = $this->virtualizorAdmin->vnc($post);
 
         $info = $result['info'];
         $base_url = public_path().'/novnc/';
         $noVNC_file_path = public_path('novnc/vnc_auto_virt.html');
+        // $noVNC_file_path = public_path('novnc/vnc_lite.html');
         $noVNC_file_content = file_get_contents($noVNC_file_path);
         
         $host_url = url('/');
         $ip = $this->virtualizorAdmin->ip;
-        
+
         $proto = 'http';
         $port = 4081;
         $websockify = 'websockify';
         if(!empty($_SERVER['HTTPS'])){
             $proto = 'https';
-            if($_SERVER['SERVER_PORT'] == '443'){
-                $port = 443;
-            }else{
-                $port = 4083;
-            }
+            // if($_SERVER['SERVER_PORT'] == '443'){
+            //     $port = 443;
+            // }else{
+            //     $port = 4083;
+            // }
+            $port = 4083;
             $websockify = 'novnc/';
         }
 
-        $vnc_token = $request->vpsid;
+        $vnc_token = $request->id;
 
-        $array = array('HOST' => $ip,
+        $array = array('HOST' => 'vnc.fidelcastro.cc',
                     'PORT' => $port,
                     'PROTO' => $proto,
                     'WEBSOCKET' => $websockify,

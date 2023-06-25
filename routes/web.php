@@ -63,7 +63,7 @@ Route::group([
     Route::post('/overview/checkhostName', 'OverviewController@checkhostName');
     Route::post('/overview/changehostName', 'OverviewController@changehostNames');
     Route::post('/overview/changeip', 'OverviewController@changeip');
-    Route::post('/overview/connectvnc', 'OverviewController@connectvnc');
+    // Route::post('/overview/connectvnc', 'OverviewController@connectvnc');
 
     Route::get('/servers', 'ServersController@index')->name('servers');
 
@@ -81,6 +81,9 @@ Route::group([
     Route::post('/ticket-create', 'SupportTicketController@openticket')->name('ticket.open');
 
     Route::get('/ticket-detail/{id}', 'TicketDetailController@index')->name('ticket-detail');
+
+    Route::get('/noVNC-connect/{id}', 'OverviewController@connectvnc')->name('noVNC-connect');
+
     Route::get('/download-file/{id}', 'TicketDetailController@downloadFile')->name('download-file');
     
     Route::post('/sendReply', 'TicketDetailController@sendReply')->name('sendReply');

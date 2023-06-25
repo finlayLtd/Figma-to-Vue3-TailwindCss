@@ -62,15 +62,16 @@
     </style>
 
     <!-- Promise polyfill for IE11 -->
-    <script src="vendor/promise.js"></script>
+    <script src="{{base_url}}vendor/promise.js"></script>
 
     <!-- ES2015/ES6 modules polyfill -->
-    <script nomodule src="vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
+    <script nomodule src="{{base_url}}vendor/browser-es-module-loader/dist/browser-es-module-loader.js"></script>
 
     <!-- actual script modules -->
     <script type="module" crossorigin="anonymous">
         // RFB holds the API to connect and communicate with a VNC server
-        import RFB from './core/rfb.js';
+        import RFB from '{{base_url}}core/rfb.js';
+        import * as WebUtil from "{{base_url}}app/webutil.js";
 
         let rfb;
         let desktopName;
@@ -140,12 +141,12 @@
             .onclick = sendCtrlAltDel;
 
         var token = '{{TOKEN}}';
-        if (token) {
-            // if token is already present in the path we should use it
-            path = WebUtil.injectParamIfMissing(path, "token", token);
+        // if (token) {
+        //     // if token is already present in the path we should use it
+        //     path = WebUtil.injectParamIfMissing(path, "token", token);
 
-            WebUtil.createCookie('token', token, 1)
-        }
+        //     WebUtil.createCookie('token', token, 1)
+        // }
         // Read parameters specified in the URL query string
         // By default, use the host and port of server that served this file
         const host = '{{HOST}}';
@@ -161,12 +162,12 @@
         // If a token variable is passed in, set the parameter in a cookie.
         // This is used by nova-novncproxy.
         var token = '{{TOKEN}}';
-        if (token) {
-            // if token is already present in the path we should use it
-            path = WebUtil.injectParamIfMissing(path, "token", token);
+        // if (token) {
+        //     // if token is already present in the path we should use it
+        //     path = WebUtil.injectParamIfMissing(path, "token", token);
 
-            WebUtil.createCookie('token', token, 1)
-        }
+        //     WebUtil.createCookie('token', token, 1)
+        // }
 		
         const password = '{{PASSWORD}}';
         const path = WebUtil.getConfigVar('path', '{{WEBSOCKET}}?virttoken='+token);
