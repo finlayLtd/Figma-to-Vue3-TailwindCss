@@ -181,8 +181,8 @@ export default class Websock {
 
     open(uri, protocols) {
         this.init();
-
         this._websocket = new WebSocket(uri, protocols);
+
         this._websocket.binaryType = 'arraybuffer';
 
         this._websocket.onmessage = this._recv_message.bind(this);
