@@ -356,6 +356,8 @@
             })
 
             $(".display-distributions").click(function() {
+                $(".selected-distribution").removeClass("selected-distribution");
+                $(this).addClass("selected-distribution");
                 let dist = $(this).attr("data-dist");
                 $(".dist-tab[data-dist=" + dist + "]").show();
                 $(".dist-tab:not([data-dist=" + dist + "])").hide();

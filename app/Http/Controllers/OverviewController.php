@@ -339,7 +339,8 @@ class OverviewController extends Controller
 
     }
 
-    private function serverMonitering($vpsid){
+    private function serverMonitering($vpsid)
+    {
         $result = $this->virtualizorAdmin->performance($vpsid);
         print_r($result);exit;
     }

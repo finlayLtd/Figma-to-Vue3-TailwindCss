@@ -3275,6 +3275,8 @@ border: none;
     margin: 1em auto;
 }
 
+
+
 .highcharts-data-table table {
     font-family: Verdana, sans-serif;
     border-collapse: collapse;
@@ -3309,4 +3311,22 @@ border: none;
 
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
+}
+
+.selected-distribution{
+	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%) !important;
+}
+
+.selected-os{
+	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%) !important;
+}
+
+.selected-plan{
+	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%);
+}
+
+.vps-info-review{
+	padding: 25px;
+    border: none;
+    border-radius: 15px;
 }

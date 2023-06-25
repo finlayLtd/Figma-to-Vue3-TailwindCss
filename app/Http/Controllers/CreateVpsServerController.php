@@ -31,11 +31,15 @@ class CreateVpsServerController extends Controller
      */
     public function index()
     {
+        $os_kind = [];
+        // $this->getProductInfo();
         $product_group = $this->getProductGroups();
         $products = $this->getProducts();
         $oslist = $this->getOSlist();
+        foreach($oslist as $kind=>$os)
+            array_push($os_kind,$kind);
         
-        return view('pages/create-vps-server', compact('products','product_group'));
+        return view('pages/create-vps-server', compact('products','product_group','oslist','os_kind'));
     }
 
     private function getProductGroups()
@@ -86,6 +90,7 @@ class CreateVpsServerController extends Controller
                 }
             }
         }
+        // print_r($product);exit;
         return $products;
     }
 
@@ -93,5 +98,14 @@ class CreateVpsServerController extends Controller
     {
         $oslists = $this->virtualizorAdmin->ostemplates();
         return $oslists['oslist']['proxk'];
+    }
+
+    
+    private function getProductInfo(){
+        $product_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetProductsGroups'
+        ]);
+
+        print_r($product_response);exit;
     }
 }
