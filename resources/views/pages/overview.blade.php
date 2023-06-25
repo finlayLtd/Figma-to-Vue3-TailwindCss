@@ -357,7 +357,7 @@
 										<div class="form-group d-flex">
 											<select name="oslist" id="Operating-system" class="form-control">
 												@foreach($oslists as $os)
-													<option value="{{$os['osid']}}" data-image="{{asset('assets/img/'.$os['group_name'].'-logo.png')}}">{{ $os['name'] }}</option>
+													<option value="{{$os['osid']}}" data-image="{{asset('assets/img/'.$os['group_name'].'-logo.png')}}">{{ __('messages.'.$os['name']) }}</option>
 												@endforeach
 											</select>
 
@@ -797,7 +797,7 @@
 							@endforeach
 						</select>
 						@endif
-						<button class="btn-dark d-block w-100 mt-5" id="open-ticket">Create Ticket</button>
+						<button class="btn-dark d-block w-100 mt-5" id="create-ticket">Create Ticket</button>
 					</form>
 				</div>
 			</div>
@@ -1309,6 +1309,7 @@
 		$('.modal-balance').addClass('hidden');
 		newWindow.focus();
 	}
+
 	function getAnalysisData(relid,vpsid){
 		let original_url;
 		$.ajax({

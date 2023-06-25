@@ -22,6 +22,9 @@ return [
     'Support_Tickets' => 'Support Tickets',
     'Logout' => 'Logout',   
     
+    // Products
+    'available_stock'=>'Available',
+    
     // Tickets
     'Support_Ticket' => 'Support Ticket',
     'Ticket_No'   => 'Ticket No',
