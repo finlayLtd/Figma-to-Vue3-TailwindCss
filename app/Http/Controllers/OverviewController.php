@@ -45,7 +45,7 @@ class OverviewController extends Controller
         $order_info_response = $this->getOrderinfo($order_id);
         $order_info = $order_info_response['orders']['order'];
         $relid = $order_info[0]['lineitems']['lineitem'][0]['relid'];
-
+        
         $order_product_info = $this->getClientProductInfo($order_id);
         $today = new DateTime(date("Y-m-d"));
         $start_day = new DateTime($order_info[0]['date']);
@@ -64,11 +64,12 @@ class OverviewController extends Controller
         $system = $other_info['system'];
         
         $OSlist = $this->getOSlist();
-        
-        if($order_info[0]['status'] == 'Active'){
+        $status = $order_info[0]['status'];
+
+        if($status == 'Active'){
             $vpsid = $other_info['vps_info']['vpsid'];
-            $network_speed = $this->getNetworkSpeed($vpsid);
             $vps_info = $this->getVpsStatistics($vpsid);
+            $network_speed = $this->getNetworkSpeed($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
             $analysis_data = $this->getAnalysisData($vpsid);
             $ip_list = $this->getIpinfo($vpsid,$vps_info['vps_data'][$vpsid]['hostname']);
@@ -104,7 +105,7 @@ class OverviewController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
-        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list','analysis_data'));
+        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list','analysis_data','status'));
     }
 
     private function getClientProductInfo($order_id)

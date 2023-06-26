@@ -143,10 +143,10 @@ class CreateVpsServerController extends Controller
             'action' => 'AddOrder',
             'clientid' => Auth::user()->client_id,
             'paymentmethod' => $request->paymentMethod,
-            'hostname' => $request->hostname,
-            'rootpw' => $request->pwd,
+            'hostname' => array($request->hostname),
+            'rootpw' => array($request->pwd),
             'pid' => array($request->product_id),
-            'customfields' => base64_encode(serialize($customFields)),
+            'customfields' => array(base64_encode(serialize($customFields))),
        ]);
 
        print_r($add_order_response);exit;
