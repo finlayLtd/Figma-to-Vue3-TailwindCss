@@ -170,7 +170,7 @@ class CreateVpsServerController extends Controller
         $configoptionsFields = array(
             base64_encode(
                 serialize(
-                    ["6" => 9]
+                    ["6" => $request->config_id]
                 )
             )
         );

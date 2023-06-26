@@ -270,7 +270,8 @@
 		var os_id = $(".selected-os").attr("osid");
 		var os_name = $(".selected-os").attr("os-name-iso");
 		var product_id = $(".selected-plan").attr("product-id");
-		var config_id = $(".selected-plan").attr("config-id");
+		var config_id = $(".selected-os").attr("config-id");
+
 		var pwd = $("#password").val();
 		var hostname = $('#hostname').val();
 		var paymentMethod = $('input[name=paymentMethod]:checked').val();
@@ -283,7 +284,8 @@
 			url:"{{ URL::to('/overview/checkhostName') }}",
 			method:'post',
 			data: {
-				hostname: hostname
+				hostname: hostname,
+				config_id : config_id,
 			},
 			success:function(data){
 				if(data=='Already Exist.'){
@@ -308,6 +310,7 @@
 						success:function(data){
 							$('#loading-bg').css('display', 'none');		
 							$(".modal").addClass("hidden");
+							showToast('Success', 'Created vps successfully', 'success');
 							window.location.href = data.redirect_url;
 						},
 					});
