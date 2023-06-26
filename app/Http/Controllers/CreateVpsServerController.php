@@ -32,14 +32,18 @@ class CreateVpsServerController extends Controller
     public function index()
     {
         $os_kind = [];
-        // $this->getProductInfo();
+        $user = (array) Auth::user();
+        $user = reset($user);
+        
         $product_group = $this->getProductGroups();
+        $payment_methods = $this->getPaymentMethods();
+        // $payment_user_token = $this->getuserPaymentToken();
         $products = $this->getProducts();
         $oslist = $this->getOSlist();
         foreach($oslist as $kind=>$os)
             array_push($os_kind,$kind);
         
-        return view('pages/create-vps-server', compact('products','product_group','oslist','os_kind'));
+        return view('pages/create-vps-server', compact('products','product_group','oslist','os_kind','user','payment_methods'));
     }
 
     private function getProductGroups()
@@ -99,13 +103,34 @@ class CreateVpsServerController extends Controller
         $oslists = $this->virtualizorAdmin->ostemplates();
         return $oslists['oslist']['proxk'];
     }
-
     
-    private function getProductInfo(){
+    private function getProductInfo()
+    {
         $product_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetProductsGroups'
         ]);
 
         print_r($product_response);exit;
     }
+
+    private function getPaymentMethods()
+    {
+        $payment_methods = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetPaymentMethods'
+       ]);
+
+       return $payment_methods['paymentmethods']['paymentmethod'];
+    //    print_r($payment_methods);exit;
+    }
+
+    private function getuserPaymentToken()
+    {
+        $payment_methods = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetPayMethods',
+            'clientid' => Auth::user()->client_id,
+       ]);
+
+       print_r($payment_methods);exit;
+    }
+
 }
