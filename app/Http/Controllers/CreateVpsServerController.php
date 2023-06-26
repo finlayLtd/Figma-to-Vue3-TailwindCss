@@ -75,7 +75,7 @@ class CreateVpsServerController extends Controller
         if ($products_response['totalresults'] > 0) {
             $products = $products_response['products']['product'];
         }
-
+        
         if(count($products)){
             foreach($products as $key=>$product){
                 $products[$key]['server_info'] = array();
@@ -131,6 +131,25 @@ class CreateVpsServerController extends Controller
        ]);
 
        print_r($payment_methods);exit;
+    }
+
+    public function create(Request $request)
+    {
+        $customFields = [
+            'OS | Operating System' => $request->os_name,
+        ];
+        
+        $add_order_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'AddOrder',
+            'clientid' => Auth::user()->client_id,
+            'paymentmethod' => $request->paymentMethod,
+            'hostname' => $request->hostname,
+            'rootpw' => $request->pwd,
+            'pid' => array($request->product_id),
+            'customfields' => base64_encode(serialize($customFields)),
+       ]);
+
+       print_r($add_order_response);exit;
     }
 
 }
