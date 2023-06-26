@@ -3026,6 +3026,9 @@ border: none;
 	align-items: center;
 	width: 100px;
 	gap: 6px;
+	position: fixed;
+    right: 50%;
+    top: 50%;
 	height: 100px;
 }
    
