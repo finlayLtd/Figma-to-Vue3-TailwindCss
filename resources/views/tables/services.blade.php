@@ -56,7 +56,7 @@
                                             <div class="options-toggle-dropdown">
                                                 <ul>
                                                     <li><a href="{{ url('/overview/' . $order['orderid']) }}">{{ __('messages.Launch_Control_Panel') }}</a></li>
-                                                    <li><a href="#">{{ __('messages.View_Invoices') }}</a></li>
+                                                    <li><a href="{{ url('/balance') }}">{{ __('messages.View_Invoices') }}</a></li>
                                                 </ul>
                                             </div>                    			
                                         </div>                    			

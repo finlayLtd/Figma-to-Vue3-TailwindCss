@@ -11,11 +11,22 @@
             <hr/>
             @foreach($products as $prodcut)
                 @if($prodcut['gid'] == $key)
-                    <div class="col-md-3 m-1 mb-4" >
+                    <div class="col-md-3 m-1 mb-4">
                         <div class="card-item data-region-card p-4  plan-item" style="cursor: pointer;" product-id="{{ $prodcut['pid'] }}">
                             <div class="server-name mb-4 d-flex justify-content-between">
                                 <span class="name">{{$prodcut['name']}}</span>
-                                
+                                @if(!empty($prodcut['stockcontrol']))
+                                    @if($prodcut['stocklevel'] !=0)
+                                        <span class="stockTitle">
+                                            {{ $prodcut['stocklevel'] }} Available
+                                        </span>
+                                    @else
+                                        <span class="stockUnavailable">
+                                            {{ $prodcut['stocklevel'] }} Available
+                                        </span>
+                                    @endif
+                                @endif
+
                             </div>
 
                             <div class="server-price mb-4">
