@@ -12,6 +12,12 @@
 				@if($dayDiff > 0 ) <span>Created {{$dayDiff}} days ago</span>
 				@else <span>Created today</span>
 				@endif
+				@if(!empty($invoiceInfo['status']) && $invoiceInfo['status'] == 'Unpaid')
+					<div class="alert alert-warning mt-2" id="alertUnpaidInvoice">
+						You have an unpaid invoice. Pay it now to avoid interruption in service.
+						<a style="color: blue; cursor: pointer;" onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank">Pay Invoice</a>
+					</div>
+				@endif
 			</div>
 		</div>
 
@@ -181,7 +187,7 @@
 												<p class="description2">{{$system}}</p>
 											</div>
 
-											<div class="server-list-options me-3 me-lg-4">
+											<!-- <div class="server-list-options me-3 me-lg-4">
 												<div class="options-toggle"></div>
 												<div class="options-toggle-dropdown">
 													<ul>
@@ -189,7 +195,7 @@
 														<li><a href="#">View Invoices</a></li>
 													</ul>
 												</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 									<div class="col-12 col-lg-4 col-md-12">
@@ -510,11 +516,11 @@
 									<ul class="nav nav-pills mb-3 mb-md-0 mb-lg-0 d-flex flex-column inner-tab-pills flex-nowrap sc-mobile no-border-mobile" id="pills-tab" role="tablist">
 
 										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link active" id="pills-renew-tab" data-bs-toggle="pill" data-bs-target="#pills-renew" type="button" role="tab" aria-controls="pills-renew" aria-selected="false">Renew Service</button>
+											<button class="nav-link" id="pills-renew-tab" data-bs-toggle="pill" data-bs-target="#pills-renew" type="button" role="tab" aria-controls="pills-renew" aria-selected="false">Renew Service</button>
 										</li>
 
 										<li class="nav-item mb-2" role="presentation">
-											<button class="nav-link" id="pills-invoices-tab" data-bs-toggle="pill" data-bs-target="#pills-invoices" type="button" role="tab" aria-controls="pills-invoices" aria-selected="false">Invoice</button>
+											<button class="nav-link active" id="pills-invoices-tab" data-bs-toggle="pill" data-bs-target="#pills-invoices" type="button" role="tab" aria-controls="pills-invoices" aria-selected="false">Invoice</button>
 										</li>
 
 										<li class="nav-item" role="presentation">
@@ -527,7 +533,7 @@
 									<div class="tab-content w-100" id="pills-tabContent">
 
 										<!--renew-->
-										<div class="tab-pane fade  show active" id="pills-renew" role="tabpanel" aria-labelledby="pills-renew-tab">
+										<div class="tab-pane fade " id="pills-renew" role="tabpanel" aria-labelledby="pills-renew-tab">
 
 											<div class="tab-inner py-0 p-mb-0">
 												<h3 class="fs-15 mb-1">Renew Service</h3>
@@ -558,7 +564,7 @@
 										</div>
 
 										<!--invoices-->
-										<div class="tab-pane fade" id="pills-invoices" role="tabpanel" aria-labelledby="pills-invoices-tab">
+										<div class="tab-pane fade active show" id="pills-invoices" role="tabpanel" aria-labelledby="pills-invoices-tab">
 											<div class="tab-inner py-0 p-mb-0">
 												<div class="support-table p-0">
 

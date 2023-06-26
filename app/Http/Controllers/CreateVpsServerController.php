@@ -146,7 +146,6 @@ class CreateVpsServerController extends Controller
             'hostname' => array($request->hostname),
             'rootpw' => array($request->pwd),
             'pid' => array($request->product_id),
-            'customfields' => array(base64_encode(serialize($customFields))),
        ]);
 
        print_r($add_order_response);exit;
