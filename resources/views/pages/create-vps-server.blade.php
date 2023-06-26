@@ -25,7 +25,7 @@
 				<div data-dist="{{$kind}}" class="dist-tab {{$kind}}-tab">
 					<div class="row server-item-wrapper os-version-wrapper flex-column align-items-start">
 						@foreach($oslist[$kind] as $osid=>$os)
-							<div class="datacenter-item system-item" osid="{{$osid}}" os-name-iso="{{$os['name']}}">
+							<div class="datacenter-item system-item" osid="{{$osid}}" os-name-iso="{{$os['name']}}" config-id="{{$os['config_id']}}">
 								<img src="assets/img/{{ $kind }}-logo.png">
 								<span>{{ __('messages.'.$os['name']) }}</span>
 							</div>
@@ -270,6 +270,7 @@
 		var os_id = $(".selected-os").attr("osid");
 		var os_name = $(".selected-os").attr("os-name-iso");
 		var product_id = $(".selected-plan").attr("product-id");
+		var config_id = $(".selected-plan").attr("config-id");
 		var pwd = $("#password").val();
 		var hostname = $('#hostname').val();
 		var paymentMethod = $('input[name=paymentMethod]:checked').val();
@@ -290,6 +291,7 @@
 					showToast('Warning', 'Inputed hostname already exist.', 'warning');
 					return;
 				}else{
+
 					$.ajax({
 						headers: {
 							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -298,15 +300,15 @@
 						method:'post',
 						data: {
 							hostname: hostname,
-							os_id: os_id,
-							os_name: os_name,
+							config_id: config_id,
 							pwd: pwd,
 							paymentMethod: paymentMethod,
 							product_id: product_id,
 						},
 						success:function(data){
-							$('#loading-bg').css('display', 'none');
-							showToast('Success', data, 'success');s
+							$('#loading-bg').css('display', 'none');		
+							$(".modal").addClass("hidden");
+							window.location.href = data.redirect_url;
 						},
 					});
 				}

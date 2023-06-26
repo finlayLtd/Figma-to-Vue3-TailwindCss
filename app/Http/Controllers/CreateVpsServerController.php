@@ -35,25 +35,44 @@ class CreateVpsServerController extends Controller
         $user = (array) Auth::user();
         $user = reset($user);
         
-        $product_group = $this->getProductGroups();
+        $product_info = $this->getProductGroups();
+        $product_group = $product_info[0];
+        $system_info = $product_info[1];
+
+        $product_info = $this->getProductGroups();
         $payment_methods = $this->getPaymentMethods();
         // $payment_user_token = $this->getuserPaymentToken();
         $products = $this->getProducts();
         $oslist = $this->getOSlist();
-        foreach($oslist as $kind=>$os)
-            array_push($os_kind,$kind);
         
+        foreach($oslist as $kind=>$os){
+            array_push($os_kind,$kind);
+        }
+        
+        foreach($oslist as $kind=>$os){
+            foreach($os as $l=>$o){
+                foreach($system_info as $system){
+                    if($system['name'] == $o['name']){
+                        $oslist[$kind][$l]['config_id'] = $system['id'];
+                    }
+                }
+            }
+        }
+
         return view('pages/create-vps-server', compact('products','product_group','oslist','os_kind','user','payment_methods'));
     }
 
     private function getProductGroups()
     {
+        $system = array();
+
         $products = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetProducts',
        ]);
        
        $productGroups = [];
-        foreach ($products['products']['product'] as $product) {
+        foreach ($products['products']['product'] as $key=>$product) {
+            
             $parts = explode('?', $product['product_url']);
             $group_names = explode('/', $parts[1]);
 
@@ -61,9 +80,22 @@ class CreateVpsServerController extends Controller
             if (!isset($productGroups[$groupId])) {
                 $productGroups[$groupId] = ucfirst($group_names[2]);
             }
+
+            if($key == 0){
+                $system_lists = $product['configoptions']['configoption'][1]['options']['option'];
+                foreach($system_lists as $system_info){
+                    array_push(
+                        $system,
+                        array(
+                            'id' => $system_info['id'],
+                            'name' => $system_info['name']
+                        )
+                    );
+                }
+            }
         }
 
-        return $productGroups;
+        return array($productGroups,$system);
     }
 
     private function getProducts()
@@ -135,10 +167,14 @@ class CreateVpsServerController extends Controller
 
     public function create(Request $request)
     {
-        $customFields = [
-            'OS | Operating System' => $request->os_name,
-        ];
-        
+        $configoptionsFields = array(
+            base64_encode(
+                serialize(
+                    ["6" => 9]
+                )
+            )
+        );
+
         $add_order_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'AddOrder',
             'clientid' => Auth::user()->client_id,
@@ -146,10 +182,14 @@ class CreateVpsServerController extends Controller
             'hostname' => array($request->hostname),
             'rootpw' => array($request->pwd),
             'pid' => array($request->product_id),
-            'customfields' => array(base64_encode(serialize($customFields))),
+            'configoptions' => $configoptionsFields,
        ]);
-
-       print_r($add_order_response);exit;
+       if($add_order_response['result'] == 'success'){
+            $add_order_response['redirect_url'] = route('overview', ['order_id' => $add_order_response['orderid']]);
+            return response()->json($add_order_response, 200);
+       }else{
+           return response()->json($add_order_response, 500);
+       }
     }
 
 }
