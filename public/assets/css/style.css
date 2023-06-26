@@ -414,7 +414,6 @@ section.pricing {
 	font-size: 34px;
 	line-height: 54px;
 	letter-spacing: -0.8px;
-	color: #2F2B43;
 	font-weight: 600;	
 }
 
@@ -1333,17 +1332,16 @@ section.dashboard .datacenter-item:not(:last-child) {
 .card-item.data-region-card .server-price {
 	border-bottom: 1px solid rgba(23, 30, 38, 0.1);
 	margin-left: -1.5rem;
-  margin-right: -1.5rem;
-  margin-top: -1.5rem;
+	margin-right: -1.5rem;
+	margin-top: -1.5rem;
 
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 1.5rem;
-
+	padding-left: 24px;
+	padding-right: 24px;
+	padding-top: 1.5rem;
 }
 
 section.dashboard .data-region-card .server-features li:last-child {
-    border-bottom: 1px solid rgba(23, 30, 38, 0.08) !important;
+    border-bottom: 1px solid rgba(23, 30, 38, 0.1) !important;
 }
 
 .card-item.data-region-card  .pricing-order-btn {
@@ -1361,17 +1359,17 @@ section.dashboard .data-region-card .server-features li:last-child {
 	}	
 }
 
-section.dashboard .data-region-card {
+/* section.dashboard .data-region-card {
 	border: 1px solid transparent !important;
-}
+} */
+
 section.dashboard .data-region-card:hover {
-	border: 1px solid #368AFF !important;
+	border: 1px solid rgb(71 54 159 / 65%) !important;
 }
 
 section.dashboard .data-region-card:hover .server-price {
 	background: rgba(54, 138, 255, 0.05);
-	border-bottom: 1px solid #368AFF;
-
+	border-bottom: 1px solid rgb(71 54 159 / 65%);
 }
 
 .configure-server-form label {
@@ -3315,14 +3313,17 @@ border: none;
 
 .selected-distribution{
 	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%) !important;
+	border: 1px solid rgb(71 54 159 / 65%) !important;
 }
 
 .selected-os{
 	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%) !important;
+	border: 1px solid rgb(71 54 159 / 65%) !important;
 }
 
 .selected-plan{
 	box-shadow: 0px 0px 10px rgb(71 54 159 / 65%);
+	border: 1px solid rgb(71 54 159 / 65%) !important;
 }
 
 .payment-info-review,
@@ -3332,4 +3333,12 @@ border: none;
     border: none;
     border-radius: 15px;
 	box-shadow: 1px 0px 5px rgb(71 54 159 / 65%) !important;
+}
+
+.stockTitle{
+	color: grey;
+}
+
+.stockUnavailable{
+	color: grey;
 }

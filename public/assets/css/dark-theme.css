@@ -366,6 +366,7 @@ html[data-theme=dark]  section.dashboard .title, html[data-theme=dark]  section.
 html[data-theme=dark] section.dashboard .server-item {
 	border: 1px solid rgba(231, 240, 248, 0.05);
 	box-shadow: inset 0px 0px 1px 0.5px rgba(224, 224, 224, 0.05);
+    
 }
 
 
@@ -393,6 +394,15 @@ html[data-theme=dark]  section.dashboard .data-region-card {
     border: 1px solid rgba(235, 235, 236, 0.1) !important;
 }
 
+html[data-theme=dark] section.dashboard .data-region-card:hover .server-price {
+	background: rgba(54, 138, 255, 0.05);
+	border-bottom: 1px solid rgb(255 255 255 / 65%);
+}
+
+html[data-theme=dark] section.dashboard .data-region-card .server-features li:last-child {
+    border-bottom: 1px solid rgb(255 255 255 / 65%) !important;
+}
+
 
 html[data-theme=dark]  section.dashboard .data-region-card .btn-light {
     background: rgba(255, 255, 255, 0.1);
@@ -406,7 +416,7 @@ html[data-theme=dark]  section.dashboard .data-region-card .btn-chevron::after {
 }
 
 html[data-theme=dark] section.dashboard .data-region-card:hover {
-    border: 1px solid #368AFF !important;
+    border: 1px solid rgb(255 255 255 / 65%) !important;
 }
 
 html[data-theme=dark]  .configure-server-form label {
@@ -783,4 +793,27 @@ html[data-theme=dark] .modal-ticket .amounts textarea, html[data-theme=dark] .mo
 
 html[data-theme=dark] .change-profile-btn img {
 	filter: brightness(0);
+}
+
+html[data-theme=dark] .selected-distribution{
+	box-shadow: 0px 0px 10px rgb(255 255 255 / 65%) !important;
+	border: 1px solid rgb(255 255 255 / 65%) !important;
+    background: rgb(24 24 24);
+}
+
+html[data-theme=dark] .selected-os{
+	box-shadow: 0px 0px 10px rgb(255 255 255 / 65%) !important;
+	border: 1px solid rgb(255 255 255 / 65%) !important;
+    background: rgb(24 24 24);
+}
+
+html[data-theme=dark] .selected-plan{
+	box-shadow: 0px 0px 10px rgb(255 255 255 / 65%);
+	border: 1px solid rgb(255 255 255 / 65%) !important;
+    background: rgb(24 24 24);
+}
+
+html[data-theme=dark] div.toast-body{
+    background: white !important;
+    color: black !important;
 }

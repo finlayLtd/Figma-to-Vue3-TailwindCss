@@ -179,8 +179,9 @@
         function showToast(title, message, type = 'info') {
             let toast = $(`
                 <div class="toast toast-${type}" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                    <div class="toast-header">
+                    <div class="toast-header" style="display: flex; justify-content: space-between;">
                         <strong class="mr-auto">${title}</strong>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div class="toast-body">
                         ${message}

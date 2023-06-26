@@ -59,6 +59,7 @@ class HomeController extends Controller
             'clientid' => Auth::user()->client_id,
         ]);
 
+        
         $products_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetProducts',
         ]);

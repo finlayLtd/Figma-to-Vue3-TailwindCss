@@ -55,7 +55,7 @@
 							<span class="rating">{{ __('messages.Password_Rating') }}: 0%</span>
 						</div>
 						</div>
-						<div class="alert alert-info" style="text-align: left;">
+						<div class="alert alert-info" style="text-align: left; position: inherit;">
 							<strong>{{ __('messages.tips') }}</strong><br>{{ __('messages.tips_content1') }}<br>{{ __('messages.tips_content2') }}<br>{{ __('messages.tips_content3') }}
 						</div>
 					</div>
@@ -189,8 +189,12 @@
 		});
 
 		jQuery(".plan-item").click(function(){
-			$(".selected-plan").removeClass("selected-plan");
-			$(this).addClass("selected-plan");
+			if($(this).find(".stockUnavailable").length == 0){
+				$(".selected-plan").removeClass("selected-plan");
+				$(this).addClass("selected-plan");
+			} else{
+				showToast('Unavailable', 'Out of Stock', 'danger');
+			}
 		});
 
 		jQuery("#create-btn").click(function(){
@@ -240,11 +244,11 @@
 
 	function settingModal(){
 		var vps_info_html = $(".selected-plan").clone(); // clone the element
-		vps_info_html = vps_info_html.find("div:eq(0)"); // remove the third div
+		vps_info_html = vps_info_html.find("div:eq(0)").html(); // remove the third div
 		$(".vps-name").html(vps_info_html);
 
 		var group = $(".selected-plan").parent().parent();
-		vps_group_html = group.find("div:eq(0)");
+		vps_group_html = group.find("div:eq(0)").html();
 		$(".vps-groupname").html(vps_group_html);
 
 		var host_name = $('#hostname').val();
