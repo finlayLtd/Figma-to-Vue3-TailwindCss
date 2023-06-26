@@ -52,6 +52,7 @@ Route::group([
     Route::get('/create-dedicated-server', 'CreateDedicatedServerController@index')->name('create-dedicated-server');
 
     Route::get('/create-vps-server', 'CreateVpsServerController@index')->name('create-vps-server');
+    Route::post('/create-vps-server/create', 'CreateVpsServerController@create')->name('create-vps');
 
     Route::get('/overview/{order_id}', 'OverviewController@index')->name('overview');
     Route::post('/overview/turnon', 'OverviewController@turnon');

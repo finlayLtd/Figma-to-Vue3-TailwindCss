@@ -25,7 +25,7 @@
 				<div data-dist="{{$kind}}" class="dist-tab {{$kind}}-tab">
 					<div class="row server-item-wrapper os-version-wrapper flex-column align-items-start">
 						@foreach($oslist[$kind] as $osid=>$os)
-							<div class="datacenter-item system-item" osid="{{$osid}}">
+							<div class="datacenter-item system-item" osid="{{$osid}}" os-name-iso="{{$os['name']}}">
 								<img src="assets/img/{{ $kind }}-logo.png">
 								<span>{{ __('messages.'.$os['name']) }}</span>
 							</div>
@@ -111,9 +111,11 @@
 					<div class="payment-info-review card">
 						<h6 class="sub-title">Payment Method</h6>
 						<hr/>
-						@foreach($payment_methods as $payment_method)
+						@foreach($payment_methods as $key=>$payment_method)
 							<div class="form-check">
-								<input type="radio" class="form-check-input" name="myRadio" id="paymentMethod" value="{{ $payment_method['module'] }}">
+								@if($key==0) <input type="radio" class="form-check-input" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}" checked/>
+								@else <input type="radio" class="form-check-input" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}"/>
+								@endif
 								<label class="form-check-label" for="paymentMethod">{{ $payment_method['displayname'] }}</label>
 							</div>
 						@endforeach
@@ -200,6 +202,10 @@
 		$(".modal-close").click(function() {
 			$(".modal").addClass("hidden");
 		});
+
+		$("#continue-order").click(function(){
+			createNewOrder();
+		});
 	});
 
 	function openSurmary(){
@@ -253,6 +259,56 @@
 		var os_html = $(".selected-os").clone();
 		os_html = os_html.find("span");
 		$(".vps-os").html('OS : ' + os_html.html());
+		
+	}
+
+	function createNewOrder(){
+		var os_id = $(".selected-os").attr("osid");
+		var os_name = $(".selected-os").attr("os-name-iso");
+		var product_id = $(".selected-plan").attr("product-id");
+		var pwd = $("#password").val();
+		var hostname = $('#hostname').val();
+		var paymentMethod = $('input[name=paymentMethod]:checked').val();
+
+		$('#loading-bg').css('display', 'flex');
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url:"{{ URL::to('/overview/checkhostName') }}",
+			method:'post',
+			data: {
+				hostname: hostname
+			},
+			success:function(data){
+				if(data=='Already Exist.'){
+					$('#loading-bg').css('display', 'none');
+					showToast('Warning', 'Inputed hostname already exist.', 'warning');
+					return;
+				}else{
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url:"{{ route('create-vps') }}",
+						method:'post',
+						data: {
+							hostname: hostname,
+							os_id: os_id,
+							os_name: os_name,
+							pwd: pwd,
+							paymentMethod: paymentMethod,
+							product_id: product_id,
+						},
+						success:function(data){
+							$('#loading-bg').css('display', 'none');
+							showToast('Success', data, 'success');s
+						},
+					});
+				}
+			},
+		});
+
 		
 	}
 
