@@ -84,8 +84,9 @@
 			</div>
 			<div class="modal-main">
 				<div class="vps-info">
-					<h4 class="sub-title">VPS info</h3>
 					<div class="vps-info-review card">
+						<h6 class="sub-title">VPS info</h6>
+						<hr/>
 						<div class="vps-name"></div>
 						<div class="vps-groupname"></div>
 						<div class="vps-hostname"></div>
@@ -95,10 +96,31 @@
 						<div class="vps-os"></div>
 					</div>
 				</div>
-				<div class="user-info">
-					<h4 class="sub-title">User info</h3>
+
+				<div class="user-info mt-2">
+					<div class="user-info-review card">
+						<h6 class="sub-title">User info</h6>
+						<hr/>
+						<div class="user-name">Name: {{$user['fullname']}}</div>
+						<div class="user-email">Email: {{$user['email']}}</div>
+						<div class="user-currency-code">Currency: {{$user['currency_code']}}</div>
+					</div>
 				</div>
-				<div class="payment-info"></div>
+
+				<div class="payment-info mt-2">
+					<div class="payment-info-review card">
+						<h6 class="sub-title">Payment Method</h6>
+						<hr/>
+						@foreach($payment_methods as $payment_method)
+							<div class="form-check">
+								<input type="radio" class="form-check-input" name="myRadio" id="paymentMethod" value="{{ $payment_method['module'] }}">
+								<label class="form-check-label" for="paymentMethod">{{ $payment_method['displayname'] }}</label>
+							</div>
+						@endforeach
+					</div>
+				</div>
+
+				<button class="btn-dark d-block w-100 mt-5" id="continue-order">CheckOut</button>
 			</div>
 		</div>
 	</div>
@@ -183,31 +205,12 @@
 	function openSurmary(){
 		var flag;
 		if(!checkingSelectionStatus()) return false;
-		// if(!checkingPwdStrength())  return false;
-		var hostname = $("#hostname").val();
-
-		// $('#loading-bg').css('display', 'flex');
-		// $.ajax({
-		// 	headers: {
-		// 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		// 	},
-		// 	url:"{{ URL::to('/overview/checkhostName') }}",
-		// 	method:'post',
-		// 	data: {
-		// 		hostname: hostname
-		// 	},
-		// 	success:function(data){
-		// 		$('#loading-bg').css('display', 'none');
-		// 		if(data=='Already Exist.'){
-		// 			showToast('Warning', 'Inputed New hostname already exist.', 'warning');
-		// 			return false;
-		// 		}else{
-		// 			settingModal();
-		// 			$(".modal").removeClass("hidden");
-		// 		}
-		// 	},
-		// });
-
+		if(!checkingPwdStrength())  return false;
+		var host_name = $('#hostname').val();
+		if(host_name==''){
+			showToast('Warning', 'Please input hostname.', 'warning');
+			return false;
+		}
 		settingModal();
 		$(".modal").removeClass("hidden");
 		
@@ -238,8 +241,20 @@
 	function settingModal(){
 		var vps_info_html = $(".selected-plan").clone(); // clone the element
 		vps_info_html = vps_info_html.find("div:eq(0)"); // remove the third div
-		$(".vps-info-review").html(vps_info_html.html());
+		$(".vps-name").html(vps_info_html);
+
+		var group = $(".selected-plan").parent().parent();
+		vps_group_html = group.find("div:eq(0)");
+		$(".vps-groupname").html(vps_group_html);
+
+		var host_name = $('#hostname').val();
+		$(".vps-hostname").html('Host Name: ' + host_name);
+
+		var os_html = $(".selected-os").clone();
+		os_html = os_html.find("span");
+		$(".vps-os").html('OS : ' + os_html.html());
 		
 	}
+
 </script>
 @endsection
