@@ -45,11 +45,17 @@
 				<div class="configure-server-form">
 					<div class="mb-3">
 						<label for="email" class="form-label">{{ __('messages.VPS_Hostname') }}</label>
-						<input type="text" class="form-control" placeholder="{{ __('messages.hostname_placeholder') }}" id="hostname" name="email" >
+						<div style="display: flex;">
+							<input type="text" class="form-control" placeholder="{{ __('messages.hostname_placeholder') }}" id="hostname" name="email" >
+							<button type="button" class="btn btn-link" style="padding: 10px;" id="randomizeButton">Random</button>
+						</div>
 					</div>
 					<div class="mb-4">
 						<label for="password" class="form-label">{{ __('messages.VPS_Password') }}</label>
-						<input type="password" class="form-control mb-4" placeholder="••••••••••" id="password" name="password" required>
+						<div style="display: flex;" class="mb-4">
+							<input type="text" class="form-control " placeholder="••••••••••" id="password" name="password" required>
+							<button type="button" class="btn btn-link" style="padding: 10px;" id="randomizeButton_password">Random</button>
+						</div>
 						<div class="progress" id="passwordStrengthBar">
 						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 							<span class="rating">{{ __('messages.Password_Rating') }}: 0%</span>
@@ -130,8 +136,95 @@
 
 <script>
 	$(document).ready(function() {
+		// Add a click event listener to the "Randomize" button
+		jQuery("#randomizeButton").click(function() {
+			var randomHostname = generateRandomHostname();
+			jQuery("#hostname").val(randomHostname);
+
+			// Copy the generated hostname to the clipboard
+			var copyTextarea = document.createElement('textarea');
+			copyTextarea.value = randomHostname;
+			document.body.appendChild(copyTextarea);
+			copyTextarea.select();
+			document.execCommand('copy');
+			document.body.removeChild(copyTextarea);
+
+			showToast('Success', 'Copied hostname to clipboard', 'success');
+
+		});
+
+		jQuery("#randomizeButton_password").click(function() {
+			var randomPassword = generatePassword();
+			jQuery("#password").val(randomPassword);
+
+			// Copy the generated hostname to the clipboard
+			var copyTextarea = document.createElement('textarea');
+			copyTextarea.value = randomPassword;
+			document.body.appendChild(copyTextarea);
+			copyTextarea.select();
+			document.execCommand('copy');
+			document.body.removeChild(copyTextarea);
+
+			showToast('Success', 'Copied password to clipboard', 'success');
+
+		});
+
 		$('form').submit(function() {
 			('#loading-bg').css('display', 'flex');
+		});
+
+		var prevPassword = "";
+		var prevHostname = "";
+
+		function generateRandomHostname() {
+			var hostname = "";
+			var possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			for (var i = 0; i < 12; i++) {
+				hostname += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+			}
+			prevHostname = hostname;
+			return hostname;
+		}
+
+		function generatePassword() {
+			const symbols = ['!', '@'];
+			const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+			let password = '';
+
+			// Add one symbol and one uppercase letter
+			password += symbols[Math.floor(Math.random() * symbols.length)];
+			password += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
+
+			// Add remaining letters randomly
+			for (let i = 2; i < 12; i++) {
+				const randomIndex = Math.floor(Math.random() * lowercaseLetters.length);
+				password += lowercaseLetters[randomIndex];
+			}
+
+			// Shuffle the password
+			password = password.split('').sort(() => Math.random() - 0.5).join('');
+
+			prevPassword = password;
+			return password;
+		}
+
+		jQuery("#hostname").keyup(function() {
+			var hostname = jQuery("#hostname").val();
+			if (hostname.length > 12) {
+				alert("Hostname can be at most 12 characters long.");
+				// Revert the hostname input to the previous value
+				jQuery("#hostname").val(prevHostname);
+				return;
+			}
+			if (/[^a-zA-Z0-9]/.test(hostname)) {
+				alert("Hostname can only contain letters and numbers.");
+				// Revert the hostname input to the previous value
+				jQuery("#hostname").val(prevHostname);
+				return;
+			}
+			// Update the previous hostname value
+			prevHostname = hostname;
 		});
 
 		// upgraded code
@@ -140,6 +233,14 @@
 			var pwStrengthWarningThreshold = 75;
 
 			var pw = jQuery("#password").val();
+
+			// Check if the password is empty
+			if (pw.length === 0) {
+				jQuery("#password").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
+				jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", "0%").attr('aria-valuenow', 0);
+				jQuery("#passwordStrengthBar .progress-bar .rating").html('Password Rating: 0%');
+				return;
+			}
 
 			// Check if the password contains any disallowed special symbols
 			if (/[^A-Za-z0-9!@]/.test(pw)) {
@@ -152,23 +253,21 @@
 			// Update the previous password value
 			prevPassword = pw;
 
-			var pwlength = (pw.length);
-			if (pwlength > 5) pwlength = 5;
-			var numnumeric = pw.replace(/[0-9]/g, "");
-			var numeric = (pw.length - numnumeric.length);
-			if (numeric > 3) numeric = 3;
-
-			// Update the regular expression to only match "!" and "@"
-			var symbols = pw.replace(/[!@]/g, "");
-			var numsymbols = (pw.length - symbols.length);
-			if (numsymbols > 3) numsymbols = 3;
-
-			var numupper = pw.replace(/[A-Z]/g, "");
+			var pwlength = pw.length;
+			var numupper = pw.replace(/[a-z!@]/g, "");
 			var upper = (pw.length - numupper.length);
-			if (upper > 3) upper = 3;
-			var pwstrength = ((pwlength * 10) - 20) + (numeric * 10) + (numsymbols * 15) + (upper * 10);
-			if (pwstrength < 0) pwstrength = 0;
-			if (pwstrength > 100) pwstrength = 100;
+			var numsymbols = pw.replace(/[^!@]/g, "").length;
+			var pwstrength = 0;
+
+			if (pwlength > 8 && upper >= 1 && numsymbols >= 1) {
+				pwstrength = 100;
+			} else if (pwlength > 8 && (upper >= 1 || numsymbols >= 1)) {
+				pwstrength = 80;
+			} else if (pwlength >= 6 && (upper >= 1 || numsymbols >= 1)) {
+				pwstrength = 60;
+			} else {
+				pwstrength = 20;
+			}
 
 			jQuery("#password").next('.form-control-feedback').removeClass('glyphicon-remove glyphicon-warning-sign glyphicon-ok');
 			jQuery("#passwordStrengthBar .progress-bar").removeClass("progress-bar-danger progress-bar-warning progress-bar-success").css("width", pwstrength + "%").attr('aria-valuenow', pwstrength);
