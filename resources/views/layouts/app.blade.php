@@ -67,7 +67,7 @@
                             <i class="fa fa-globe options-toggle" style="margin-right: 24px; cursor: pointer;">&nbsp;<small id="language-code" style="user-select: none;"></small></i>
                             <div class="options-toggle-dropdown">
                                 <ul>
-                                    <li style="border-bottom:unset !important; cursor: pointer;" onclick="setLanguage('en')">
+                                    <li style="cursor: pointer;" onclick="setLanguage('en')">
                                         <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px -4px 5px;"></span>
                                         <b style="line-height:36px; margin-left:5px; color: black;">English</b>
                                     </li>
@@ -209,11 +209,7 @@
 
         // Function that open the new Window
         function openInvoiceWindow(invoice_id) {
-            windowClose();
-            var windowWidth = 1024;
-            var windowHeight = 768;
-            var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
-            var topPosition = (window.screen.height / 2) - (windowHeight / 2);
+            // windowClose();
             // Make AJAX request to Laravel backend route
             $('#loading-bg').css('display', 'flex');
             $.ajax({
@@ -225,15 +221,10 @@
                 },
                 success: function(response) {
                     if(response.result == "success"){
-                        // window.onbeforeunload = function(event) {   
-                        //     console.log("Window closed manually");
-                        // };
-                        Window = window.open(
+                        window.open(
                         response.redirect_url,
-                            "_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
-                            // console.log('2')
+                            "_blank");
                             
-                        Window.focus();
                     } else{
                         console.log('access denied for sso!');
                     }

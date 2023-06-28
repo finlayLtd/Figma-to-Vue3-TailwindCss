@@ -470,8 +470,6 @@
 												</div>
 
 												<p class="fs-14 mt-4 mb-2 inner-sub-title2">After assigning IP address, our system will perform a reboot on your server, please make sure any temporary files are saved before performing IP assignment. Note: Extra IP address will still remain to your account even after server termination unless you cancel the extra IP address subscription.</p>
-												<a style="color:#0078D4;" class="fs-14" href="#">Click here to purchase Extra IP Address</a>
-
 											</div>
 										</div>
 									</div>
@@ -606,11 +604,12 @@
 																	</span>
 																</td>
 																@endif
-																<td class="text-center">
+																<!-- <td class="text-center">
 																	<a onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank">
 																		<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice">
 																	</a>
-																</td>
+																</td> -->
+																<td class="text-center"><a target="_blank"><img src="assets/img/eye-open.svg" class="icon-password view-invoice"></a></td>
 															</tr>
 														</tbody>
 													</table>
@@ -757,8 +756,6 @@
 		@else
 		<div class="alert alert-warning mt-2" id="alertUnpaidInvoice">
 			This VPS has not been activated yet. Pay the invoice or wait for confirmation of payment in case you did pay already.
-			<a style="color: blue; cursor: pointer;" target="_blank">Click here to return to the previous page</a>
-			
 		</div>
 
 		<div class="support-table">
@@ -802,7 +799,7 @@
 						@endif
 						<td class="text-center">
 							<a onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank">
-								<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice">
+								<img src="{{asset('assets/img/eye-open.png')}}" class="icon-password view-invoice">
 							</a>
 						</td>
 					</tr>

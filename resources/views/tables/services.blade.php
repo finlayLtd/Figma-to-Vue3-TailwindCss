@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($state != 'Pending')
+                            @if($state == 'Active')
                             <div class="server-list-item">
                                 <div class="server-list-item-wrapper">
                                     <div class="image-wrapper">
