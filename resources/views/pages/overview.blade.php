@@ -20,7 +20,7 @@
 				@endif
 			</div>
 		</div>
-
+		@if($status == 'Active')
 		<div class="sub-section server-list-tab">
 			<div class="row justify-content-between align-items-center ">
 				<div class="row mb-5 pe-0 overview-cols">
@@ -754,6 +754,62 @@
 				</div>
 			</div>
 		</div>
+		@else
+		<div class="alert alert-warning mt-2" id="alertUnpaidInvoice">
+			This VPS has not been activated yet. Pay the invoice or wait for confirmation of payment in case you did pay already.
+			<a style="color: blue; cursor: pointer;" target="_blank">Click here to return to the previous page</a>
+			
+		</div>
+
+		<div class="support-table">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Invoice ID</th>
+						<th scope="col">Invoice Date</th>
+						<th scope="col">Due Date</th>
+						<th scope="col">Date Paid</th>
+						<th scope="col">Amount</th>
+						<th scope="col">Status</th>
+						<th scope="col" class="text-center">View Invoice</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{$invoiceInfo['invoiceid']}}</td>
+						<td class="date-cell">{{$invoiceInfo['date']}}</td>
+						<td class="date-cell">{{$invoiceInfo['duedate']}}</td>
+						<td class="date-cell">{{$invoiceInfo['datepaid']}}</td>						      
+						<td class="remaining-cell"><span>€ {{$invoiceInfo['subtotal']}}</span></td>
+						@if($invoiceInfo['status'] == 'Paid')
+						<td class="successful-cell">
+							<span>
+								{{ $invoiceInfo['status'] }}
+							</span>
+						</td>
+						@elseif($invoiceInfo['status'] == 'Unpaid')
+						<td class="cancelled-cell">
+							<span>
+								{{ $invoiceInfo['status'] }}
+							</span>
+						</td>
+						@else
+						<td class="in-progress-cell">
+							<span>
+								{{ $invoiceInfo['status'] }}
+							</span>
+						</td>
+						@endif
+						<td class="text-center">
+							<a onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank">
+								<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice">
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		@endif
 	</div>
 </section>
 
@@ -1149,6 +1205,7 @@
 		var result = '';
 		var uppercaseCount = 0;
 		var specialCharCount = 0;
+		var numberCount = 0; // add a counter for numbers
 		for (var i = 0; i < length; i++) {
 			var randomIndex = Math.floor(Math.random() * chars.length);
 			var randomChar = chars.charAt(randomIndex);
@@ -1156,10 +1213,12 @@
 			uppercaseCount++;
 			} else if (/[\!\@]/.test(randomChar)) {
 			specialCharCount++;
-			}
+			}else if (/[0-9]/.test(randomChar)) { // check if the character is a number
+      		numberCount++;
+    		}
 			result += randomChar;
 		}
-		if (uppercaseCount < 3 || specialCharCount < 2) {
+		if (uppercaseCount < 3 || specialCharCount < 2 || numberCount < 2) {
 			return generateRandomString();
 		}
   		return result;

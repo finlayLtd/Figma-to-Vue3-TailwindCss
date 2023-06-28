@@ -34,7 +34,7 @@
 								</div>
 							</div>
 							<div class="balance-card-footer d-flex justify-content-end">
-								<button class="btn-dark add-funds hover-dark-light">{{ __('messages.Add_Funds') }}</button>
+								<button class="btn-dark add-funds hover-dark-light" id="addFunds">{{ __('messages.Add_Funds') }}</button>
 							</div>
 						</div>
 					</div>
@@ -198,6 +198,10 @@ function sortByInvoice(orderby, order) {
 $(document).ready(function() {
   $('.touch-item').click(function() {
     $('.sorting-items').hide();
+  });
+
+  $("#addFunds").click(function(){
+	$(".modal-balance").removeClass('hidden');
   });
 });
 

@@ -53,10 +53,10 @@
 					<div class="mb-4">
 						<label for="password" class="form-label">{{ __('messages.VPS_Password') }}</label>
 						<div style="display: flex;" class="mb-4">
-							<input type="text" class="form-control " placeholder="••••••••••" id="password" name="password" required>
+							<input type="text" class="form-control " placeholder="••••••••••" id="password" name="password" required disabled>
 							<button type="button" class="btn btn-link" style="padding: 10px;" id="randomizeButton_password">Random</button>
 						</div>
-						<div class="progress" id="passwordStrengthBar">
+						<div class="progress" id="passwordStrengthBar" style="display: none;">
 						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 							<span class="rating">{{ __('messages.Password_Rating') }}: 0%</span>
 						</div>
@@ -154,7 +154,7 @@
 		});
 
 		jQuery("#randomizeButton_password").click(function() {
-			var randomPassword = generatePassword();
+			var randomPassword = generateRandomString();
 			jQuery("#password").val(randomPassword);
 
 			// Copy the generated hostname to the clipboard
@@ -209,6 +209,31 @@
 			return password;
 		}
 
+		function generateRandomString() {
+			var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@';
+			var length = 12;
+			var result = '';
+			var uppercaseCount = 0;
+			var specialCharCount = 0;
+			var numberCount = 0; // add a counter for numbers
+			for (var i = 0; i < length; i++) {
+				var randomIndex = Math.floor(Math.random() * chars.length);
+				var randomChar = chars.charAt(randomIndex);
+				if (/[A-Z]/.test(randomChar)) {
+				uppercaseCount++;
+				} else if (/[\!\@]/.test(randomChar)) {
+				specialCharCount++;
+				}else if (/[0-9]/.test(randomChar)) { // check if the character is a number
+				numberCount++;
+				}
+				result += randomChar;
+			}
+			if (uppercaseCount < 3 || specialCharCount < 2 || numberCount < 2) {
+				return generateRandomString();
+			}
+			prevPassword = result;
+			return result;
+		}
 		jQuery("#hostname").keyup(function() {
 			var hostname = jQuery("#hostname").val();
 			if (hostname.length > 12) {
