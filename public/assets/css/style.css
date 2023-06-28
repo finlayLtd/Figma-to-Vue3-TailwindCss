@@ -1524,14 +1524,20 @@ section.dashboard .data-region-card:hover .server-price {
 }
 
 .server-list-tab .server-list-item:nth-child(2) {
-	border-bottom: 1px solid rgba(23, 30, 38, 0.08);
+	
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
 
 .server-list-tab .server-list-item:nth-child(3) {
 	padding-top: 20px;
+	border-top: 1px solid rgba(23, 30, 38, 0.08);
 }
+
+.server-list-tab .server-list-item:last-child {
+	border-bottom: none !important;
+}
+
 
 .server-list-options {
 		position: absolute;

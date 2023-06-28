@@ -140,12 +140,7 @@
 
 
 function openAddFundsWindow(){
-	windowClose();
-	var windowWidth = 1024;
-	var windowHeight = 768;
-	var leftPosition = (window.screen.width / 2) - (windowWidth / 2);
-  	var topPosition = (window.screen.height / 2) - (windowHeight / 2);
-	// Make AJAX request to Laravel backend route
+	// windowClose();
 	$('#loading-bg').css('display', 'flex');
 	$.ajax({
 		url: "{{ route('add_funds_sso') }}",
@@ -155,11 +150,10 @@ function openAddFundsWindow(){
 		},
 		success: function(response) {
 			if(response.result == "success"){
-				Window = window.open(
+				window.open(
 				response.redirect_url,
-					"_blank", "width=" + windowWidth + ", height=" + windowHeight + ", left=" + leftPosition + ", top=" + topPosition);
+					"_blank");
 				$('.modal-balance').addClass('hidden');
-				Window.focus();
 			} else{
 				console.log('access denied for sso!');
 			}
