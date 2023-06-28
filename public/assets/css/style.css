@@ -1798,7 +1798,7 @@ td.date-cell::before {
     filter: brightness(2.6);
 }
 
-
+div.successful-cell span,
 td.successful-cell span {
 		position: relative;
     padding: 7px 15px 6px 28px;
@@ -1807,6 +1807,7 @@ td.successful-cell span {
     color: #3FBB27;
 }
 
+div.successful-cell span::before,
 td.successful-cell span::before {
 		content: "";
     position: absolute;
@@ -1818,7 +1819,7 @@ td.successful-cell span::before {
     filter: brightness(2.6);
 }
 
-
+div.cancelled-cell span,
 td.cancelled-cell span {
 		position: relative;
     padding: 7px 15px 6px 28px;
@@ -1827,6 +1828,7 @@ td.cancelled-cell span {
     color: #EB4545;
 }
 
+div.cancelled-cell span::before,
 td.cancelled-cell span::before {
 		content: "";
     position: absolute;
@@ -1839,7 +1841,7 @@ td.cancelled-cell span::before {
 }
 
 
-
+div.in-progress-cell span,
 td.in-progress-cell span {
 		position: relative;
     padding: 7px 15px 6px 28px;
@@ -1849,6 +1851,7 @@ td.in-progress-cell span {
     white-space: nowrap;
 }
 
+div.in-progress-cell span::before,
 td.in-progress-cell span::before {
 		content: "";
     position: absolute;
@@ -1859,10 +1862,6 @@ td.in-progress-cell span::before {
     height: 15px;
     filter: brightness(1.2);
 }
-
-
-
-
 
 td.remaining-cell {
 	position: relative;

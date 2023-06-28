@@ -70,7 +70,16 @@
                                     </h3>
                                 </a>
                                 <div class="support-item-status">
-                                    <span class="fs-15 color-in-work">{{$ticket['status']}}</span>
+                                    @switch($ticket['status'])
+                                        @case('Answered')
+                                            <div class="successful-cell"><span class="fs-15 color-in-work">{{$ticket['status']}}</span></div>
+                                            @break
+                                        @case('Closed')
+                                            <div class="cancelled-cell"><span class="fs-15 color-in-work">{{$ticket['status']}}</span></div>
+                                            @break
+                                        @default
+                                            <div class="in-progress-cell"><span class="fs-15 color-in-work">{{$ticket['status']}}</span></div>
+                                    @endswitch
                                 </div>
                             </div>
 

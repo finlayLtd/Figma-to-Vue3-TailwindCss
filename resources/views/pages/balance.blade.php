@@ -197,6 +197,14 @@ $(document).ready(function() {
   $("#addFunds").click(function(){
 	$(".modal-balance").removeClass('hidden');
   });
+
+  $(".close-dark").click(function(){
+	$(".modal-balance").addClass('hidden');
+  });
+
+  $(".close-light").click(function(){
+	$(".modal-balance").addClass('hidden');
+  });
 });
 
 
