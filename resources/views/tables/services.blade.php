@@ -49,6 +49,7 @@
                                         <h3 class="detail">
                                             {{$order['configoptions']['configoption'][1]['value']}}
                                         </h3>
+                                        @if($state != 'Cancelled')
                                         <div class="server-list-options">
                                             <div class="options-toggle" style="padding-right: 10px; padding-left: 10px;">
 
@@ -58,11 +59,13 @@
                                                     <li><a href="{{ url('/overview/' . $order['orderid']) }}">{{ __('messages.Launch_Control_Panel') }}</a></li>
                                                     <li><a href="{{ url('/balance') }}">{{ __('messages.View_Invoices') }}</a></li>
                                                 </ul>
-                                            </div>                    			
+                                            </div>                 
                                         </div>                    			
+                                        @endif   			
                                     </div>
                                 </div>
                             </div>
+                            @if($state != 'Pending')
                             <div class="server-list-item">
                                 <div class="server-list-item-wrapper">
                                     <div class="image-wrapper">
@@ -79,13 +82,14 @@
                                             {{ __('messages.Duedate_at') }} &nbsp;{{$order['nextduedate']}}
                                         </h3>                    			
                                     </div>
-                                    <div class="server-list-options">
-                                        @if($state == 'Active')
-                                            <button class="active-badge"><span class="active-dot"></span>Active</button>
-                                        @endif
-                                    </div>
+                                    @if($state == 'Active')
+                                        <div class="server-list-options">
+                                                <button class="active-badge"><span class="active-dot"></span>Active</button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
+                            @endif
                             <div class="server-list-item">
                                 <div class="server-list-item-wrapper">
                                     <div class="image-wrapper">
