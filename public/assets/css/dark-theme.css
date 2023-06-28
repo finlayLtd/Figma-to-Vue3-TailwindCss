@@ -821,3 +821,7 @@ html[data-theme=dark] div.toast-body{
     background: white !important;
     color: black !important;
 }
+
+html[data-theme=dark] .view-invoice{
+	filter: brightness(15) !important;
+}

@@ -22,9 +22,9 @@
 								@if ($reply['requestor_type'] == 'Owner')
 								<div class="message-item message-received">
 									<div class="message-item-header">
-										<div class="message-sender-image">
-											<img src="{{ asset('assets/img/profile-support.png') }}" alt="">
-										</div>
+										<!-- <div class="message-sender-image">
+											
+										</div> -->
 										<div class="message-sender">
 											<span class="fs-15">{{ $reply['requestor_name'] }}</span><span class="message-sent-time fs-13">{{ $reply['date'] }}</span>
 										</div>
@@ -51,9 +51,9 @@
 								@else
 								<div class="message-item message-sent">
 									<div class="message-item-header">
-										<div class="message-sender-image">
-											<img src="{{ asset('assets/img/message-profile.png') }}" alt="">
-										</div>
+										<!-- <div class="message-sender-image">
+											
+										</div> -->
 										<div class="message-sender">
 											<span class="fs-15">{{ $reply['name'] }}</span><span class="message-sent-time fs-13">{{ $reply['date'] }}</span>
 										</div>

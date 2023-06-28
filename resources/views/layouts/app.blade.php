@@ -64,19 +64,23 @@
 
                         <div class="profile-area position-relative">
                             <!-- <img class="profile-img  options-toggle" src="{{asset('assets/img/profile.png')}}" alt=""> -->
-                            <i class="fa fa-globe options-toggle" style="margin-right: 24px; cursor: pointer;">&nbsp;<small id="language-code" style="user-select: none;"></small></i>
+                            <!-- <i class="fa fa-globe options-toggle" style="margin-right: 24px; cursor: pointer;">&nbsp;<small id="language-code" style="user-select: none;"></small></i> -->
+                            <div class="options-toggle" style="margin-right: 24px; cursor: pointer;">
+                                <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px -3px 5px;" id="language-flag"></span>
+                                <small id="language-code" style="user-select: none;">EN</small>
+                            </div>
                             <div class="options-toggle-dropdown">
                                 <ul>
                                     <li style="cursor: pointer;" onclick="setLanguage('en')">
-                                        <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px -4px 5px;"></span>
+                                        <span class="ip2location-flag-16 flag-round flag-us" style="margin: 10px 0px -3px 5px;"></span>
                                         <b style="line-height:36px; margin-left:5px; color: black;">English</b>
                                     </li>
                                     <li onclick="setLanguage('ru')" style="cursor: pointer;">
-                                        <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px -4px 5px;"></span>
+                                        <span class="ip2location-flag-16 flag-round flag-ru" style="margin: 10px 0px -3px 5px;"></span>
                                         <b style="line-height:36px; margin-left:5px; color: black;">русский</b>
                                     </li>
                                     <li onclick="setLanguage('zh')" style="cursor: pointer;">
-                                        <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px -4px 5px;"></span>
+                                        <span class="ip2location-flag-16 flag-round flag-cn" style="margin: 10px 0px -3px 5px;"></span>
                                         <b style="line-height:36px; margin-left:5px; color: black;">中文</b>
                                     </li>
                                 </ul>
@@ -248,12 +252,20 @@
             var lang = getCookie('lang');
             if (lang == 'en') {
                 document.getElementById('language-code').innerHTML = 'EN';
+                $('#language-flag').removeClass();
+                $('#language-flag').addClass('ip2location-flag-16 flag-round flag-us');
             } else if (lang == 'ru') {
                 document.getElementById('language-code').innerHTML = 'RU';
+                $('#language-flag').removeClass();
+                $('#language-flag').addClass('ip2location-flag-16 flag-round flag-ru');
             } else if (lang == 'zh') {
                 document.getElementById('language-code').innerHTML = 'CN';
+                $('#language-flag').removeClass();
+                $('#language-flag').addClass('ip2location-flag-16 flag-round flag-cn');
             } else{
                 document.getElementById('language-code').innerHTML = 'EN';
+                $('#language-flag').removeClass();
+                $('#language-flag').addClass('ip2location-flag-16 flag-round flag-us');
             }
         }
 

@@ -2639,6 +2639,10 @@ section.login {
 	filter: brightness(0);
 }
 
+.view-invoice{
+	filter: brightness(0);
+}
+
 
 
 .color-in-work {
@@ -3350,4 +3354,29 @@ border: none;
 
 .stockUnavailable{
 	color: grey;
+}
+
+
+
+.message-item.message-received .message-content-wrapper {
+	padding-left: 0px;
+}
+
+.message-item.message-sent .message-content-wrapper {
+	padding-right: 0px;
+}
+
+@media (max-width: 768px) {
+	.message-sender-image{
+		width: 0px; 
+		height: 0px;
+	}
+
+	.message-item.message-received .message-content-wrapper {
+		padding-left: 0px;
+	}
+
+	.message-item.message-sent .message-content-wrapper {
+		padding-right: 0px;
+	}
 }
