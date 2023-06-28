@@ -24,7 +24,16 @@
                         <td>{{$ticket['subject']}}</std>
                         <td class="refund-request">{{$ticket['priority']}}</td>
                         <td class="date-cell">{{$ticket['date']}}</td>
-                        <td class="successful-cell"><span>{{$ticket['status']}}</span></td>
+                        @switch($ticket['status'])
+                            @case('Answered')
+                                <td class="successful-cell"><span>{{$ticket['status']}}</span></td>
+                                @break
+                            @case('Closed')
+                                <td class="cancelled-cell"><span>{{$ticket['status']}}</span></td>
+                                @break
+                            @default
+                                <td class="in-progress-cell"><span>{{$ticket['status']}}</span></td>
+                        @endswitch
                     </tr>
                 @endforeach		
             @endif	    					    					    
