@@ -297,6 +297,7 @@
 
 
         $(document).ready(function() {
+
             updateLanguage();
             // fetch data from the backend to get the credit
             fetchCredit();

@@ -60,7 +60,12 @@ class OverviewController extends Controller
         $invoiceInfo = $this->getinvoiceInfo($order_id);
 
         $flag = $other_info['flag'];
-        $sys_logo = $other_info['sys_logo'];
+        if(isset($other_info['sys_logo'])){
+            $sys_logo = $other_info['sys_logo'];
+        } else {
+            $sys_logo  = 'windows';
+        }
+
         $system = $other_info['system'];
         
         $OSlist = $this->getOSlist();

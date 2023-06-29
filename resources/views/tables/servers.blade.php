@@ -2,13 +2,11 @@
 @if(count($products))
     @foreach($product_group as $key=>$group)
         <div class="row">
-            <div class="image-wrapper mb-2">
-                @if($key == 2) <img src="assets/img/flag-nl.png" alt="" />  
-                @else <img src="assets/img/flag-en.png" alt="" />  
+            <div class="image-wrapper mb-2" style="font-size: 20px;">
+                @if($key == 2) <img src="assets/img/flag-nl.png" style="width: 28px;" alt="" />  &nbsp;Netherlands
+                @else <img src="assets/img/flag-en.png" style="width: 28px;" alt="" />  &nbsp;USA
                 @endif
-                {{$group}}
             </div>
-            <hr/>
             @foreach($products as $prodcut)
                 @if($prodcut['gid'] == $key)
                     <div class="col-md-3 m-1 mb-4">
@@ -29,7 +27,7 @@
 
                             </div>
 
-                            <div class="server-price mb-4">
+                            <div class="server-price mb-4" style="background: none;">
                                 <span class="price">€{{$prodcut['pricing']['EUR']['monthly']}}<span class="month">/ {{ __('messages.month') }}</span></span>
                             </div>
 

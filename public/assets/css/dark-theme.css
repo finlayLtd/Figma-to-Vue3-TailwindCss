@@ -479,17 +479,48 @@ html[data-theme=dark] .sorting-items {
 }
 
 
+
 html[data-theme=dark] .sorting-items ul li:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 html[data-theme=dark] .sorting-items_2 {
-    background: rgba(255, 255, 255, 0.05);
+    background: black;
     box-shadow: none !important;
+}
+
+html[data-theme=dark] .paymentMethod:checked {
+    background-color: #000;
+}
+
+html[data-theme=dark] .paymentMethod:not(:checked) {
+    background-color: #E9E9E9;
 }
 
 
 html[data-theme=dark] .sorting-items_2 ul li:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme=dark] .sorting-items_3 {
+    background: black;
+    box-shadow: none !important;
+}
+
+html[data-theme=dark] .vps-info-review {
+    color: black;
+}
+
+html[data-theme=dark] .payment-info {
+    color: black;
+}
+
+html[data-theme=dark] .user-info {
+    color: black;
+}
+
+
+html[data-theme=dark] .sorting-items_3 ul li:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
