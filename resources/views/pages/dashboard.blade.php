@@ -21,21 +21,7 @@
 						<h3 class="sub-title">{{ __('messages.Support_Ticket') }}</h3>
 					</div>
 
-					<div class="sort-servers order-2 order-md-1 mb-2" style="display: inline-block;">
-						<div id="toggleButton" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
-							<span>{{ __('messages.Sort_by') }}...</span>
-						</div>
-						<div class="sorting-items" style="display: none;">
-							<ul>
-								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'desc')">{{ __('messages.Opened-latest') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('date', 'asc')">{{ __('messages.Opened-oldest') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'desc')">{{ __('messages.Last-Reply-latest') }}</li>
-								<li class="touch-item" onclick="sortByTicket_dashboard('lastreply', 'asc')">{{ __('messages.Last-Reply-oldest') }}</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="w-100 support-table support-ticket-table mb-4">
+					<div class="support-ticket-table">
 						@include('tables.tickettable')
 					</div>
 
@@ -46,6 +32,7 @@
 							</ul>
 						</nav>
 					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -69,6 +56,8 @@
 
 	function initPageNation_ticket(selectPage, flag, orderby, order) {
 
+		
+
 		cnt = $("#ticket-pagination-container").attr("total-ticket-num");
 		btn_number = Math.ceil(cnt / 10);
 		if (selectPage <= 0) return;
@@ -79,7 +68,7 @@
 		if (btn_number > 6) {
 			switch (selectPage) {
 				case 1:
-					var btn_str = "<li id='page-1' class='ticket-page page-item active' page-number='1'><span class='page-link' style='cursor:pointer;'>1</span></li>";
+					var btn_str = "<li id='page-1' class='ticket-page page-item active active-pageNow' page-number='1'><span class='page-link' style='cursor:pointer;'>1</span></li>";
 					btn_str += "<li id='page-2' class='ticket-page page-item' page-number='2'><span class='page-link' style='cursor:pointer;'>2</span></li>";
 					btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 					btn_str += "<li id='page-" + (btn_number - 1) + "' class='ticket-page page-item' page-number='" + (btn_number - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 1) + "</span></li>";
@@ -88,7 +77,7 @@
 					break;
 				case 2:
 					var btn_str = "<li id='page-1' class='ticket-page page-item' page-number='1'><span class='page-link' style='cursor:pointer;'>1</span></li>";
-					btn_str += "<li id='page-2' class='ticket-page page-item active' page-number='2'><span class='page-link' style='cursor:pointer;'>2</span></li>";
+					btn_str += "<li id='page-2' class='ticket-page page-item active active-pageNow' page-number='2'><span class='page-link' style='cursor:pointer;'>2</span></li>";
 					btn_str += "<li id='page-3' class='ticket-page page-item' page-number='3'><span class='page-link' style='cursor:pointer;'>3</span></li>";
 					btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 					btn_str += "<li id='page-" + (btn_number - 1) + "' class='ticket-page page-item' page-number='" + (btn_number - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 1) + "</span></li>";
@@ -100,7 +89,7 @@
 					btn_str += "<li id='page-2' class='ticket-page page-item' page-number='2'><span class='page-link' style='cursor:pointer;'>2</span></li>";
 					btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 					btn_str += "<li id='page-" + (btn_number - 2) + "' class='ticket-page page-item page-number='" + (btn_number - 2) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 2) + "</span></li>";
-					btn_str += "<li id='page-" + (btn_number - 1) + "' class='ticket-page page-item  active' page-number='" + (btn_number - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 1) + "</span></li>";
+					btn_str += "<li id='page-" + (btn_number - 1) + "' class='ticket-page page-item  active active-pageNow' page-number='" + (btn_number - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 1) + "</span></li>";
 					btn_str += "<li id='page-" + (btn_number) + "' class='ticket-page page-item' page-number='" + (btn_number) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number) + "</span></li>";
 					$("#ticket-pagination-container").append(btn_str);
 					break;
@@ -109,7 +98,7 @@
 					btn_str += "<li id='page-2' class='ticket-page page-item' page-number='2'><span class='page-link' style='cursor:pointer;'>2</span></li>";
 					btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 					btn_str += "<li id='page-" + (btn_number - 1) + "' class='ticket-page page-item' page-number='" + (btn_number - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 1) + "</span></li>";
-					btn_str += "<li id='page-" + (btn_number) + "' class='ticket-page page-item active' page-number='" + (btn_number) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number) + "</span></li>";
+					btn_str += "<li id='page-" + (btn_number) + "' class='ticket-page page-item active active-pageNow' page-number='" + (btn_number) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number) + "</span></li>";
 					$("#ticket-pagination-container").append(btn_str);
 					break;
 
@@ -120,15 +109,15 @@
 						if (selectPage != (btn_number - 2)) {
 							if ((selectPage - 2) > 2) btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 							btn_str += "<li id='page-" + (selectPage - 1) + "' class='ticket-page page-item' page-number='" + (selectPage - 1) + "'><span class='page-link' style='cursor:pointer;'>" + (selectPage - 1) + "</span></li>";
-							btn_str += "<li id='page-" + (selectPage) + "' class='ticket-page page-item active' page-number='" + (selectPage) + "'><span class='page-link' style='cursor:pointer;'>" + (selectPage) + "</span></li>";
+							btn_str += "<li id='page-" + (selectPage) + "' class='ticket-page page-item active active-pageNow' page-number='" + (selectPage) + "'><span class='page-link' style='cursor:pointer;'>" + (selectPage) + "</span></li>";
 							btn_str += "<li id='page-" + (selectPage + 1) + "' class='ticket-page page-item' page-number='" + (selectPage + 1) + "'><span class='page-link' style='cursor:pointer;'>" + (selectPage + 1) + "</span></li>";
 							if ((selectPage + 2) < (btn_number - 1)) btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 						} else {
 							btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
-							btn_str += "<li id='page-" + (btn_number - 2) + "' class='ticket-page page-item active' page-number='" + (btn_number - 2) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 2) + "</span></li>";
+							btn_str += "<li id='page-" + (btn_number - 2) + "' class='ticket-page page-item active active-pageNow' page-number='" + (btn_number - 2) + "'><span class='page-link' style='cursor:pointer;'>" + (btn_number - 2) + "</span></li>";
 						}
 					} else {
-						btn_str += "<li id='page-3' class='ticket-page page-item active' page-number='3'><span class='page-link' style='cursor:pointer;'>3</span></li>";
+						btn_str += "<li id='page-3' class='ticket-page page-item active active-pageNow' page-number='3'><span class='page-link' style='cursor:pointer;'>3</span></li>";
 						btn_str += "<li id='page-4' class='ticket-page page-item' page-number='4'><span class='page-link' style='cursor:pointer;'>4</span></li>";
 						btn_str += "<li id='page-ellipsis' class='ticket-page page-item' page-number='ellipsis'><span class='page-link' style='cursor:pointer;'><i class='fa fa-ellipsis page-link'></i></li>";
 					}
@@ -139,7 +128,7 @@
 			}
 		} else {
 			for (var loop = 1; loop <= btn_number; loop++) {
-				if (loop == selectPage) var btn_str = "<li id='page-" + loop + "' class='ticket-page page-item active' page-number='" + loop + "'><span class='page-link' style='cursor:pointer;'>" + loop + "</span></li>";
+				if (loop == selectPage) var btn_str = "<li id='page-" + loop + "' class='ticket-page page-item active active-pageNow' page-number='" + loop + "'><span class='page-link' style='cursor:pointer;'>" + loop + "</span></li>";
 				else var btn_str = "<li id='page-" + loop + "' class='ticket-page page-item' page-number='" + loop + "'><span class='page-link' style='cursor:pointer;'>" + loop + "</span></li>";
 				$("#ticket-pagination-container").append(btn_str);
 			}
@@ -149,7 +138,7 @@
 
 		$('.ticket-page').on('click', function(event) {
 			var selectedButtonValue = $(this).attr("page-number") * 1;
-			var CurrentSelectedPage = $(".active").attr("page-number") * 1;
+			var CurrentSelectedPage = $(".active-pageNow").attr("page-number") * 1;
 			if (selectedButtonValue > 0) {
 				initPageNation_ticket(selectedButtonValue, flag);
 			} else {
@@ -173,7 +162,7 @@
 	}
 
 	function UserCards(flag, orderby, order) {
-		var selectedPage = $('.active').attr("page-number") * 1;
+		var selectedPage = $('.active-pageNow').attr("page-number") * 1;
 
 		$('#loading-bg').css('display', 'flex');
 		if(flag == true){
@@ -189,13 +178,13 @@
 					$('#loading-bg').css('display', 'none');
 					$('.support-ticket-table').empty();
 					$('.support-ticket-table').html(data);
-					toggleSortingItems();
+					if(flag == true) toggleSortingItems();
 				},
 				error: function(xhr, status, error) {
 					// Handle the error here
 					console.log(error);
 					$('#loading-bg').css('display', 'none');
-					toggleSortingItems();
+					if(flag == true) toggleSortingItems();
 				},
 			});
 		} else{
@@ -209,13 +198,13 @@
 					$('#loading-bg').css('display', 'none');
 					$('.support-ticket-table').empty();
 					$('.support-ticket-table').html(data);
-					toggleSortingItems();
+					if(flag == true)  toggleSortingItems();
 				},
 				error: function(xhr, status, error) {
 					// Handle the error here
 					console.log(error);
 					$('#loading-bg').css('display', 'none');
-					toggleSortingItems();
+					if(flag == true) toggleSortingItems();
 				},
 			});
 		}
@@ -243,6 +232,7 @@
 				$(".options-toggle").click(function() {
 					$(this).siblings(".options-toggle-dropdown").toggle();
 				})
+				initPageNation_ticket(1, false);
 			},
 			error: function(xhr, status, error) {
 				// Handle the error here

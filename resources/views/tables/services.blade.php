@@ -2,7 +2,7 @@
     <h3 class="col-md-3 sub-title pt-2">{{ __('messages.Service_title') }}</h3>
     <div class="col-md-9 d-flex justify-content-end pe-0 flex-wrap list-flex-nav">
         <div class="sort-servers order-2 order-md-1 mb-2" style="display: inline-block;">
-            <div id="toggleButton-2" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;">
+            <div id="toggleButton-2" class="sort-item-active btn-chevron chevron-dark" style="width: 160px;" onclick="toggleSortingItems_2()">
                 <span>{{ __('messages.Sort_by') }}...</span>
             </div>
             <div class="sorting-items_2" style="display: none;">

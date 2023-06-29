@@ -1706,25 +1706,47 @@ section.dashboard .data-region-card:hover .server-price {
 
 .sorting-items_2 {
 	position: absolute;
-top: 45px;
-background-color: #fff;
-box-shadow: inset 0px 0px 0px 1px #E0E0E0;
-border-radius: 8px;
-width: 100%;
-padding: 5px 10px;
-z-index: 2;
-font-size: 14px;
-
+	top: 45px;
+	background-color: #fff;
+	box-shadow: inset 0px 0px 0px 1px #E0E0E0;
+	border-radius: 8px;
+	width: 100%;
+	padding: 5px 10px;
+	z-index: 2;
+	font-size: 14px;
 }
 
 .sorting-items_2 ul li {
-cursor: pointer;
-padding: 5px 5px;
+	cursor: pointer;
+	padding: 5px 5px;
 }
 
 .sorting-items_2 ul li:not(:last-child) {
-margin-bottom: 3px;
-border-bottom:solid 1px #c7c7c7;
+	margin-bottom: 3px;
+	border-bottom:solid 1px #c7c7c7;
+}
+
+/* 3 */
+.sorting-items_3 {
+	position: absolute;
+	top: 45px;
+	background-color: #fff;
+	box-shadow: inset 0px 0px 0px 1px #E0E0E0;
+	border-radius: 8px;
+	width: 100%;
+	padding: 5px 10px;
+	z-index: 2;
+	font-size: 14px;
+}
+
+.sorting-items_3 ul li {
+	cursor: pointer;
+	padding: 5px 5px;
+}
+
+.sorting-items_3 ul li:not(:last-child) {
+	margin-bottom: 3px;
+	border-bottom:solid 1px #c7c7c7;
 }
 
 .support-table {

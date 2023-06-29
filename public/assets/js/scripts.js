@@ -29,7 +29,6 @@
 
   /*toggle sort box*/
   function toggleSortingItems() {
-    console.log('toggleSortingItems_1');
     var sortingItems = document.getElementsByClassName('sorting-items');
     
     for (var i = 0; i < sortingItems.length; i++) {
@@ -45,18 +44,29 @@
 
   /*toggle sort box*/
   function toggleSortingItems_2() {
-
-    console.log('toggleSortingItems_2');
     var sortingItems = document.getElementsByClassName('sorting-items_2');
     
     for (var i = 0; i < sortingItems.length; i++) {
       var item = sortingItems[i];
       
       if (item.style.display === 'none') {
-        console.log(item.style.display);
         item.style.display = 'block';
       } else {
-        console.log(item.style.display);
+        item.style.display = 'none';
+      }
+    }
+  }
+
+  function toggleSortingItems_3() {
+
+    var sortingItems = document.getElementsByClassName('sorting-items_3');
+    
+    for (var i = 0; i < sortingItems.length; i++) {
+      var item = sortingItems[i];
+      
+      if (item.style.display === 'none') {
+        item.style.display = 'block';
+      } else {
         item.style.display = 'none';
       }
     }
@@ -66,8 +76,8 @@
 var toggleButton = document.getElementById('toggleButton');
 toggleButton.addEventListener('click', toggleSortingItems);
 
-var toggleButton_2 = document.getElementById('toggleButton-2');
-toggleButton_2.addEventListener('click', toggleSortingItems_2);
+// var toggleButton_2 = document.getElementById('toggleButton-2');
+// toggleButton_2.addEventListener('click', toggleSortingItems_2);
 
 /*modal*/
 

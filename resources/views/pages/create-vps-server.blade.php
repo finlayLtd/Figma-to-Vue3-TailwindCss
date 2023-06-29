@@ -11,10 +11,12 @@
 			<h3 class="sub-title">{{ __('messages.Choose_a_OS') }}</h3>
 			<div class="row server-item-wrapper">
 				@foreach($oslist as $key=>$os)
+					@if(ucfirst($key) != 'others' && ucfirst($key) != 'Others')
 					<div data-dist="{{ $key }}" class="server-item display-distributions">
 						<img src="assets/img/{{ $key }}-logo.png">
 						<span>{{ ucfirst($key) }}</span>
 					</div>
+					@endif
 				@endforeach
 			</div>
 		</div>
@@ -56,7 +58,7 @@
 							<input type="text" class="form-control " placeholder="••••••••••" id="password" name="password" required disabled>
 							<button type="button" class="btn btn-link" style="padding: 10px;" id="randomizeButton_password">Random</button>
 						</div>
-						<div class="progress" id="passwordStrengthBar" style="display: none;">
+						<div class="progress" id="passwordStrengthBar">
 						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 							<span class="rating">{{ __('messages.Password_Rating') }}: 0%</span>
 						</div>
@@ -89,7 +91,7 @@
 				</div>
 			</div>
 			<div class="modal-main">
-				<div class="vps-info">
+				<div class="vps-info mb-2">
 					<div class="vps-info-review card">
 						<h6 class="sub-title">VPS info</h6>
 						<hr/>
@@ -103,7 +105,7 @@
 					</div>
 				</div>
 
-				<div class="user-info mt-2">
+				<div class="user-info mt-2 mb-2">
 					<div class="user-info-review card">
 						<h6 class="sub-title">User info</h6>
 						<hr/>
@@ -119,8 +121,8 @@
 						<hr/>
 						@foreach($payment_methods as $key=>$payment_method)
 							<div class="form-check">
-								@if($key==0) <input type="radio" class="form-check-input" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}" checked/>
-								@else <input type="radio" class="form-check-input" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}"/>
+								@if($key==0) <input type="radio" class="form-check-input paymentMethod" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}" checked/>
+								@else <input type="radio" class="form-check-input paymentMethod" name="paymentMethod" id="paymentMethod" value="{{ $payment_method['module'] }}"/>
 								@endif
 								<label class="form-check-label" for="paymentMethod">{{ $payment_method['displayname'] }}</label>
 							</div>
@@ -164,7 +166,7 @@
 			copyTextarea.select();
 			document.execCommand('copy');
 			document.body.removeChild(copyTextarea);
-
+			checkPassword();
 			showToast('Success', 'Copied password to clipboard', 'success');
 
 		});
@@ -254,6 +256,10 @@
 
 		// upgraded code
 		jQuery("#password").keyup(function() {
+			checkPassword();
+		});
+
+		function checkPassword(){
 			var pwStrengthErrorThreshold = 50;
 			var pwStrengthWarningThreshold = 75;
 
@@ -307,7 +313,7 @@
 				jQuery("#password").next('.form-control-feedback').addClass('glyphicon-ok');
 				jQuery("#passwordStrengthBar .progress-bar").addClass("progress-bar-success");
 			}
-		});
+		}
 
 		jQuery(".system-item").click(function(){
 			$(".selected-os").removeClass("selected-os");

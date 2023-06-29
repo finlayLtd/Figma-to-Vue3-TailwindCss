@@ -30,13 +30,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // var_dump(Auth::user());
-        // exit();
         $total_tickets = 0;
         $tickets = [];
         $products = [];
         $states = [];
         $state_order = [];
+        $status = array(); //status of ticket 
         $product_group = $this->getProductGroups();
         
         $tickets_response = (new \Sburina\Whmcs\Client)->post([
@@ -147,12 +146,21 @@ class HomeController extends Controller
             $tickets = $tickets_response['tickets']['ticket'];
         }
 
-        return view('pages/dashboard', compact('tickets', 'total_tickets', 'states', 'state_order', 'products', 'product_group'));
+        $tickets_status = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetSupportStatuses'
+        ]);
+
+        if ($tickets_status['totalresults'] > 0) {
+            $status = $tickets_status['statuses']['status'];//status of ticket 
+        }
+
+        return view('pages/dashboard', compact('tickets', 'total_tickets', 'states', 'state_order', 'products', 'product_group', 'status'));
     }
 
     public function gettickets(Request $request)
     {
         $offset  = ($request->offset - 1) * 10;
+        
         $tickets_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'GetTickets',
             'limitstart' => $offset,
@@ -170,7 +178,15 @@ class HomeController extends Controller
             
         }
 
-        return view('tables/tickettable', compact('tickets', 'total_tickets'));
+        $tickets_status = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetSupportStatuses'
+        ]);
+
+        if ($tickets_status['totalresults'] > 0) {
+            $status = $tickets_status['statuses']['status'];//status of ticket 
+        }
+
+        return view('tables/tickettable', compact('tickets', 'total_tickets', 'status'));
     }
 
     public function invoicelist(Request $request)

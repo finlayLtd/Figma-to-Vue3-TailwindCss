@@ -58,6 +58,25 @@ class CreateVpsServerController extends Controller
                 }
             }
         }
+        // windows 2012 have to be added to windows
+        $temp_array = [];
+        foreach($oslist as $kind=>$os){
+            if($kind == 'others') {
+                
+                foreach ($oslist[$kind] as $id => $innerArray) {
+                    $temp_array = $innerArray; 
+                    break;
+                }
+            }
+        }
+
+        foreach($oslist as $kind=>$os){
+            if($kind == 'windows') {
+                if(count($temp_array) != 0){
+                    array_push($oslist[$kind],$temp_array);
+                }
+            }
+        }
 
         return view('pages/create-vps-server', compact('products','product_group','oslist','os_kind','user','payment_methods'));
     }
