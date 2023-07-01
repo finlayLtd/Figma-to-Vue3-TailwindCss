@@ -704,9 +704,6 @@ background: linear-gradient(180deg, rgba(147, 34, 121, 0.1) -17.5%, rgba(251, 25
 }
 
 .distribution-dots {
-
-}
-.distribution-dots {
 	height: 440px;
     width: 40%;
     position: absolute;
@@ -1149,13 +1146,6 @@ section.contact .hero-title {
 .multi-col-wrapper {
 	display: flex;
 
-}
-
-.multi-col-item {
-}
-
-.dropdown-menu.columns-2 {
-	/*min-width: 438px;*/
 }
 
 
@@ -1935,9 +1925,6 @@ td.remaining-cell::before {
     margin-bottom: 25px;
 }
 
-.credit-balance-header {
-
-}
 
 .balance-card-header .balance {
 	font-weight: 600;
@@ -1984,8 +1971,6 @@ td.remaining-cell::before {
 
 	}
 	
-	.modal-content {
-	}
 	
 	.modal-balance .modal-header {
 	    display: flex;
@@ -2019,9 +2004,6 @@ td.remaining-cell::before {
 		cursor: pointer;
 	} 
 
-	.modal-balance .modal-close img {
-		
-	} 
 
 	.modal-header {
 		margin-bottom:27px;
@@ -2289,8 +2271,6 @@ section.overview .title {
     margin-right: 12px;
 }
 
-.overview-tab ul.nav-pills {
-}
 
 .overview-tab .nav-link {
 	font-size: 14.5px;
@@ -2858,9 +2838,6 @@ border: none;
 	padding: 0 3px !important;
 	}
 	
-	.profile-area .options-toggle-dropdown {
-
-	}
 
 	.options-toggle-dropdown ul li:not(:last-child) {
 		border-bottom: solid 1px #e7e2e27a;
