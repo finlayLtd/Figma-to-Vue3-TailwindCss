@@ -397,10 +397,11 @@ class OverviewController extends Controller
         $post['show'] = date("Ym");           
         $post['svs'] = $vpsid;           
         $output = $this->virtualizorAdmin->vps_stats($post);
-
-        foreach($output['vps_stats'] as $state){
-            $state[1] = date('Y-m-d H:i:s', $state[1]);
-            array_push($return_datas,$state);
+        if(is_array($output['vps_stats'])){
+            foreach($output['vps_stats'] as $state){
+                $state[1] = date('Y-m-d H:i:s', $state[1]);
+                array_push($return_datas,$state);
+            }
         }
 
         return $return_datas;
