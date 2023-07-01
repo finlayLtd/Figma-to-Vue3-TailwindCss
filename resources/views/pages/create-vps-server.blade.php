@@ -96,6 +96,7 @@
 						<h6 class="sub-title">VPS info</h6>
 						<hr/>
 						<div class="vps-name"></div>
+						<div class="vps-price"></div>
 						<div class="vps-groupname"></div>
 						<div class="vps-hostname"></div>
 						<div class="vps-ipnum">
@@ -127,6 +128,11 @@
 								<label class="form-check-label" for="paymentMethod">{{ $payment_method['displayname'] }}</label>
 							</div>
 						@endforeach
+						<!-- added newly to implement apply credit -->
+						<div class="form-check">
+							<input type="radio" class="form-check-input paymentMethod" name="paymentMethod" id="paymentMethod" value="credit"/>
+							<label class="form-check-label" for="paymentMethod">Account Funds (available €{{ Auth::user()->credit }})</label>
+						</div>
 					</div>
 				</div>
 
@@ -236,6 +242,7 @@
 			prevPassword = result;
 			return result;
 		}
+
 		jQuery("#hostname").keyup(function() {
 			var hostname = jQuery("#hostname").val();
 			if (hostname.length > 12) {
@@ -383,6 +390,10 @@
 		vps_info_html = vps_info_html.find("div:eq(0)").html(); // remove the third div
 		$(".vps-name").html(vps_info_html);
 
+		var vps_price_html = $(".selected-plan").clone();
+		vps_price_html = vps_price_html.find("div:eq(1)").html();
+		$(".vps-price").html(vps_price_html);
+
 		var group = $(".selected-plan").parent().parent();
 		vps_group_html = group.find("div:eq(0)").html();
 		$(".vps-groupname").html(vps_group_html);
@@ -397,6 +408,8 @@
 	}
 
 	function createNewOrder(){
+		
+
 		var os_id = $(".selected-os").attr("osid");
 		var os_name = $(".selected-os").attr("os-name-iso");
 		var product_id = $(".selected-plan").attr("product-id");
@@ -405,6 +418,15 @@
 		var pwd = $("#password").val();
 		var hostname = $('#hostname').val();
 		var paymentMethod = $('input[name=paymentMethod]:checked').val();
+		// check the balance
+		if(paymentMethod == 'credit'){
+			var	priceValue = document.querySelector('.vps-price .price-value').textContent;
+			if(parseFloat(priceValue) > 0){
+				showToast('Warning', 'Account funds are not enough.', 'warning');
+				$(".modal").addClass("hidden");
+				return;
+			} 
+		}
 
 		$('#loading-bg').css('display', 'flex');
 		$.ajax({
@@ -441,6 +463,8 @@
 							$('#loading-bg').css('display', 'none');		
 							$(".modal").addClass("hidden");
 							showToast('Success', 'Created vps successfully', 'success');
+							console.log('response from the backend');
+							console.log(data);
 							window.location.href = data.redirect_url;
 						},
 					});

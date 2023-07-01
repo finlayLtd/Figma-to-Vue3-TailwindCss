@@ -29,10 +29,11 @@ class BalanceController extends Controller
             'action' => 'GetInvoices',
             'orderby' => 'date',
             'order' => 'desc',
-            // 'limitstart' => $offset,
-            // 'limitnum' => 10, // Set number of tickets to retrieve per request
+            'limitstart' => 0,
+            'limitnum' => 100, // Set number of tickets to retrieve per request
             'userid' => Auth::user()->client_id, // Set number of tickets to retrieve per request
         ]);
+
         if (count($response['invoices']) != 0) {
             $invoices = $response['invoices']['invoice'];
         } else $invoices = [];

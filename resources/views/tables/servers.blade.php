@@ -28,7 +28,7 @@
                             </div>
 
                             <div class="server-price mb-4" style="background: none;">
-                                <span class="price">€{{$prodcut['pricing']['EUR']['monthly']}}<span class="month">/ {{ __('messages.month') }}</span></span>
+                                <span class="price">€<span class='price-value'>{{$prodcut['pricing']['EUR']['monthly']}}</span><span class="month">/ {{ __('messages.month') }}</span></span>
                             </div>
 
                             <div class="">

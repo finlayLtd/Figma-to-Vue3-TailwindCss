@@ -609,7 +609,7 @@
 																		<img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice">
 																	</a>
 																</td> -->
-																<td class="text-center"><a target="_blank"><img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice"></a></td>
+																<td class="text-center"><a onclick="openInvoiceWindow({{ $invoiceInfo['invoiceid'] }})" target="_blank"><img src="{{asset('assets/img/eye-open.svg')}}" class="icon-password view-invoice"></a></td>
 															</tr>
 														</tbody>
 													</table>

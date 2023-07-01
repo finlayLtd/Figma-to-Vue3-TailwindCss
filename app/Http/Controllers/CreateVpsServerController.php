@@ -31,6 +31,30 @@ class CreateVpsServerController extends Controller
      */
     public function index()
     {
+        // double check current balance
+        $check_balance = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetClientsDetails',
+            'clientid' => Auth::user()->client_id,
+        ]);
+
+        if($check_balance['result'] == 'success'){
+            //if credit is different
+            if($check_balance['credit'] != Auth::user()->credit){
+                // default system to set the session again!(switch account)
+                $userAttributes = [];
+
+                $userAttributes = (array) (new \Sburina\Whmcs\Client)->post([
+                    'action' => 'getClientsDetails',
+                    'clientid' => Auth::user()->client_id,
+                ]);
+
+                $userAttributes['originUserData'] = Auth::user()->originUserData;
+                $userAttributes['permissions'] = Auth::user()->permissions;
+
+                session()->put(config('whmcs.session_key'), $userAttributes);
+            }
+        }
+
         $os_kind = [];
         $user = (array) Auth::user();
         $user = reset($user);
@@ -194,21 +218,76 @@ class CreateVpsServerController extends Controller
             )
         );
 
+        $payment_method = $request->paymentMethod;
+        //this case, just create vps with cryptocurrency
+        if($payment_method == 'credit') $payment_method = 'cryptomusgateway';
+
         $add_order_response = (new \Sburina\Whmcs\Client)->post([
             'action' => 'AddOrder',
             'clientid' => Auth::user()->client_id,
-            'paymentmethod' => $request->paymentMethod,
+            'paymentmethod' => $payment_method,
             'hostname' => array($request->hostname),
             'rootpw' => array($request->pwd),
             'pid' => array($request->product_id),
             'configoptions' => $configoptionsFields,
        ]);
+
        if($add_order_response['result'] == 'success'){
+            //apply the credit here
+            if($request->paymentMethod == 'credit'){
+                // get the invoice id from the orderid
+                $invoiceInfo = $this->getinvoiceInfo($add_order_response['orderid']);
+                if(isset($invoiceInfo['invoiceid'])){
+                    $created_invoice_id = $invoiceInfo['invoiceid'];
+                    //get the invoice data and total sum of price
+                    $invoice_detail = (new \Sburina\Whmcs\Client)->post([
+                        'action' => 'GetInvoice',
+                        'clientid' => Auth::user()->client_id,
+                        'invoiceid' => $created_invoice_id,
+                   ]);
+                   //if success, get the funds amount
+                   $credit_appling_amount = 0;
+                   if($invoice_detail['result'] == 'success')  $credit_appling_amount = $invoice_detail['total'];
+
+                   $apply_credit = (new \Sburina\Whmcs\Client)->post([
+                        'action' => 'ApplyCredit',
+                        'clientid' => Auth::user()->client_id,
+                        'invoiceid' => $created_invoice_id,
+                        'amount' => $credit_appling_amount,
+                    ]);
+                }
+                // apply credit and get the result
+            }
+
             $add_order_response['redirect_url'] = route('overview', ['order_id' => $add_order_response['orderid']]);
             return response()->json($add_order_response, 200);
-       }else{
+       } else{
            return response()->json($add_order_response, 500);
        }
+    }
+
+    private function getinvoiceInfo($order_id)
+    {
+        $invoice_info = array();
+        $orders_response = $this->getOrderinfo($order_id);
+        
+        $invoice_info = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetInvoice',
+            'invoiceid' => $orders_response['orders']['order'][0]['invoiceid'],
+        ]);
+        
+        return $invoice_info;
+    }
+
+    private function getOrderinfo($order_id)
+    {
+        $orders_response = (new \Sburina\Whmcs\Client)->post([
+            'action' => 'GetOrders',
+            'userid' => Auth::user()->client_id,
+            'id' => $order_id,
+        ]);
+        
+        return $orders_response;
     }
 
 }
