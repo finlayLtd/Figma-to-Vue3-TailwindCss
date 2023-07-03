@@ -77,7 +77,7 @@ class OverviewController extends Controller
             $network_speed = $this->getNetworkSpeed($vpsid);
             $cpu = $this->getCpuStatistics($vpsid);
             $analysis_data = $this->getAnalysisData($vpsid);
-            $ip_list = $this->getIpinfo($vpsid,$vps_info['vps_data'][$vpsid]['hostname']);
+            $ip_list = $this->getIpinfo($other_info['vps_info']['hostname']);
             
         }
 
@@ -375,7 +375,7 @@ class OverviewController extends Controller
         return $invoice_info;
     }
 
-    private function getIpinfo($vpsid,$hostname)
+    private function getIpinfo($hostname)
     {
         $post = array();
         $ip_list = array();
@@ -466,5 +466,9 @@ class OverviewController extends Controller
         }
 
         return response($noVNC_file_content);
+    }
+
+    private function getDNSlist(){
+
     }
 }
