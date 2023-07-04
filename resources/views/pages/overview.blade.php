@@ -507,31 +507,17 @@
 								</div>
 								<div class="d-flex">
 									<div class="overview-dns-select">
-										<select name="iplist" id="primary-ip">
+										<select name="iplist" id="rdns-ip">
 											@foreach($ip_list['ips'] as $ip)
-												<option value="{{$ip['ipid']}}">{{$ip['ip']}}</option>
+												<option value="{{$ip['ip']}}">{{$ip['ip']}}</option>
 											@endforeach
 										</select>
 									</div>
-									<input class="form-control" type="text" style="width:auto;margin-left:10px;">
-									<button class="btn-dark px-4 me-2 hover-dark-light" type="submit" style="padding: 0px 20px;margin-left:10px;">Add Reverse DNS</button>
+									<input class="form-control" id="dns-content" type="text" style="width:auto;margin-left:10px;">
+									<button class="btn-dark px-4 me-2 hover-dark-light" type="submit" style="padding: 0px 20px;margin-left:10px;" onclick="addRDNS()">Add Reverse DNS</button>
 								</div>
 								<div class="support-table">
-									<table class="table">
-										<thead>
-											<tr>
-												<th scope="col">ID</th>
-												<th scope="col">IP address</th>
-												<th scope="col">Name</th>
-												<th scope="col">Domain</th>
-												<th scope="col">Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-											</tr>
-										</tbody>
-									</table>
+									@include('tables.rdnstable')
 								</div>
 							</div>
 						</div>
@@ -2236,5 +2222,9 @@
 		});
 	}
 
+	function addRDNS(){
+		var ip_addr = $("#rdns-ip").val();
+		var domain_content = $('#dns-content').val();
+	}
 </script>
 @endsection
