@@ -41,12 +41,12 @@ class OverviewController extends Controller
         $ip_list['ips'] = [];
         $analysis_data = [];
         $order_id  = $request->order_id;
-        
         $order_info_response = $this->getOrderinfo($order_id);
         $order_info = $order_info_response['orders']['order'];
         $relid = $order_info[0]['lineitems']['lineitem'][0]['relid'];
         
         $order_product_info = $this->getClientProductInfo($order_id);
+        
         $today = new DateTime(date("Y-m-d"));
         $start_day = new DateTime($order_info[0]['date']);
         $interval = $today->diff($start_day);
@@ -78,7 +78,7 @@ class OverviewController extends Controller
             $cpu = $this->getCpuStatistics($vpsid);
             $analysis_data = $this->getAnalysisData($vpsid);
             $ip_list = $this->getIpinfo($other_info['vps_info']['hostname']);
-            
+            $rdnslist = $this->getDNSlist($order_product_info['dedicatedip']);
         }
 
 
@@ -110,7 +110,7 @@ class OverviewController extends Controller
             $departments = $departments_info['departments']['department'];
         }
 
-        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list','analysis_data','status'));
+        return view('pages/overview', compact('relid','order_id','order_product_info','dayDiff','detail_info','flag','sys_logo','system','vpsid','vps_info','oslists','cpu','network_speed','invoiceInfo','orders','departments','ip_list','analysis_data','status','rdnslist'));
     }
 
     private function getClientProductInfo($order_id)
@@ -468,7 +468,21 @@ class OverviewController extends Controller
         return response($noVNC_file_content);
     }
 
-    private function getDNSlist(){
+    private function getDNSlist($ip){
+        $post = array();
+        $result = $this->virtualizorAdmin->pdns(1, 50, $post);
+        $pnds_server_info = reset($result['pdns']);
+        
+        $ip_array = array_reverse(explode(".",$ip));
+        
+        $post['pdnsid'] = $pnds_server_info['id'];
+        $post['dns_name'] = $ip_array[0].".".$ip_array[1].".".$ip_array[2].".".$ip_array[3].".in-addr.arpa";
+        $post['domain_id'] = '';
+        $post['dns_domain'] = '';
+        $post['record_type'] = 'PTR';
+        $result = $this->virtualizorAdmin->search_dnsrecords(1, 100000, $post);
 
+        return $result['dns_records'];
+        
     }
 }
