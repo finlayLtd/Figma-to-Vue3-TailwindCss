@@ -516,7 +516,7 @@
 									<input class="form-control" id="dns-content" type="text" style="width:auto;margin-left:10px;">
 									<button class="btn-dark px-4 me-2 hover-dark-light" type="submit" style="padding: 0px 20px;margin-left:10px;" onclick="addRDNS()">Add Reverse DNS</button>
 								</div>
-								<div class="support-table">
+								<div class="support-table rdns-table-container">
 									@include('tables.rdnstable')
 								</div>
 							</div>
@@ -2225,6 +2225,51 @@
 	function addRDNS(){
 		var ip_addr = $("#rdns-ip").val();
 		var domain_content = $('#dns-content').val();
+
+		var firstCellValue = $('table#rdns-records tr:first-child td:first-child').text();
+		if(firstCellValue != 'id1'){
+			showToast('Warning', 'ReverseDNS record already exist.', 'warning');
+			return;
+		}
+
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/addrdns') }}",
+            method:'post',
+            data: {
+                ip: ip_addr,
+                domain: domain_content
+            },
+            success:function(data){
+                $('#loading-bg').css('display', 'none');
+				$('.rdns-table-container').empty();
+				$('.rdns-table-container').html(data);
+            },
+        });
+	}
+
+	function deleteRdns(rdns_id){
+		var ip_addr = $("#rdns-ip").val();
+		$('#loading-bg').css('display', 'flex');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{ URL::to('/overview/deleterdns') }}",
+            method:'post',
+            data: {
+                ip: ip_addr,
+                rdns_record_id: rdns_id
+            },
+            success:function(data){
+                $('#loading-bg').css('display', 'none');
+				$('.rdns-table-container').empty();
+				$('.rdns-table-container').html(data);
+            },
+        });
 	}
 </script>
 @endsection

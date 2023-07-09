@@ -64,6 +64,8 @@ Route::group([
     Route::post('/overview/checkhostName', 'OverviewController@checkhostName');
     Route::post('/overview/changehostName', 'OverviewController@changehostNames');
     Route::post('/overview/changeip', 'OverviewController@changeip');
+    Route::post('/overview/addrdns', 'OverviewController@addRDNS');
+    Route::post('/overview/deleterdns', 'OverviewController@deleteRDNS');
     // Route::post('/overview/connectvnc', 'OverviewController@connectvnc');
 
     Route::get('/servers', 'ServersController@index')->name('servers');

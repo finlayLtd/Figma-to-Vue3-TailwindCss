@@ -481,8 +481,51 @@ class OverviewController extends Controller
         $post['dns_domain'] = '';
         $post['record_type'] = 'PTR';
         $result = $this->virtualizorAdmin->search_dnsrecords(1, 100000, $post);
-
+        foreach($result['dns_records'] as $key=>$rdns){
+            $result['dns_records'][$key]['ip'] = $ip;
+        }
+        
         return $result['dns_records'];
         
+    }
+    
+    public function addRDNS(Request $request)
+    {
+        $post = array();
+        $result = $this->virtualizorAdmin->pdns(1, 50, $post);
+        $pnds_server_info = reset($result['pdns']);
+
+        $ip_array = array_reverse(explode(".",$request->ip));
+
+        $post['pdnsid'] = $pnds_server_info['id'];
+        $post['domain'] = $request->domain;
+        $post['dns_ip'] = $request->ip;
+        $post['dns_type'] = 'type_rdns';
+        $post['content'] = $ip_array[0].".".$ip_array[1].".".$ip_array[2].".".$ip_array[3].".in-addr.arpa";
+        $result = $this->virtualizorAdmin->add_dnsrecord($post);
+
+        if($result['done'] == 1){
+            $rdnslist = $this->getDNSlist($request->ip);
+            return view('tables/rdnstable', compact('rdnslist'));
+        }
+    }
+
+    public function deleteRDNS(Request $request)
+    {
+        $post = array();
+        $result = $this->virtualizorAdmin->pdns(1, 50, $post);
+        $pnds_server_info = reset($result['pdns']);
+
+        $ip_array = array_reverse(explode(".",$request->ip));
+
+        $post['pdnsid'] = $pnds_server_info['id'];
+        $post['del'] = $request->rdns_record_id;
+        $result = $this->virtualizorAdmin->delete_dnsrecords($post);
+
+        if($result['done']){
+            $rdnslist = $this->getDNSlist($request->ip);
+            $ip = $request->ip;
+            return view('tables/rdnstable', compact('rdnslist','ip'));
+        }
     }
 }
