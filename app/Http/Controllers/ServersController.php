@@ -112,6 +112,8 @@ class ServersController extends Controller
                                 $state_order[$state][$last_index]['sys_log'] = 'fedora'; break;
                             case 'rocky':
                                 $state_order[$state][$last_index]['sys_log'] = 'rocky'; break;
+                            default:
+                                $state_order[$state][$last_index]['sys_log'] = 'windows'; break;
                         }
                     }
                 }
